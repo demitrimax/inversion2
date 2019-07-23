@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class bancos
  * @package App\Models
  * @version June 3, 2019, 10:41 am CDT
  *
- * @property \Illuminate\Database\Eloquent\Collection 
+ * @property \Illuminate\Database\Eloquent\Collection
  * @property string nombre
  * @property string denominacionsocial
  * @property string nombrecorto
@@ -24,14 +25,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class bancos extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     public $table = 'cat_bancos';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
 
     protected $dates = ['deleted_at'];
+    protected static $logAttributes = ['*'];
 
 
     public $fillable = [
@@ -76,5 +79,5 @@ class bancos extends Model
         'RFC' => 'required'
     ];
 
-    
+
 }

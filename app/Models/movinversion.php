@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class movinversion extends Model
 {
     //
     use SoftDeletes;
+    use LogsActivity;
 
     public $table = 'mov_inversion';
 
@@ -17,7 +19,7 @@ class movinversion extends Model
 
 
     protected $dates = ['deleted_at'];
-
+    protected static $logAttributes = ['*'];
 
     public $fillable = [
         'cuenta_id',

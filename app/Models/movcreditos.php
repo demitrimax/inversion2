@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class movcreditos extends Model
 {
     //
     use SoftDeletes;
+    use LogsActivity;
 
     public $table = 'mov_creditos';
 
@@ -17,6 +19,7 @@ class movcreditos extends Model
 
 
     protected $dates = ['deleted_at','fecha'];
+    protected static $logAttributes = ['*'];
 
 
     public $fillable = [

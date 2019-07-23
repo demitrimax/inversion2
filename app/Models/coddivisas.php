@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class coddivisas
@@ -17,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class coddivisas extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     public $table = 'cod_divisas';
 
@@ -25,6 +27,7 @@ class coddivisas extends Model
 
 
     protected $dates = ['deleted_at'];
+    protected static $logAttributes = ['*'];
 
 
     public $fillable = [

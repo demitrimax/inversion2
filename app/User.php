@@ -7,12 +7,14 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable
 {
     use Notifiable;
     use HasRoles;
     use SoftDeletes;
+    use LogsActivity;
 
   protected $dates = ['deleted_at'];
 
@@ -24,6 +26,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password',
     ];
+    protected static $logAttributes = ['*'];
 
     /**
      * The attributes that should be hidden for arrays.

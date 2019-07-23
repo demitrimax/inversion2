@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class corridafinanciera extends Model
 {
     //
     use SoftDeletes;
+    use LogsActivity;
 
     public $table = 'corridafinanciera';
 
@@ -17,6 +19,7 @@ class corridafinanciera extends Model
 
 
     protected $dates = ['deleted_at'];
+    protected static $logAttributes = ['*'];
 
     public $fillable = [
         'credito_id',

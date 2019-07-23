@@ -62,13 +62,13 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
 
                 </div>
-            {!! Form::close() !!}
+
               <!-- /.box-body -->
 
               <div class="card-footer tx-center bg-gray-300">
                     <button type="submit" class="btn btn-primary">Guardar</button>
               </div>
-
+            {!! Form::close() !!}
           </div>
           <!-- /.box -->
 

@@ -5,6 +5,7 @@ namespace App\Models;
 use Eloquent as Model;
 use App\Models\coddivisas;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class empresas
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class empresas extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     public $table = 'cat_empresas';
 
@@ -28,6 +30,7 @@ class empresas extends Model
 
 
     protected $dates = ['deleted_at'];
+    protected static $logAttributes = ['*'];
 
 
     public $fillable = [

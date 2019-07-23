@@ -6,6 +6,7 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\creditos;
 use App\Models\movinversion;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class bcuentas
@@ -25,6 +26,7 @@ use App\Models\movinversion;
 class bcuentas extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     public $table = 'catcuentas';
 
@@ -33,6 +35,7 @@ class bcuentas extends Model
 
 
     protected $dates = ['deleted_at'];
+    protected static $logAttributes = ['*'];
 
 
     public $fillable = [
