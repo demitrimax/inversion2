@@ -19,7 +19,7 @@ Auth::routes();
 
 
 
-Route::group(['middleware'=>['auth']], function() {
+Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::get('/home', 'HomeController@index')->name('home');
   //RUTAS DE LA CONFIGURACION
   Route::resource('roles','RoleController');
