@@ -1,41 +1,48 @@
-<aside class="main-sidebar" id="sidebar-wrapper">
+<div class="left side-menu">
+    <div class="sidebar-inner slimscrollleft">
 
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel">
-            <div class="pull-left image">
-                <img src="http://infyom.com/images/logo/blue_logo_150x150.jpg" class="img-circle"
-                     alt="User Image"/>
+        <div class="user-details">
+            <div class="pull-left">
+                <img src="{{asset('appzia/images/users/avatar-1.jpg')}}" alt="" class="thumb-md img-circle">
             </div>
-            <div class="pull-left info">
-                @if (Auth::guest())
-                <p>InfyOm</p>
-                @else
-                    <p>{{ Auth::user()->name}}</p>
-                @endif
-                <!-- Status -->
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            <div class="user-info">
+                <div class="dropdown">
+                  @guest
+                      <li>
+                          <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                      </li>
+                      @if (Route::has('register'))
+                          <li>
+                              <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                          </li>
+                      @endif
+                  @else
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{Auth::user()->name}} <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:void(0)"><i class="md md-face-unlock"></i> Profile<div class="ripple-wrapper"></div></a></li>
+                        <li><a href="javascript:void(0)"><i class="md md-settings"></i> Settings</a></li>
+                        <li><a href="javascript:void(0)"><i class="md md-lock"></i> Lock screen</a></li>
+                        <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                      document.getElementById('logout-form').submit();">
+                     <i class="md md-settings-power"></i> {{ __('Logout') }}</a></li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </ul>
+                                            @endguest
+                </div>
+
+                <p class="text-muted m-0">Admin</p>
             </div>
         </div>
+        <!--- Divider -->
 
-        <!-- search form (Optional) -->
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search..."/>
-          <span class="input-group-btn">
-            <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>
-            </button>
-          </span>
-            </div>
-        </form>
-        <!-- Sidebar Menu -->
 
-        <ul class="sidebar-menu" data-widget="tree">
-            @include('layouts.menu')
-        </ul>
-        <!-- /.sidebar-menu -->
-    </section>
-    <!-- /.sidebar -->
-</aside>
+        <div id="sidebar-menu">
+            <ul>
+              @include('layouts.menu')
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+    </div> <!-- end sidebarinner -->
+</div>
