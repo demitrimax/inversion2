@@ -53,4 +53,5 @@ Route::group(['middleware'=>['auth']], function() {
   Route::resource('metpagos', 'metpagoController');
   Route::resource('proveedores', 'proveedoresController');
   Route::resource('coddivisas', 'coddivisasController');
+  Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 });
