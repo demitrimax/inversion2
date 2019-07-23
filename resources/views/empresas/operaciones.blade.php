@@ -20,7 +20,7 @@
              <td>{{ $operacion->tipo }}</td>
              <td>{{ $operacion->cuenta->nomcuenta }}</td>
              <td>
-               {!! Form::open(['route' => ['operacion.destroy', $operacion->id], 'method' => 'delete', 'id'=>'formoper'.$operacion->id]) !!}
+               {!! Form::open(['route' => ['operacion.destroy', $operacion->id], 'id'=>'formoper'.$operacion->id]) !!}
                <div class='btn-group'>
 
                    @can('operacion-delete')
