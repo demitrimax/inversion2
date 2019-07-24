@@ -1,6 +1,6 @@
 @extends('layouts.appv2')
 
-@section('title',config('app.name').' | Empresas' )
+@section('title',config('app.name').' | Activity Log' )
 @section('content')
 <div class="container-fluid">
   <div class="row">

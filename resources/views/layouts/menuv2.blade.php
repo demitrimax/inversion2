@@ -78,7 +78,7 @@ if( Request::is('efinancieras*') || Request::is('clasificas*') || Request::is('b
 </ul>
   @hasrole('administrador')
   @php
-  if( Request::is('user*') || Request::is('permissions*') || Request::is('roles*') || Request::is('logs*') ) {
+  if( Request::is('user*') || Request::is('permissions*') || Request::is('roles*') || Request::is('logs*') || Request::is('activity*') ) {
       $varActive = "active show-sub";
   } else {
     $varActive = "";
@@ -96,5 +96,6 @@ if( Request::is('efinancieras*') || Request::is('clasificas*') || Request::is('b
   <li class="nav-item"><a href="{{url('roles')}}" class="nav-link {{ Request::is('roles*') ? 'active' : '' }}">Roles</a></li>
   <li class="nav-item"><a href="{{url('permissions')}}" class="nav-link {{ Request::is('permissions*') ? 'active' : '' }}">Permisos</a></li>
   <li class="nav-item"><a href="{{url('logs')}}" class="nav-link {{ Request::is('logs*') ? 'active' : '' }}">Logs del Sistema</a></li>
+  <li class="nav-item"><a href="{{url('activity')}}" class="nav-link {{ Request::is('activity*') ? 'active' : '' }}">Activity Logs</a></li>
 </ul>
 @endhasrole
