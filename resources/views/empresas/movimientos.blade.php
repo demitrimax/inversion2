@@ -8,21 +8,21 @@
       <table class="table table-striped table-bordered detail-view" id="movcuentas-table">
        <thead class="bg-primary">
          <tr>
-           <th>Num</th>
+           <th>Núm</th>
            <th>Fecha</th>
            <th>Monto</th>
            <th>Proyecto</th>
            <th>Acciones</th>
          </tr>
        </thead>
-         <tbody>
+         <tbody> @php $i = 1; @endphp
          @foreach($empresas->cuentas as $cuentas)
-          @foreach($cuentas->inversiones as $key=>$inversion)
+          @foreach($cuentas->inversiones->sortBy('fecha') as $key=>$inversion)
            <tr>
-             <td>{{$key+1}}</td>
+             <td>{{$i++}}</td>
              <td>{{$inversion->fecha->format('d-m-Y')}}</td>
              <td>${{number_format($inversion->monto,2).'('.$inversion->cuenta->divisa.')' }}</td>
-             <td>{{ $inversion->proyecto->nombre }}</td>
+             <td><a href="{{url('/cproyectos/'.$inversion->id)}}">{{ $inversion->proyecto->nombre }}</a></td>
              <td></td>
            </tr>
             @endforeach

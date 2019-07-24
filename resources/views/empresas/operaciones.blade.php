@@ -3,7 +3,7 @@
       <table class="table table-striped table-bordered detail-view" id="corrida-table">
        <thead class="bg-primary">
          <tr>
-           <th>Num</th>
+           <th>Núm</th>
            <th>Fecha</th>
            <th>Monto</th>
            <th>Tipo</th>
@@ -11,10 +11,10 @@
            <th>Acciones</th>
          </tr>
        </thead>
-         <tbody>
+         <tbody>@php $i=1; @endphp
          @foreach($empresas->operaciones->sortBy('fecha') as $key=>$operacion)
            <tr>
-             <td>{{$key+1}}</td>
+             <td>{{$i++}}</td>
              <td>{{$operacion->fecha->format('d-m-Y')}}</td>
              <td>${{ number_format($operacion->monto,2).'('.$operacion->cuenta->divisa.')' }}</td>
              <td>{{ $operacion->tipo }}</td>
