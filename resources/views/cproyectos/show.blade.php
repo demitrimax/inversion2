@@ -3,16 +3,10 @@
 @section('content')
 
     <div class="content">
-        <div class="card bg-0">
-            <div class="card-body">
-                <div class="row" style="padding-left: 20px">
 
-                    @include('cproyectos.show_fields')
-
-
-                </div>
-                <a href="{!! route('cproyectos.index') !!}" class="btn btn-primary">Regresar</a>
-            </div>
+        <div class="row row-sm mg-t-20">
+          @include('cproyectos.detallefields')
+          @include('cproyectos.detinversion')
         </div>
     </div>
 @endsection

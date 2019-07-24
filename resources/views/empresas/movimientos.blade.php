@@ -16,8 +16,7 @@
          </tr>
        </thead>
          <tbody> @php $i = 1; @endphp
-         @foreach($empresas->cuentas as $cuentas)
-          @foreach($cuentas->inversiones->sortBy('fecha') as $key=>$inversion)
+         @foreach($inversiones->sortBy('fecha') as $inversion )
            <tr>
              <td>{{$i++}}</td>
              <td>{{$inversion->fecha->format('d-m-Y')}}</td>
@@ -26,7 +25,6 @@
              <td></td>
            </tr>
             @endforeach
-           @endforeach
          </tbody>
      </table>
 

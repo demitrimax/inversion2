@@ -112,7 +112,15 @@ class empresasController extends AppBaseController
         $proveedores = proveedores::pluck('nombre','id');
         $proyectos = cproyectos::pluck('nombre','id');
         $divisas = coddivisas::pluck('nombre','codigo');
-        return view('empresas.show')->with(compact('empresas','bancos','creditos','metpago','cuental', 'proveedores', 'proyectos','divisas'));
+
+        $inversiones = collect([]);
+        foreach($cuentas as $cuenta){
+          foreach($cuenta->inversiones as $inversion)
+            $inversiones->push($inversion);
+        }
+        //$inversiones = collect($inversiones);
+        //dd($inversiones);
+        return view('empresas.show')->with(compact('empresas','bancos','creditos','metpago','cuental', 'proveedores', 'proyectos','divisas', 'inversiones'));
     }
 
     /**
