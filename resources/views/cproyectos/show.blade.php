@@ -6,6 +6,9 @@
 
         <div class="row row-sm mg-t-20">
           @include('cproyectos.detallefields')
+          @include('cproyectos.barchart')
+        </div>
+          <div class="row row-sm mg-t-20">
           @include('cproyectos.detinversion')
         </div>
     </div>

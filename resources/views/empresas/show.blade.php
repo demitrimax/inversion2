@@ -56,6 +56,8 @@
                           @include('empresas.movimientos')
                       </div>
                     </div>
+                  </div>
+
                     <div class="card">
                       <div class="card-header" role="tab" id="headingThree">
                         <h6 class="mg-b-0">
@@ -70,8 +72,6 @@
                       </div><!-- collapse -->
                     </div><!-- card -->
                   </div>
-
-            </div>
 
                 </div>
 

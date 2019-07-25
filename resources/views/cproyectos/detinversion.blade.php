@@ -1,10 +1,10 @@
-<div class="col-xl-6 mg-t-25 mg-xl-t-0">
+<div class="col-xl-12 mg-t-25 mg-xl-t-0">
   <div class="card pd-20 pd-sm-40 form-layout form-layout-5">
     <h6 class="tx-gray-800 tx-uppercase tx-bold tx-14 mg-b-10">Detalle de las Inversiones</h6>
     <p class="mg-b-30 tx-gray-600">Listado por detalle de cada una de las inversiones.</p>
 
     <div id="accordion" class="accordion" role="tablist" aria-multiselectable="true">
-      @foreach($cproyectos->inversiones as $key=>$inversion)
+      @foreach($cproyectos->inversiones->sortBy('fecha') as $key=>$inversion)
           <div class="card">
             <div class="card-header" role="tab" id="heading{{$key}}">
               <h6 class="mg-b-0">
@@ -38,28 +38,25 @@
                    @php
                    $factual = date('Y-m-d');
                    $numpagos = $inversion->fecha->diffInMonths($factual)+1;
-                   @endphp
-
-                   @php
-   					$primerpagfecha = $inversion->fecha;
-   					$ultimopagfecha = $factual;
-   					$linea = 0;
-   					$monto = $inversion->monto;
-   					$tasa = $inversion->tinteres;
-             $tasamensual = ($tasa/12);
-   					$numdias = $inversion->fecha->diffInDays($factual);
-             $anios =  $inversion->fecha->diffInYears($factual);
-   				 $numpagos = $inversion->fecha->diffInMonths($factual)+1;
-   					//echo $numpagos;
-             //cantidad final con el interes de la tasa
-             $montofinal = $monto * (($tasa/100)+1);
-   					$pagofijo = $monto / ($numpagos);
-             $saldocapital = $monto;
-   					$interesi = $pagofijo*($tasamensual);
-   					$interes = 0;
-   					$total = 0;
-             $line = 0;
-
+           					$primerpagfecha = $inversion->fecha;
+           					$ultimopagfecha = $factual;
+           					$linea = 0;
+           					$monto = $inversion->monto;
+           					$tasa = $inversion->tinteres;
+                    $tasamensual = ($tasa/12);
+           					$numdias = $inversion->fecha->diffInDays($factual);
+                    $anios =  $inversion->fecha->diffInYears($factual);
+           				  $numpagos = $inversion->fecha->diffInMonths($factual)+1;
+           					//echo $numpagos;
+                    //cantidad final con el interes de la tasa
+                    $montofinal = $monto * (($tasa/100)+1);
+           					$pagofijo = $monto / ($numpagos);
+                    $saldocapital = $monto;
+           					$interesi = $pagofijo*($tasamensual);
+           					$interes = 0;
+           					$total = 0;
+                    $line = 0;
+                    $tpinteres = 0;
 
                  	@endphp
 
@@ -70,7 +67,8 @@
                                <td>{{ number_format($saldocapital,2) }}</td>
        <!-- pago capital-->    <td>{{ number_format($pcapital = $pagofijo ,2) }}</td>
        <!-- pago interes-->    <td>{{ number_format($pinteres = App\Helpers\SomeClass::pagointeExcel($tasamensual, $saldocapital, $numpagos, $line+1) ,2) }}</td>
-       <!-- monto de pago-->   <td>{{ number_format($mpago = $pcapital+$pinteres,2) }}</td>
+       <!-- monto de pago-->   @php $tpinteres += $pinteres; @endphp
+                                <td>{{ number_format($mpago = $pcapital+$pinteres,2) }}</td>
       <!-- saldo capital-->    <td>{{ number_format($saldocapital = ($saldocapital+$pinteres) - $mpago,2) }}</td>
      <!-- No de pago-->        <td>{{ $line = $linea  }}</td>
                                <td>{{$i->format('d-m-Y')}}</td>
@@ -79,6 +77,20 @@
                  	@endfor
 
                  </tbody>
+                 <tfoot>
+                   <tr>
+                     <th></th>
+                     <th></th>
+                     <th></th>
+                     <th>Total Interes:</th>
+                     <th>${{ number_format($tpinteres,2)}}</th>
+                     <th></th>
+                     <th></th>
+                     <th></th>
+                     <th></th>
+                     <th></th>
+                   </tr>
+                 </tfoot>
              </table>
 
               </div>
@@ -122,8 +134,10 @@
     <div class="row row-xs mg-t-30">
       <div class="col-sm-8 mg-l-auto">
         <div class="form-layout-footer">
+          <!--
           <button class="btn btn-info mg-r-5">Submit Form</button>
           <button class="btn btn-secondary">Cancel</button>
+        -->
         </div><!-- form-layout-footer -->
       </div><!-- col-8 -->
     </div>
