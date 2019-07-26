@@ -64,8 +64,8 @@ class clasificaController extends AppBaseController
 
         $clasifica = $this->clasificaRepository->create($input);
 
-        Flash::success('Clasifica guardado correctamente.');
-        Alert::success('Clasifica guardado correctamente.');
+        Flash::success('Categoría guardada correctamente.');
+        Alert::success('Categoría guardada correctamente.');
 
         return redirect(route('clasificas.index'));
     }
@@ -82,8 +82,8 @@ class clasificaController extends AppBaseController
         $clasifica = $this->clasificaRepository->findWithoutFail($id);
 
         if (empty($clasifica)) {
-            Flash::error('Clasifica no encontrado');
-            Alert::error('Clasifica no encontrado.');
+            Flash::error('Categoría no encontrada');
+            Alert::error('Categoría no encontrada.');
 
             return redirect(route('clasificas.index'));
         }
@@ -103,8 +103,8 @@ class clasificaController extends AppBaseController
         $clasifica = $this->clasificaRepository->findWithoutFail($id);
 
         if (empty($clasifica)) {
-            Flash::error('Clasifica no encontrado');
-            Alert::error('Clasifica no encontrado');
+            Flash::error('Categoría no encontrada');
+            Alert::error('Categoría no encontrada');
 
             return redirect(route('clasificas.index'));
         }
@@ -125,16 +125,16 @@ class clasificaController extends AppBaseController
         $clasifica = $this->clasificaRepository->findWithoutFail($id);
 
         if (empty($clasifica)) {
-            Flash::error('Clasifica no encontrado');
-            Alert::error('Clasifica no encontrado');
+            Flash::error('Categoría no encontrada');
+            Alert::error('Categoría no encontrada');
 
             return redirect(route('clasificas.index'));
         }
 
         $clasifica = $this->clasificaRepository->update($request->all(), $id);
 
-        Flash::success('Clasifica actualizado correctamente.');
-        Alert::success('Clasifica actualizado correctamente.');
+        Flash::success('Categoría actualizada correctamente.');
+        Alert::success('Categoría actualizada correctamente.');
 
         return redirect(route('clasificas.index'));
     }
@@ -151,16 +151,16 @@ class clasificaController extends AppBaseController
         $clasifica = $this->clasificaRepository->findWithoutFail($id);
 
         if (empty($clasifica)) {
-            Flash::error('Clasifica no encontrado');
-            Alert::error('Clasifica no encontrado');
+            Flash::error('Categoría no encontrada');
+            Alert::error('Categoría no encontrada');
 
             return redirect(route('clasificas.index'));
         }
 
         $this->clasificaRepository->delete($id);
 
-        Flash::success('Clasifica borrado correctamente.');
-        Flash::success('Clasifica borrado correctamente.');
+        Flash::success('Categoría borrada correctamente.');
+        Alert::success('Categoría borrada correctamente.');
 
         return redirect(route('clasificas.index'));
     }
