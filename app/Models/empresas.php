@@ -97,7 +97,22 @@ class empresas extends Model
       return number_format($saldocuentasMXN,2).'MNX - '.number_format($saldocuentasUSD,2).'USD';
     }
 
-
-
+    public function getSaldofinalAttribute()
+    {
+        //saldo final de las cuentas
+        $saldocuentasMXN = 0;
+        $saldocuentasUSD = 0;
+        $paridad = 19.8;
+        foreach($this->cuentas as $cuenta){
+          if ($cuenta->divisa == 'MXN'){
+            $saldocuentasMXN += $cuenta->saldocuenta;
+          }
+          if ($cuenta->divisa == 'USD'){
+            $saldocuentasUSD += $cuenta->saldocuenta;
+          }
+        }
+          $saldofinal = $saldocuentasMXN + ($saldocuentasUSD*$paridad);
+          return $saldofinal;
+    }
 
 }

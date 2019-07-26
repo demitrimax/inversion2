@@ -58,7 +58,7 @@
                 <!-- Tipo Field -->
 
                 @php
-                $saldofinal = abs($empresas->saldoaldia);
+                  $saldofinal = abs($empresas->saldofinal);
                 @endphp
 
                 <div class="form-group col-sm-6">
@@ -98,6 +98,11 @@
                 <div class="form-group col-sm-6">
                     {!! Form::label('numfactura', '# de Factura:') !!}
                     {!! Form::text('numfactura', null, ['class' => 'form-control', 'required']) !!}
+                </div>
+
+                <div class="form-group col-sm-6">
+                    {!! Form::label('clasifica_id', 'Categoría:') !!}
+                    {!! Form::select('clasifica_id', $categorias,null, ['class' => 'form-control', 'required']) !!}
                 </div>
 
                 <div class="form-group col-sm-12">

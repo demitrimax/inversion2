@@ -22,6 +22,7 @@ use App\Models\corridafinanciera;
 use App\Models\cproyectos;
 use App\Models\movinversion;
 use App\Models\coddivisas;
+use App\Models\clasifica;
 use Auth;
 
 class empresasController extends AppBaseController
@@ -112,6 +113,7 @@ class empresasController extends AppBaseController
         $proveedores = proveedores::pluck('nombre','id');
         $proyectos = cproyectos::pluck('nombre','id');
         $divisas = coddivisas::pluck('nombre','codigo');
+        $categorias = clasifica::pluck('nombre','id');
 
         $inversiones = collect([]);
         foreach($cuentas as $cuenta){
@@ -120,7 +122,7 @@ class empresasController extends AppBaseController
         }
         //$inversiones = collect($inversiones);
         //dd($inversiones);
-        return view('empresas.show')->with(compact('empresas','bancos','creditos','metpago','cuental', 'proveedores', 'proyectos','divisas', 'inversiones'));
+        return view('empresas.show')->with(compact('empresas','bancos','creditos','metpago','cuental', 'proveedores', 'proyectos','divisas', 'inversiones', 'categorias'));
     }
 
     /**
@@ -221,6 +223,7 @@ class empresasController extends AppBaseController
       $operacion->tipo = $input['tipo'];
       $operacion->fecha = $input['fecha'];
       $operacion->metpago = $input['metpago'];
+      $operacion->clasifica_id = $input['clasifica_id'];
       $operacion->concepto = $input['concepto'];
       $operacion->comentario = $input['comentario'];
       $operacion->save();

@@ -12,6 +12,8 @@
   $pares =    array(0,2,4,6,8,10,12,14,16,18,20);
   $impares =  array(1,3,5,7,9,11,13,15,17,19,21);
   $cont = 0;
+  $fechas = [];
+  $inver = [];
 
     foreach($cproyectos->inversiones->sortBy('fecha') as $key=>$inversion){
         $cont++;

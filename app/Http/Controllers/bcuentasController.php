@@ -213,9 +213,16 @@ class bcuentasController extends AppBaseController
 
             return redirect(route('bcuentas.index'));
         }
-        if ($bcuentas->operaciones->count>0){
+        if ($bcuentas->operaciones->count()>0){
               Flash::error('No se puede eliminar, la cuenta tiene registros de operaciones.');
               Alert::error('No se puede eliminar, la cuenta tiene registros de operaciones.');
+
+          return back();
+        }
+
+        if ($bcuentas->creditos->count()>0){
+          Flash::error('No se puede eliminar, la cuenta tiene registros de creditos.');
+          Alert::error('No se puede eliminar, la cuenta tiene registros de creditos.');
 
           return back();
         }
