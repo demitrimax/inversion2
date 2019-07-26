@@ -9,7 +9,7 @@
     <tbody>
     @foreach($clasificas as $clasifica)
         <tr>
-            <td>{!! $clasifica->nombre !!}</td>
+            <td><a href="{!! route('clasificas.show', [$clasifica->id]) !!}">{!! $clasifica->nombre !!}</a></td>
             <td>{!! $clasifica->descripcion !!}</td>
             <td>
                 {!! Form::open(['route' => ['clasificas.destroy', $clasifica->id], 'method' => 'delete', 'id'=>'form'.$clasifica->id]) !!}

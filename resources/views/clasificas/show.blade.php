@@ -1,23 +1,26 @@
 @extends('layouts.appv2')
-@section('title',config('app.name').' | Clasificas' )
+@section('title',config('app.name').' | Categorías' )
+
 @section('content')
-    <section class="content-header">
-        <h1>
-            Clasifica
-        </h1>
-    </section>
+
     <div class="content">
-        <div class="box box-primary">
-            <div class="box-body">
+      <div class="row">
+      <div class="col-md-6">
+        <div class="card card-primary">
+          <div class="card-header card-header-default">
+              <h3 class="card-title">Categoría </h3>
+          </div>
+            <div class="card-body">
                 <div class="row" style="padding-left: 20px">
-                <table class="table table-striped table-bordered detail-view" id="clasificas-table">
-                  <tbody>
+
                     @include('clasificas.show_fields')
-                    </tbody>
-                  </table>
-                    <a href="{!! route('clasificas.index') !!}" class="btn btn-secondary">Back</a>
+                    <a href="{!! route('clasificas.index') !!}" class="btn btn-secondary">Regresar</a>
+
+
                 </div>
             </div>
         </div>
     </div>
+  </div>
+  </div>
 @endsection
