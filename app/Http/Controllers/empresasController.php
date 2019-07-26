@@ -325,4 +325,21 @@ class empresasController extends AppBaseController
       Flash::success('Se ha eliminado existosamente la operación');
       return back();
     }
+    public function eliminver($id)
+    {
+      $inversion  = movinversion::find($id);
+
+      if(empty($inversion))
+      {
+        Alert::error('No se encuentra la Inversión a eliminar');
+        Flash::error('No se encuentra la Inversión a eliminar');
+        return back();
+      }
+      $inversion->delete();
+
+      Alert::success('Se ha eliminado existosamente la inversión');
+      Flash::success('Se ha eliminado existosamente la inversión');
+      return back();
+
+    }
 }

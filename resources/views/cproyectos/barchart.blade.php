@@ -1,7 +1,7 @@
 <div class="col-xl-6 mg-t-25 mg-xl-t-0">
   <div class="card pd-20 pd-sm-40"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-    <h6 class="card-body-title">Multiple Color Bar Chart</h6>
-    <p class="mg-b-20 mg-sm-b-30">A bar chart or bar graph is a chart with rectangular bars with lengths proportional to the values that they represent.</p>
+    <h6 class="card-body-title">COMPORTAMIENTO DE LAS Inversiones</h6>
+    <p class="mg-b-20 mg-sm-b-30">En esta grafica podras ver como se comportan las inversiones a este proyecto.</p>
     <canvas id="chartBar2" height="445" width="715" class="chartjs-render-monitor" style="display: block; width: 715px; height: 445px;"></canvas>
   </div><!-- card -->
 </div>

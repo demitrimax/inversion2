@@ -21,8 +21,19 @@
              <td>{{$i++}}</td>
              <td>{{$inversion->fecha->format('d-m-Y')}}</td>
              <td>${{number_format($inversion->monto,2).'('.$inversion->cuenta->divisa.')' }}</td>
-             <td><a href="{{url('/cproyectos/'.$inversion->id)}}">{{ $inversion->proyecto->nombre }}</a></td>
-             <td></td>
+             <td><a href="{{url('/cproyectos/'.$inversion->proyecto->id)}}">{{ $inversion->proyecto->nombre }}</a></td>
+             <td>
+               {!! Form::open(['route' => ['movcredito.destroy', $inversion->id], 'id'=>'forminver'.$inversion->id]) !!}
+               <div class='btn-group'>
+
+                   @can('movcreditos-delete')
+                   {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelInver($inversion->id)"]) !!}
+                   {!! Form::hidden('redirect', 'empresas.show') !!}
+                   {!! Form::hidden('empresa_id', $empresas->id) !!}
+                   @endcan
+               </div>
+               {!! Form::close() !!}
+             </td>
            </tr>
             @endforeach
          </tbody>
@@ -126,5 +137,21 @@ var dp = $('.datepicker-input').datepicker().data('datepicker');
 
 // When just use method .selectDate(), to select desirable date.
 dp.selectDate(new Date()) // Will select current date;
+
+function ConfirmDelInver(id) {
+  swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Estás seguro de borrar esta inversion.',
+        type: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Continuar',
+        }).then((result) => {
+  if (result.value) {
+    document.forms['forminver'+id].submit();
+  }
+})
+}
 </script>
 @endpush

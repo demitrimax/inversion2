@@ -36,9 +36,7 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::get('CorridaFinanciera/{id}', 'creditosController@crearCorridaFinanciera')->name('CorridaFinanciera.create');
   Route::get('getCreditoPagos/{id}', 'creditosController@getCreditoPagos');
 
-
   Route::resource('clasificas', 'clasificaController');
-
 
   Route::resource('bancos', 'bancosController');
 
@@ -48,6 +46,7 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
 
   Route::post('operaciones/guardar', 'empresasController@regoper')->name('operacion.store');
   Route::post('operaciones/{id}/eliminar','empresasController@elimoper')->name('operacion.destroy');
+  Route::post('inversion/{id}/eliminar','empresasController@eliminver')->name('movcredito.destroy');
 
   Route::resource('bcuentas', 'bcuentasController');
   Route::resource('metpagos', 'metpagoController');

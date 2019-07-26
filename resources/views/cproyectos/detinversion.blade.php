@@ -16,7 +16,7 @@
 
             <div id="collapse{{$key}}" class="collapse" role="tabpanel" aria-labelledby="heading{{$key}}" style="">
               <div class="card-body">
-                Tasa de Interés segun credito : {{ $inversion->cuenta->creditos->count() }} <br>
+                Tasa de Interés segun credito : {{ $tasaint = $inversion->cuenta->creditos->sum('tasainteres') }} <br>
                 Tasa de Interes propia: {{ number_format($inversion->tinteres,2).'%'}}
 
                 <table class="table table-striped table-bordered detail-view" id="corrida-table">
@@ -42,7 +42,7 @@
            					$ultimopagfecha = $factual;
            					$linea = 0;
            					$monto = $inversion->monto;
-           					$tasa = $inversion->tinteres;
+           					$tasa = $inversion->tinteres + $tasaint;
                     $tasamensual = ($tasa/12);
            					$numdias = $inversion->fecha->diffInDays($factual);
                     $anios =  $inversion->fecha->diffInYears($factual);
