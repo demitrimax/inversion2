@@ -11,16 +11,16 @@
               <h3 class="card-title">Categoría </h3>
           </div>
             <div class="card-body">
-                <div class="row" style="padding-left: 20px">
+                <div class="row">
 
                     @include('clasificas.show_fields')
                     <a href="{!! route('clasificas.index') !!}" class="btn btn-secondary">Regresar</a>
-
 
                 </div>
             </div>
         </div>
     </div>
+    @include('clasificas.subcategorias')
   </div>
   </div>
 @endsection

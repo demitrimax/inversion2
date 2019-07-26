@@ -55,4 +55,6 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
   Route::resource('operaciones', 'operacionesController');
+
+  Route::resource('subclasificas', 'subclasificaController');
 });

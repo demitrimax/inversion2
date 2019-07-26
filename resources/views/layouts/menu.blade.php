@@ -86,3 +86,7 @@
     <a href="{!! route('operaciones.index') !!}"><i class="fa fa-edit"></i><span>Operaciones</span></a>
 </li>
 
+<li class="{{ Request::is('subclasificas*') ? 'active' : '' }}">
+    <a href="{!! route('subclasificas.index') !!}"><i class="fa fa-edit"></i><span>Subclasificas</span></a>
+</li>
+

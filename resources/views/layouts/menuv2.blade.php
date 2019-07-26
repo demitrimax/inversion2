@@ -42,7 +42,7 @@
 
 @php
 if( Request::is('efinancieras*') || Request::is('clasificas*') || Request::is('bancos*') ||
-      Request::is('bcuentas*') || Request::is('metpagos*') || Request::is('operaciones*') ) {
+      Request::is('bcuentas*') || Request::is('metpagos*') || Request::is('operaciones*') || Request::is('subclasificas*') ) {
     $varActive = "active show-sub";
 } else {
   $varActive = "";
@@ -62,6 +62,9 @@ if( Request::is('efinancieras*') || Request::is('clasificas*') || Request::is('b
   @endcan
   @can('clasificas-list')
   <li class="nav-item"><a href="{!! route('clasificas.index') !!}" class="nav-link {{ Request::is('clasificas*') ? 'active' : '' }}">Categorías</a></li>
+  @endcan
+  @can('subclasificas-list')
+  <li class="nav-item"><a href="{!! route('subclasificas.index') !!}" class="nav-link {{ Request::is('subclasificas*') ? 'active' : '' }}">SubCategorías</a></li>
   @endcan
   @can('bancos-list')
   <li class="nav-item"><a href="{!! route('bancos.index') !!}" class="nav-link {{ Request::is('bancos*') ? 'active' : '' }}">Bancos</a></li>

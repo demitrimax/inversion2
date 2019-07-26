@@ -4,35 +4,38 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
- * Class clasifica
+ * Class subclasifica
  * @package App\Models
- * @version May 31, 2019, 12:26 am CDT
+ * @version July 26, 2019, 12:27 pm CDT
  *
+ * @property \App\Models\CatClasifica clasifica
+ * @property \Illuminate\Database\Eloquent\Collection
+ * @property \Illuminate\Database\Eloquent\Collection
+ * @property \Illuminate\Database\Eloquent\Collection
  * @property \Illuminate\Database\Eloquent\Collection
  * @property string nombre
  * @property string descripcion
+ * @property integer clasifica_id
  */
-class clasifica extends Model
+class subclasifica extends Model
 {
     use SoftDeletes;
-    use LogsActivity;
 
-    public $table = 'cat_clasifica';
+    public $table = 'cat_subclasifica';
 
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
 
     protected $dates = ['deleted_at'];
-    protected static $logAttributes = ['*'];
 
 
     public $fillable = [
         'nombre',
-        'descripcion'
+        'descripcion',
+        'clasifica_id'
     ];
 
     /**
@@ -43,7 +46,8 @@ class clasifica extends Model
     protected $casts = [
         'id' => 'integer',
         'nombre' => 'string',
-        'descripcion' => 'string'
+        'descripcion' => 'string',
+        'clasifica_id' => 'integer'
     ];
 
     /**
@@ -55,10 +59,11 @@ class clasifica extends Model
         'nombre' => 'required'
     ];
 
-    public function subcategorias()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function clasifica()
     {
-      return $this->hasMany('App\Models\subclasifica', 'clasifica_id');
+        return $this->belongsTo(\App\Models\clasifica::class, 'clasifica_id');
     }
-
-
 }
