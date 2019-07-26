@@ -42,7 +42,7 @@
 
 @php
 if( Request::is('efinancieras*') || Request::is('clasificas*') || Request::is('bancos*') ||
-      Request::is('bcuentas*') || Request::is('metpagos*')) {
+      Request::is('bcuentas*') || Request::is('metpagos*') || Request::is('operaciones*') ) {
     $varActive = "active show-sub";
 } else {
   $varActive = "";
@@ -75,10 +75,13 @@ if( Request::is('efinancieras*') || Request::is('clasificas*') || Request::is('b
   @can('coddivisas-list')
   <li class="nav-item"><a href="{!! route('coddivisas.index') !!}" class="nav-link {{ Request::is('coddivisas*') ? 'active' : '' }}">Códigos de Divisa</a></li>
   @endcan
+  @can('operaciones-list')
+  <li class="nav-item"><a href="{!! route('operaciones.index') !!}" class="nav-link {{ Request::is('operaciones*') ? 'active' : '' }}">Operaciones</a></li>
+  @endcan
 </ul>
   @hasrole('administrador')
   @php
-  if( Request::is('user*') || Request::is('permissions*') || Request::is('roles*') || Request::is('logs*') || Request::is('activity*') ) {
+  if( Request::is('user*') || Request::is('permissions*') || Request::is('roles*') || Request::is('logs*') || Request::is('activity*')) {
       $varActive = "active show-sub";
   } else {
     $varActive = "";

@@ -6,7 +6,7 @@
            <th>Núm</th>
            <th>Fecha</th>
            <th>Monto</th>
-           <th>Tipo</th>
+           <th>Categoría</th>
            <th>Cuenta</th>
            <th>Acciones</th>
          </tr>
@@ -17,7 +17,7 @@
              <td>{{$i++}}</td>
              <td>{{$operacion->fecha->format('d-m-Y')}}</td>
              <td>${{ number_format($operacion->monto,2).'('.$operacion->cuenta->divisa.')' }}</td>
-             <td>{{ $operacion->tipo }}</td>
+             <td>{{ $operacion->clasifica->nombre }}</td>
              <td>{{ $operacion->cuenta->nomcuenta }}</td>
              <td>
                {!! Form::open(['route' => ['operacion.destroy', $operacion->id], 'id'=>'formoper'.$operacion->id]) !!}
@@ -102,7 +102,7 @@
 
                 <div class="form-group col-sm-6">
                     {!! Form::label('clasifica_id', 'Categoría:') !!}
-                    {!! Form::select('clasifica_id', $categorias,null, ['class' => 'form-control', 'required']) !!}
+                    {!! Form::select('clasifica_id', $categorias,null, ['class' => 'form-control', 'required', 'placeholder'=>'Seleccione']) !!}
                 </div>
 
                 <div class="form-group col-sm-12">

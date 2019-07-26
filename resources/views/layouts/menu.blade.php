@@ -82,3 +82,7 @@
     <a href="{!! route('coddivisas.index') !!}"><i class="fa fa-edit"></i><span>Coddivisas</span></a>
 </li>
 
+<li class="{{ Request::is('operaciones*') ? 'active' : '' }}">
+    <a href="{!! route('operaciones.index') !!}"><i class="fa fa-edit"></i><span>Operaciones</span></a>
+</li>
+
