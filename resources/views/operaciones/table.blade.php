@@ -3,29 +3,29 @@
         <tr>
           <th>Monto</th>
           <th>Empresa</th>
-          <th>Clasifica Id</th>
+          <th>Categoría</th>
           <th>Concepto</th>
           <th>Fecha</th>
           <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-    @foreach($operaciones as $operaciones)
+    @foreach($operaciones->sortBy('fecha') as $operacion)
         <tr>
-            <td>{!! number_format($operaciones->monto,2) !!}</td>
-            <td>{!! $operaciones->empresa->nombre !!}</td>
-            <td>{!! $operaciones->clasifica->nombre !!}</td>
-            <td>{!! $operaciones->concepto !!}</td>
-            <td>{!! $operaciones->fecha !!}</td>
+            <td>{!! number_format($operacion->monto,2) !!}</td>
+            <td>{!! $operacion->empresa->nombre !!}</td>
+            <td>{!! $operacion->subclasifica->nombre !!}</td>
+            <td>{!! $operacion->concepto !!}</td>
+            <td>{!! $operacion->fecha->format('d-m-Y') !!}</td>
             <td>
-                {!! Form::open(['route' => ['operaciones.destroy', $operaciones->id], 'method' => 'delete', 'id'=>'form'.$operaciones->id]) !!}
+                {!! Form::open(['route' => ['operaciones.destroy', $operacion->id], 'method' => 'delete', 'id'=>'form'.$operacion->id]) !!}
                 <div class='btn-group'>
-                    <a href="{!! route('operaciones.show', [$operaciones->id]) !!}" class='btn btn-info btn-xs'><i class="fa fa-eye"></i></a>
+                    <a href="{!! route('operaciones.show', [$operacion->id]) !!}" class='btn btn-info btn-xs'><i class="fa fa-eye"></i></a>
                     @can('operaciones-edit')
-                    <a href="{!! route('operaciones.edit', [$operaciones->id]) !!}" class='btn btn-primary btn-xs'><i class="fa fa-pencil"></i></a>
+                    <a href="{!! route('operaciones.edit', [$operacion->id]) !!}" class='btn btn-primary btn-xs'><i class="fa fa-pencil"></i></a>
                     @endcan
                     @can('operaciones-delete')
-                    {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($operaciones->id)"]) !!}
+                    {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($operacion->id)"]) !!}
                     @endcan
                 </div>
                 {!! Form::close() !!}

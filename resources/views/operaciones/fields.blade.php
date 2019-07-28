@@ -30,8 +30,8 @@
 
 <!-- Clasifica Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('clasifica_id', 'Categoría:') !!}
-    {!! Form::select('clasifica_id', $categorias, null, ['class' => 'form-control']) !!}
+    {!! Form::label('subclasifica_id', 'Categoría:') !!}
+    {!! Form::select('subclasifica_id', $subcategoriasAgrupadas, null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Tipo Field -->

@@ -59,10 +59,16 @@ class operacionesController extends AppBaseController
       $cuentas = bcuentas::all();
       $cuental = $cuentas->pluck('nomcuentasaldo', 'id');
       $proveedores = proveedores::pluck('nombre','id');
-      $categorias = clasifica::pluck('nombre','id');
+      $categorias = clasifica::all();
       $metpago = metpago::pluck('nombre','id');
 
-        return view('operaciones.create')->with(compact('empresas','cuental','proveedores','categorias','metpago'));
+      foreach($categorias as $key=>$categoria){
+         foreach($categoria->subcategorias->sortBy('nombre') as $subcategoria){
+          $subcategoriasAgrupadas[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
+        }
+      }
+
+        return view('operaciones.create')->with(compact('empresas','cuental','proveedores','subcategoriasAgrupadas','metpago'));
     }
 
     /**
@@ -130,9 +136,14 @@ class operacionesController extends AppBaseController
         //dd($cuentas);
         $cuental = $cuentas->pluck('nomcuentasaldo', 'id');
         $proveedores = proveedores::pluck('nombre','id');
-        $categorias = clasifica::pluck('nombre','id');
+        $categorias = clasifica::all();
         $metpago = metpago::pluck('nombre','id');
-        return view('operaciones.edit')->with(compact('operaciones','empresas', 'cuental', 'proveedores','categorias','metpago'));
+        foreach($categorias as $key=>$categoria){
+           foreach($categoria->subcategorias->sortBy('nombre') as $subcategoria){
+            $subcategoriasAgrupadas[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
+          }
+        }
+        return view('operaciones.edit')->with(compact('operaciones','empresas', 'cuental', 'proveedores','subcategoriasAgrupadas','metpago'));
     }
 
     /**

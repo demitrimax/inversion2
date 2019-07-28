@@ -66,8 +66,8 @@ class subclasificaController extends AppBaseController
 
         $subclasifica = $this->subclasificaRepository->create($input);
 
-        Flash::success('Subclasifica guardado correctamente.');
-        Alert::success('Subclasifica guardado correctamente.');
+        Flash::success('Subcategoría guardada correctamente.');
+        Alert::success('Subcategoría guardado correctamente.');
 
         return redirect(route('subclasificas.index'));
     }
@@ -84,8 +84,8 @@ class subclasificaController extends AppBaseController
         $subclasifica = $this->subclasificaRepository->findWithoutFail($id);
 
         if (empty($subclasifica)) {
-            Flash::error('Subclasifica no encontrado');
-            Alert::error('Subclasifica no encontrado.');
+            Flash::error('Subcategoría no encontrada');
+            Alert::error('Subcategoría no encontrada.');
 
             return redirect(route('subclasificas.index'));
         }
@@ -105,8 +105,8 @@ class subclasificaController extends AppBaseController
         $subclasifica = $this->subclasificaRepository->findWithoutFail($id);
 
         if (empty($subclasifica)) {
-            Flash::error('Subclasifica no encontrado');
-            Alert::error('Subclasifica no encontrado');
+            Flash::error('Subcategoría no encontrada');
+            Alert::error('Subcategoría no encontrada');
 
             return redirect(route('subclasificas.index'));
         }
@@ -127,16 +127,16 @@ class subclasificaController extends AppBaseController
         $subclasifica = $this->subclasificaRepository->findWithoutFail($id);
 
         if (empty($subclasifica)) {
-            Flash::error('Subclasifica no encontrado');
-            Alert::error('Subclasifica no encontrado');
+            Flash::error('Subcategoría no encontrada');
+            Alert::error('Subcategoría no encontrada');
 
             return redirect(route('subclasificas.index'));
         }
 
         $subclasifica = $this->subclasificaRepository->update($request->all(), $id);
 
-        Flash::success('Subclasifica actualizado correctamente.');
-        Alert::success('Subclasifica actualizado correctamente.');
+        Flash::success('Subcategoría actualizada correctamente.');
+        Alert::success('Subcategoría actualizada correctamente.');
 
         return redirect(route('subclasificas.index'));
     }
@@ -153,16 +153,16 @@ class subclasificaController extends AppBaseController
         $subclasifica = $this->subclasificaRepository->findWithoutFail($id);
 
         if (empty($subclasifica)) {
-            Flash::error('Subclasifica no encontrado');
-            Alert::error('Subclasifica no encontrado');
+            Flash::error('Subcategoría no encontrada');
+            Alert::error('Subcategoría no encontrada');
 
             return redirect(route('subclasificas.index'));
         }
 
         $this->subclasificaRepository->delete($id);
 
-        Flash::success('Subclasifica borrado correctamente.');
-        Flash::success('Subclasifica borrado correctamente.');
+        Flash::success('Subcategoría borrada correctamente.');
+        Alert::success('Subcategoría borrada correctamente.');
 
         return redirect(route('subclasificas.index'));
     }

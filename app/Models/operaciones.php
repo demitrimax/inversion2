@@ -53,7 +53,7 @@ class operaciones extends Model
         'cuenta_id',
         'proveedor_id',
         'numfactura',
-        'clasifica_id',
+        'subclasifica_id',
         'tipo',
         'metpago',
         'concepto',
@@ -67,18 +67,18 @@ class operaciones extends Model
      * @var array
      */
     protected $casts = [
-        'id'            => 'integer',
-        'monto'         => 'float',
-        'empresa_id'    => 'integer',
-        'cuenta_id'     => 'integer',
-        'proveedor_id'  => 'integer',
-        'numfactura'    => 'string',
-        'clasifica_id'  => 'integer',
-        'tipo'          => 'string',
-        'metpago'       => 'integer',
-        'concepto'      => 'string',
-        'comentario'    => 'string',
-        'fecha'         => 'date'
+        'id'              => 'integer',
+        'monto'           => 'float',
+        'empresa_id'      => 'integer',
+        'cuenta_id'       => 'integer',
+        'proveedor_id'    => 'integer',
+        'numfactura'      => 'string',
+        'subclasifica_id' => 'integer',
+        'tipo'            => 'string',
+        'metpago'         => 'integer',
+        'concepto'        => 'string',
+        'comentario'      => 'string',
+        'fecha'           => 'date'
     ];
 
     /**
@@ -87,15 +87,15 @@ class operaciones extends Model
      * @var array
      */
     public static $rules = [
-        'monto' => 'required',
-        'empresa_id' => 'required',
-        'cuenta_id' => 'required',
-        'proveedor_id' => 'required',
-        'clasifica_id' => 'required',
-        'tipo' => 'required',
-        'metpago' => 'required',
-        'concepto' => 'required',
-        'fecha' => 'required'
+        'monto'             => 'required',
+        'empresa_id'        => 'required',
+        'cuenta_id'         => 'required',
+        'proveedor_id'      => 'required',
+        'subclasifica_id'   => 'required',
+        'tipo'              => 'required',
+        'metpago'           => 'required',
+        'concepto'          => 'required',
+        'fecha'             => 'required'
     ];
 
     public function empresa()
@@ -126,8 +126,8 @@ class operaciones extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function clasifica()
+    public function subclasifica()
     {
-        return $this->belongsTo('App\Models\clasifica', 'clasifica_id');
+        return $this->belongsTo('App\Models\subclasifica', 'subclasifica_id');
     }
 }

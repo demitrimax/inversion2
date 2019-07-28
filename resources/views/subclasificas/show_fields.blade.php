@@ -23,8 +23,8 @@
 
     <!-- Clasifica Id Field -->
     <tr>
-      <th>{!! Form::label('clasifica_id', 'Clasifica Id:') !!}</th>
-      <td>{!! $subclasifica->clasifica_id !!}</td>
+      <th>{!! Form::label('clasifica_id', 'Categoría Principal:') !!}</th>
+      <td>{!! $subclasifica->clasifica->nombre !!}</td>
     </tr>
 
   </tbody>

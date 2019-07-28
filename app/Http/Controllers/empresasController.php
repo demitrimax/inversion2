@@ -113,16 +113,23 @@ class empresasController extends AppBaseController
         $proveedores = proveedores::pluck('nombre','id');
         $proyectos = cproyectos::pluck('nombre','id');
         $divisas = coddivisas::pluck('nombre','codigo');
-        $categorias = clasifica::pluck('nombre','id');
+        $categorias = clasifica::all();
 
         $inversiones = collect([]);
         foreach($cuentas as $cuenta){
           foreach($cuenta->inversiones as $inversion)
             $inversiones->push($inversion);
         }
+
+        foreach($categorias as $key=>$categoria){
+           foreach($categoria->subcategorias->sortBy('nombre') as $subcategoria){
+            $subcategoriasAgrupadas[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
+          }
+        }
+
         //$inversiones = collect($inversiones);
         //dd($inversiones);
-        return view('empresas.show')->with(compact('empresas','bancos','creditos','metpago','cuental', 'proveedores', 'proyectos','divisas', 'inversiones', 'categorias'));
+        return view('empresas.show')->with(compact('empresas','bancos','creditos','metpago','cuental', 'proveedores', 'proyectos','divisas', 'inversiones', 'categorias', 'subcategoriasAgrupadas'));
     }
 
     /**
@@ -223,7 +230,7 @@ class empresasController extends AppBaseController
       $operacion->tipo = $input['tipo'];
       $operacion->fecha = $input['fecha'];
       $operacion->metpago = $input['metpago'];
-      $operacion->clasifica_id = $input['clasifica_id'];
+      $operacion->subclasifica_id = $input['subclasifica_id'];
       $operacion->concepto = $input['concepto'];
       $operacion->comentario = $input['comentario'];
       $operacion->save();

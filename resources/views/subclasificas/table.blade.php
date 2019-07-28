@@ -1,10 +1,18 @@
+@section('css')
+<!-- DataTables -->
+<link href="{{asset('starlight/lib/datatables/jquery.dataTables.css')}}" rel="stylesheet">
+<link href="{{asset('starlight/lib/select2/css/select2.min.css')}}" rel="stylesheet">
+<link href="{{asset('starlight/lib/highlightjs/github.css')}}" rel="stylesheet">
+
+@endsection
+
 <table class="table table-responsive" id="subclasificas-table">
     <thead>
         <tr>
             <th>Nombre</th>
-        <th>Descripcion</th>
-        <th>Categoría</th>
-            <th colspan="3">Acciones</th>
+            <th>Descripcion</th>
+            <th>Categoría</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -49,4 +57,20 @@ function ConfirmDelete(id) {
 })
 }
 </script>
+
+<!-- DataTables -->
+<script src="{{asset('starlight/lib/datatables/jquery.dataTables.js')}}"></script>
+<script src="{{asset('starlight/lib/datatables-responsive/dataTables.responsive.js')}}"></script>
+
+<script>
+  $(function () {
+    $('#subclasificas-table').DataTable({
+      responsive: true,
+      "language": {
+                "url": "{{asset('appzia/plugins/datatables/Spanish.json')}}"
+            }
+    })
+  })
+</script>
+
 @endsection

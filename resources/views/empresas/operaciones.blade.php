@@ -17,7 +17,7 @@
              <td>{{$i++}}</td>
              <td>{{$operacion->fecha->format('d-m-Y')}}</td>
              <td>${{ number_format($operacion->monto,2).'('.$operacion->cuenta->divisa.')' }}</td>
-             <td>{{ $operacion->clasifica->nombre }}</td>
+             <td>{{ $operacion->subclasifica->nombre }}</td>
              <td>{{ $operacion->cuenta->nomcuenta }}</td>
              <td>
                {!! Form::open(['route' => ['operacion.destroy', $operacion->id], 'id'=>'formoper'.$operacion->id]) !!}
@@ -44,8 +44,9 @@
 
 
 @can('operaciones-create')
+
 <div id="RegOperacion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg">
           <div class="modal-content">
 
               <div class="modal-header">
@@ -71,7 +72,7 @@
                     {!! Form::hidden('empresa_id', $empresas->id) !!}
                     {!! Form::hidden('maxmonto',$saldofinal) !!}
                     {!! Form::label('tipo', 'Tipo:') !!}
-                    {!! Form::select('tipo', ['Salida'=>'Cargo','Entrada'=>'Abono'], null, ['class' => 'form-control', 'required', 'placeholder'=>'Seleccione']) !!}
+                    {!! Form::select('tipo', ['Salida'=>'CARGO','Entrada'=>'ABONO'], null, ['class' => 'form-control', 'required', 'placeholder'=>'Seleccione']) !!}
                 </div>
 
                 <!-- Monto Field -->
@@ -101,8 +102,8 @@
                 </div>
 
                 <div class="form-group col-sm-6">
-                    {!! Form::label('clasifica_id', 'Categoría:') !!}
-                    {!! Form::select('clasifica_id', $categorias,null, ['class' => 'form-control', 'required', 'placeholder'=>'Seleccione']) !!}
+                    {!! Form::label('subclasifica_id', 'Categoría:') !!}
+                    {!! Form::select('subclasifica_id', $subcategoriasAgrupadas,null, ['class' => 'form-control', 'required', 'placeholder'=>'Seleccione']) !!}
                 </div>
 
                 <div class="form-group col-sm-12">
