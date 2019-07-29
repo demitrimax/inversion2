@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appv2')
 @section('title',config('app.name').' | Operaciones' )
 @section('content')
     <section class="content-header">
@@ -18,7 +18,11 @@
                     @include('operaciones.show_fields')
                     </tbody>
                   </table>
-                    <a href="{!! route('operaciones.index') !!}" class="btn btn-default">Back</a>
+
+                  @can('operaciones-edit')
+                  <a href="{!! route('operaciones.edit', [$operaciones->id]) !!}" class='btn btn-primary'>Editar</a>
+                  @endcan
+                    <a href="{!! route('operaciones.index') !!}" class="btn btn-secondary">Regresar</a>
                 </div>
             </div>
         </div>

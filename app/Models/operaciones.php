@@ -110,7 +110,7 @@ class operaciones extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function metpago()
+    public function metopago()
     {
         return $this->belongsTo(\App\Models\metpago::class, 'metpago');
     }
@@ -120,7 +120,7 @@ class operaciones extends Model
      **/
     public function proveedor()
     {
-        return $this->belongsTo(\App\Models\CatProveedore::class, 'proveedor_id');
+        return $this->belongsTo(\App\Models\proveedores::class, 'proveedor_id');
     }
 
     /**

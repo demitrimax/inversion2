@@ -28,7 +28,7 @@
   </div><!-- form-group -->
   <button type="submit" class="btn btn-info btn-block">{{ __('Login') }}</button>
 
-  <div class="mg-t-60 tx-center">No eres usuario? <a href="page-signup.html" class="tx-info">Crear una cuenta</a></div>
+  <div class="mg-t-60 tx-center">No eres usuario? <a href="{{url('/register')}}" class="tx-info">Crear una cuenta</a></div>
 </div><!-- login-wrapper -->
         </form>
 

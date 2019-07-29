@@ -114,6 +114,7 @@ class empresasController extends AppBaseController
         $proyectos = cproyectos::pluck('nombre','id');
         $divisas = coddivisas::pluck('nombre','codigo');
         $categorias = clasifica::all();
+        $operaciones = operaciones::where('empresa_id',$empresaid)->orderBy('fecha', 'desc')->paginate(10);
 
         $inversiones = collect([]);
         foreach($cuentas as $cuenta){
@@ -129,7 +130,7 @@ class empresasController extends AppBaseController
 
         //$inversiones = collect($inversiones);
         //dd($inversiones);
-        return view('empresas.show')->with(compact('empresas','bancos','creditos','metpago','cuental', 'proveedores', 'proyectos','divisas', 'inversiones', 'categorias', 'subcategoriasAgrupadas'));
+        return view('empresas.show')->with(compact('empresas','bancos','creditos','metpago','cuental', 'proveedores', 'proyectos','divisas', 'inversiones', 'categorias', 'subcategoriasAgrupadas', 'operaciones'));
     }
 
     /**

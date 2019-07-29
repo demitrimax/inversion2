@@ -156,6 +156,12 @@ class clasificaController extends AppBaseController
 
             return redirect(route('clasificas.index'));
         }
+        if($clasifica->subcategorias->count()>0){
+          Flash::error('Categoría no se puede elminar, tiene subcategorías.');
+          Alert::error('Categoría no se puede elminar, tiene subcategorías.');
+
+            return redirect(route('clasificas.index'));
+        }
 
         $this->clasificaRepository->delete($id);
 

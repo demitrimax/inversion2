@@ -1,7 +1,7 @@
-@extends('layouts.applogin')
+@extends('layouts.appv2login')
 
 @section('content')
-      <div class="panel panel-color panel-primary panel-pages">
+      <div class="card card-color card-primary card-pages">
             <div class="card-body">
                     <h3 class="text-center m-t-0 m-b-15">
                         <a href="{{url('/')}}" class="logo"><img src="{{asset('logos/logo_x_white.png')}}" alt="logo-img"></a>

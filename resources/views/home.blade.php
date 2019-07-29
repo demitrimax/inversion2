@@ -237,7 +237,7 @@ $(function(){
   @endphp
     var piedata = [
       @foreach($business as $key=>$empresa)
-      { label: "{{$empresa->nombre}}", data: [[1,{{$empresa->saldoaldia}}]], color: '{{$colores[$key]}}'},
+      { label: "{{$empresa->nombre}}", data: [[1,{{$empresa->saldofinal}}]], color: '{{$colores[$key]}}'},
       @endforeach
     ];
 

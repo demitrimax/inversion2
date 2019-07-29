@@ -1,13 +1,14 @@
-@extends('layouts.applogin')
+@extends('layouts.appv2login')
 
 @section('content')
 
 <div class="wrapper-page">
-            <div class="panel panel-color panel-primary panel-pages">
+            <div class="card card-color panel-primary panel-pages">
 
                 <div class="card-body">
                     <h3 class="text-center m-t-0 m-b-15">
-                        <a href="index.html" class="logo"><img src="{{asset('logos/logo_x_white.png')}}" alt="logo-img"></a>
+                      <div class="signin-logo tx-center tx-24 tx-bold tx-inverse">Proyectos <span class="tx-info tx-normal">Inversión</span></div>
+
                     </h3>
                     <h4 class="text-muted text-center m-t-0"><b>Registro</b></h4>
 

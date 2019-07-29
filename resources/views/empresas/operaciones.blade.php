@@ -12,11 +12,11 @@
          </tr>
        </thead>
          <tbody>@php $i=1; @endphp
-         @foreach($empresas->operaciones->sortBy('fecha') as $key=>$operacion)
+         @foreach($operaciones as $key=>$operacion)
            <tr>
              <td>{{$i++}}</td>
              <td>{{$operacion->fecha->format('d-m-Y')}}</td>
-             <td>${{ number_format($operacion->monto,2).'('.$operacion->cuenta->divisa.')' }}</td>
+             <td><a href="{{url('operaciones/'.$operacion->id)}}">${{ number_format($operacion->monto,2).'('.$operacion->cuenta->divisa.')' }}</a></td>
              <td>{{ $operacion->subclasifica->nombre }}</td>
              <td>{{ $operacion->cuenta->nomcuenta }}</td>
              <td>
@@ -35,6 +35,7 @@
            @endforeach
          </tbody>
      </table>
+     {{$operaciones->links()}}
      @else
      No Existen Operaciones Registradas<br>
      @endif
