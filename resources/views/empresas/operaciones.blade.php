@@ -17,7 +17,7 @@
              <td>{{$i++}}</td>
              <td>{{$operacion->fecha->format('d-m-Y')}}</td>
              <td><a href="{{url('operaciones/'.$operacion->id)}}">${{ number_format($operacion->monto,2).'('.$operacion->cuenta->divisa.')' }}</a></td>
-             <td>{{ $operacion->subclasifica->nombre }}</td>
+             <td>{{ $operacion->subclasifica->clasifica->nombre.':'.$operacion->subclasifica->nombre }}</td>
              <td>{{ $operacion->cuenta->nomcuenta }}</td>
              <td>
                {!! Form::open(['route' => ['operacion.destroy', $operacion->id], 'id'=>'formoper'.$operacion->id]) !!}

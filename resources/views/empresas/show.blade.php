@@ -34,7 +34,7 @@
             <div class="col-md-6">
               <div class="card card-primary">
                 <div class="card-body">
-
+                  @include('empresas.resumenopera')
                 </div>
               </div>
             </div>

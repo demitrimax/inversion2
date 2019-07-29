@@ -127,10 +127,17 @@ class empresasController extends AppBaseController
             $subcategoriasAgrupadas[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
           }
         }
-
-        //$inversiones = collect($inversiones);
-        //dd($inversiones);
-        return view('empresas.show')->with(compact('empresas','bancos','creditos','metpago','cuental', 'proveedores', 'proyectos','divisas', 'inversiones', 'categorias', 'subcategoriasAgrupadas', 'operaciones'));
+        $toperacionesg = operaciones::where('empresa_id',$empresaid)
+                                    ->selectRaw('*, sum(monto) as montog, count(monto) as cantidad, DATE_FORMAT(fecha, "%m-%y") as fechag')
+                                    ->groupBy('subclasifica_id')
+                                    ->groupBy('fechag')
+                                    ->get();
+        $fechasopg = operaciones::where('empresa_id', $empresaid)
+                                ->selectRaw('*, DATE_FORMAT(fecha, "%m-%y") as fechag')
+                                ->groupBy('fechag')
+                                ->get();
+        //dd($toperacionesg);
+        return view('empresas.show')->with(compact('empresas','bancos','creditos','metpago','cuental', 'proveedores', 'proyectos','divisas', 'inversiones', 'categorias', 'subcategoriasAgrupadas', 'operaciones', 'toperacionesg', 'fechasopg'));
     }
 
     /**
