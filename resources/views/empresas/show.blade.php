@@ -1,5 +1,6 @@
 @extends('layouts.appv2')
 @section('title',config('app.name').' | Empresa '.$empresas->nombre )
+
 @section('breadcrum')
 <nav class="breadcrumb sl-breadcrumb">
   <a class="breadcrumb-item" href="{{url('/')}}">Principal</a>

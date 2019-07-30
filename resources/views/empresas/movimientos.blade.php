@@ -4,7 +4,9 @@
 <style>
  .datepicker{z-index:9999 !important}
  </style>
+  @stack('css')
 @endsection
+
       <table class="table table-striped table-bordered detail-view" id="movcuentas-table">
        <thead class="bg-primary">
          <tr>

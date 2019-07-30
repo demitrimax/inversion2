@@ -2,13 +2,13 @@
     <div class="card">
       <div class="card-header" role="tab" id="headingOne">
         <h6 class="mg-b-0">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="tx-gray-800 transition">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="tx-gray-800 transition">
             Cuentas
           </a>
         </h6>
       </div><!-- card-header -->
 
-      <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" style="">
+      <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" style="">
         <div class="card-body">
             @include('empresas.cuentas')
         </div>
