@@ -6,7 +6,7 @@
             <th colspan="3">Acciones</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="sortable">
     @foreach($clasificas as $clasifica)
         <tr>
             <td><a href="{!! route('clasificas.show', [$clasifica->id]) !!}">{!! $clasifica->nombre !!}</a></td>
@@ -47,4 +47,6 @@ function ConfirmDelete(id) {
 })
 }
 </script>
+<script>$(".sortable").sortable();</script>
+
 @endsection

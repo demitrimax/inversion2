@@ -32,7 +32,9 @@ class clasifica extends Model
 
     public $fillable = [
         'nombre',
-        'descripcion'
+        'descripcion',
+        'orden',
+        'tip'
     ];
 
     /**
@@ -41,9 +43,11 @@ class clasifica extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'nombre' => 'string',
-        'descripcion' => 'string'
+        'id'          => 'integer',
+        'nombre'      => 'string',
+        'descripcion' => 'string',
+        'orden'       => 'integer',
+        'tip'         => 'string',
     ];
 
     /**

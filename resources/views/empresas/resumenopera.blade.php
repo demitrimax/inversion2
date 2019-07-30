@@ -1,14 +1,13 @@
 
 @push('css')
 
-<link rel="stylesheet" type="text/css" href="{{asset('table_fixed_headers/vendor/animate/animate.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('table_fixed_header/vendor/animate/animate.css')}}">
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="{{asset('table_fixed_headers/vendor/select2/select2.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('table_fixed_header/vendor/select2/select2.min.css')}}">
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="{{asset('table_fixed_headers/vendor/perfect-scrollbar/perfect-scrollbar.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('table_fixed_header/vendor/perfect-scrollbar/perfect-scrollbar.css')}}">
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="{{asset('table_fixed_headers/css/util.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('table_fixed_headers/css/main.css')}}">
+
 <!--===============================================================================================-->
 @endpush
 
@@ -47,13 +46,26 @@
                   </thead>
 
                   <tbody>
+                    @php
+                      $catunicas = '';
+                    @endphp
 
-                    @foreach($toperacionesg->where('fechag',$fechas->fechag)->sortBy('subclasifica.clasifica.nombre') as $key=>$operacion)
+                    @foreach($toperacionesg->where('fechag',$fechas->fechag)->sortBy('subclasifica.clasifica.orden') as $key=>$operacion)
 
+                      @if($catunicas <> $operacion->subclasifica->clasifica->nombre )
+                        <tr>
+                          <td colspan="2"><b>{{ $categoria = $operacion->subclasifica->clasifica->nombre}}</b></td>
+                          @php
+                          $montocat = $toperacionesg->where('fechag',$fechas->fechag)->where('subclasifica_id', $operacion->subclasifica_id)->sum('montog');
+                          @endphp
+                          <td> <b>{{ number_format($montocat,2) }}</b></td>
+                          </tr>
+                          @php $catunicas = $operacion->subclasifica->clasifica->nombre; @endphp
+                      @endif
                       <tr>
-                        <td>{{$operacion->subclasifica->clasifica->nombre}}</td>
+                        <td></td>
                         <td>{{$operacion->subclasifica->nombre}} </td>
-                        <td class="pull-right">{{number_format($operacion->montog)}} </td>
+                        <td class="pull-right"><a href="{{route('detalle.categoria', [$empresas->id, $operacion->fechag, $operacion->subclasifica_id])}}">{{number_format($operacion->montog)}} </a></td>
                       </tr>
 
                     @endforeach
@@ -77,7 +89,7 @@
 
 @push('scripts')
 
-	<script src="{{asset('table_fixed_headers/vendor/select2/select2.min.js')}}"></script>
+	<script src="{{asset('table_fixed_header/vendor/select2/select2.min.js')}}"></script>
 
 	<script>
 		$('.js-pscroll').each(function(){
@@ -91,6 +103,6 @@
 
 	</script>
 <!--===============================================================================================-->
-	<script src="{{asset('table_fixed_headers/js/main.js')}}"></script>
+	<script src="{{asset('table_fixed_header/js/main.js')}}"></script>
 
 @endpush

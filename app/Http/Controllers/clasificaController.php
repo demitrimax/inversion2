@@ -35,7 +35,7 @@ class clasificaController extends AppBaseController
     public function index(Request $request)
     {
         $this->clasificaRepository->pushCriteria(new RequestCriteria($request));
-        $clasificas = $this->clasificaRepository->all();
+        $clasificas = $this->clasificaRepository->orderBy('orden', 'asc')->all();
 
         return view('clasificas.index')
             ->with('clasificas', $clasificas);

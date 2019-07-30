@@ -10,6 +10,18 @@
     {!! Form::text('descripcion', null, ['class' => 'form-control', 'maxlength'=>'150']) !!}
 </div>
 
+<!-- Descripcion Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('orden', 'Orden:') !!}
+    {!! Form::number('orden', null, ['class' => 'form-control', 'required']) !!}
+</div>
+
+<!-- Descripcion Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('tip', 'Tipo:') !!}
+    {!! Form::Select('tip', ['E'=>'Egreso', 'I' => 'Ingreso'], null, ['class' => 'form-control', 'required']) !!}
+</div>
+
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}

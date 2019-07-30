@@ -23,6 +23,7 @@ use App\Models\cproyectos;
 use App\Models\movinversion;
 use App\Models\coddivisas;
 use App\Models\clasifica;
+use App\Models\subclasifica;
 use Auth;
 
 class empresasController extends AppBaseController
@@ -131,6 +132,7 @@ class empresasController extends AppBaseController
                                     ->selectRaw('*, sum(monto) as montog, count(monto) as cantidad, DATE_FORMAT(fecha, "%m-%y") as fechag')
                                     ->groupBy('subclasifica_id')
                                     ->groupBy('fechag')
+                                    ->orderBy('subclasifica_id', 'asc')
                                     ->get();
         $fechasopg = operaciones::where('empresa_id', $empresaid)
                                 ->selectRaw('*, DATE_FORMAT(fecha, "%m-%y") as fechag')
@@ -359,5 +361,24 @@ class empresasController extends AppBaseController
       Flash::success('Se ha eliminado existosamente la inversión');
       return back();
 
+    }
+
+    public function detalleoperaciones($id, $mesanio, $subclasificaid)
+    {
+        $empresas = $this->empresasRepository->findWithoutFail($id);
+        $operaciones = operaciones::selectRaw('*, DATE_FORMAT(fecha, "%m-%y") as fechag')
+                                    ->where('subclasifica_id', $subclasificaid)
+                                    ->whereRaw('DATE_FORMAT(fecha, "%m-%y") = "'.$mesanio.'"')
+                                    ->where('subclasifica_id', $subclasificaid)
+                                    ->get();
+      //dd($operaciones);
+      $subclasifica = subclasifica::find($subclasificaid);
+      if(empty($operaciones)){
+        Alert::error('sin datos para mostrar');
+        Flash::error('sin datos para mostrar');
+        return back();
+      }
+
+        return view('empresas.detoperaciones')->with(compact('empresas', 'operaciones', 'mesanio', 'subclasifica'));
     }
 }

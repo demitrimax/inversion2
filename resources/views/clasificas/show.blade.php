@@ -16,6 +16,10 @@
                     @include('clasificas.show_fields')
                     <a href="{!! route('clasificas.index') !!}" class="btn btn-secondary">Regresar</a>
 
+                    @can('clasificas-edit')
+                    <a href="{!! route('clasificas.edit', [$clasifica->id]) !!}" class='btn btn-primary'>Editar</a>
+                    @endcan
+
                 </div>
             </div>
         </div>
