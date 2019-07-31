@@ -1,14 +1,9 @@
 
 @push('css')
 
-<link rel="stylesheet" type="text/css" href="{{asset('table_fixed_header/vendor/animate/animate.css')}}">
-<!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="{{asset('table_fixed_header/vendor/select2/select2.min.css')}}">
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="{{asset('table_fixed_header/vendor/perfect-scrollbar/perfect-scrollbar.css')}}">
-<!--===============================================================================================-->
 
-<!--===============================================================================================-->
 @endpush
 
 <div class="col-xl-12 mg-t-25 mg-xl-t-0">
@@ -48,6 +43,7 @@
                   <tbody>
                     @php
                       $catunicas = '';
+
                     @endphp
 
                     @foreach($toperacionesg->where('fechag',$fechas->fechag)->sortBy('subclasifica.clasifica.orden') as $key=>$operacion)
@@ -56,9 +52,10 @@
                         <tr>
                           <td colspan="2"><b>{{ $categoria = $operacion->subclasifica->clasifica->nombre}}</b></td>
                           @php
-                          $montocat = $toperacionesg->where('fechag',$fechas->fechag)->where('subclasifica_id', $operacion->subclasifica_id)->sum('montog');
+                            //echo $operacion->subclasifica->clasifica_id;
+                            $montocat = $toperacionesg->where('fechag',$fechas->fechag)->where('subclasifica.clasifica_id', $operacion->subclasifica->clasifica_id)->sum('montog');
                           @endphp
-                          <td> <b>{{ number_format($montocat,2) }}</b></td>
+                          <td> <b class="{{ $operacion->subclasifica->clasifica->tip == 'I' ? 'tx-teal' : 'tx-danger'}}">{{ number_format($montocat,2) }}</b></td>
                           </tr>
                           @php $catunicas = $operacion->subclasifica->clasifica->nombre; @endphp
                       @endif
@@ -90,19 +87,5 @@
 @push('scripts')
 
 	<script src="{{asset('table_fixed_header/vendor/select2/select2.min.js')}}"></script>
-
-	<script>
-		$('.js-pscroll').each(function(){
-			var ps = new PerfectScrollbar(this);
-
-			$(window).on('resize', function(){
-				ps.update();
-			})
-		});
-
-
-	</script>
-<!--===============================================================================================-->
-	<script src="{{asset('table_fixed_header/js/main.js')}}"></script>
 
 @endpush

@@ -29,7 +29,7 @@
     <thead>
         <tr>
           <th>Monto</th>
-          <th>Categoría</th>
+          <th>Categoría/Subcategoria</th>
           <th>Concepto</th>
           <th>Fecha</th>
           <th>Acciones</th>
@@ -39,7 +39,7 @@
     @foreach($operaciones->sortBy('fecha') as $operacion)
         <tr>
             <td>{!! number_format($operacion->monto,2) !!}</td>
-            <td>{!! $operacion->subclasifica->nombre !!}</td>
+            <td>{!! $operacion->subclasifica->clasifica->nombre.' : '.$operacion->subclasifica->nombre !!}</td>
             <td>{!! $operacion->concepto !!}</td>
             <td>{!! $operacion->fecha->format('d-m-Y') !!}</td>
             <td>
