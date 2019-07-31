@@ -7,7 +7,7 @@
         <div class="col-md-12">
             <div class="card bg-0">
               <div class="card-header card-header-default">
-                  <h3 class="card-title">Coddivisas</h3>
+                  <h3 class="card-title">CÓDIGO DE DIVISAS</h3>
               </div>
                 <div class="card-body">
                     <h1 class="pull-right">

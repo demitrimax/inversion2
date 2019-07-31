@@ -33,11 +33,6 @@
     {!! Form::text('Entidad', null, ['class' => 'form-control maxlen', 'maxlength'=>'10']) !!}
 </div>
 
-<!-- Grupofinancierto Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('grupofinancierto', 'Grupo Financiero:') !!}
-    {!! Form::text('grupofinancierto', null, ['class' => 'form-control', 'maxlength'=>'120']) !!}
-</div>
 
 <!-- Paginainternet Field -->
 <div class="form-group col-sm-6">
@@ -49,6 +44,24 @@
 <div class="form-group col-sm-6">
     {!! Form::label('email', 'Email:') !!}
     {!! Form::email('email', null, ['class' => 'form-control', 'maxlength'=>'120']) !!}
+</div>
+
+<!-- Ejecutivo Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('ejecutivo', 'Ejecutivo:') !!}
+    {!! Form::text('ejecutivo', null, ['class' => 'form-control', 'maxlength'=>'120']) !!}
+</div>
+
+<!-- Telefono Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('telefono', 'Teléfono:') !!}
+    {!! Form::text('telefono', null, ['class' => 'form-control', 'maxlength'=>'20']) !!}
+</div>
+
+<!-- Telefono Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('extension', 'Extensión:') !!}
+    {!! Form::text('extension', null, ['class' => 'form-control', 'maxlength'=>'8']) !!}
 </div>
 
 <!-- Submit Field -->

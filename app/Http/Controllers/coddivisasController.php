@@ -11,6 +11,8 @@ use Flash;
 use Alert;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use App\Models\coddivisas;
+use App\Models\bcuentas;
 
 class coddivisasController extends AppBaseController
 {
@@ -64,8 +66,8 @@ class coddivisasController extends AppBaseController
 
         $coddivisas = $this->coddivisasRepository->create($input);
 
-        Flash::success('Coddivisas guardado correctamente.');
-        Alert::success('Coddivisas guardado correctamente.');
+        Flash::success('Código de Divisa guardado correctamente.');
+        Alert::success('Código de Divisa guardado correctamente.');
 
         return redirect(route('coddivisas.index'));
     }
@@ -80,10 +82,11 @@ class coddivisasController extends AppBaseController
     public function show($id)
     {
         $coddivisas = $this->coddivisasRepository->findWithoutFail($id);
+        $coddivisas = coddivisas::where('codigo', $id)->first();
 
         if (empty($coddivisas)) {
-            Flash::error('Coddivisas no encontrado');
-            Alert::error('Coddivisas no encontrado.');
+            Flash::error('Código de Divisa no encontrado');
+            Alert::error('Código de Divisa no encontrado.');
 
             return redirect(route('coddivisas.index'));
         }
@@ -101,10 +104,11 @@ class coddivisasController extends AppBaseController
     public function edit($id)
     {
         $coddivisas = $this->coddivisasRepository->findWithoutFail($id);
+        $coddivisas = coddivisas::where('codigo', $id)->first();
 
         if (empty($coddivisas)) {
-            Flash::error('Coddivisas no encontrado');
-            Alert::error('Coddivisas no encontrado');
+            Flash::error('Código de Divisa no encontrado');
+            Alert::error('Código de Divisa no encontrado');
 
             return redirect(route('coddivisas.index'));
         }
@@ -123,18 +127,19 @@ class coddivisasController extends AppBaseController
     public function update($id, UpdatecoddivisasRequest $request)
     {
         $coddivisas = $this->coddivisasRepository->findWithoutFail($id);
+        $coddivisas = coddivisas::where('codigo', $id)->first();
 
         if (empty($coddivisas)) {
-            Flash::error('Coddivisas no encontrado');
-            Alert::error('Coddivisas no encontrado');
+            Flash::error('Código de Divisa no encontrado');
+            Alert::error('Código de Divisa no encontrado');
 
             return redirect(route('coddivisas.index'));
         }
 
         $coddivisas = $this->coddivisasRepository->update($request->all(), $id);
 
-        Flash::success('Coddivisas actualizado correctamente.');
-        Alert::success('Coddivisas actualizado correctamente.');
+        Flash::success('Código de divisa actualizado correctamente.');
+        Alert::success('Código de divisa actualizado correctamente.');
 
         return redirect(route('coddivisas.index'));
     }
@@ -148,19 +153,27 @@ class coddivisasController extends AppBaseController
      */
     public function destroy($id)
     {
-        $coddivisas = $this->coddivisasRepository->findWithoutFail($id);
+        //$coddivisas = $this->coddivisasRepository->findWithoutFail($id);
+        $coddivisas = coddivisas::where('codigo', $id)->first();
 
         if (empty($coddivisas)) {
-            Flash::error('Coddivisas no encontrado');
-            Alert::error('Coddivisas no encontrado');
+            Flash::error('Código de divisa no encontrado');
+            Alert::error('Código de divisa no encontrado');
 
             return redirect(route('coddivisas.index'));
         }
 
-        $this->coddivisasRepository->delete($id);
+        if (bcuentas::where('divisa',$id)->count()>0){
+          Flash::error('Código de divisa no se puede eliminar, Se encuentra asociado a una o varias cuentas bancarias.');
+          Alert::error('Código de divisa no se puede eliminar, Se encuentra asociado a una o varias cuentas bancarias');
 
-        Flash::success('Coddivisas borrado correctamente.');
-        Flash::success('Coddivisas borrado correctamente.');
+          return redirect(route('coddivisas.index'));
+        }
+
+        coddivisas::where('codigo',$id)->delete();
+
+        Flash::success('Código de divisa borrado correctamente.');
+        Alert::success('Código de divisa borrado correctamente.');
 
         return redirect(route('coddivisas.index'));
     }

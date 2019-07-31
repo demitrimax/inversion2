@@ -46,7 +46,10 @@ class bancos extends Model
         'grupofinancierto',
         'paginainternet',
         'logo',
-        'email'
+        'email',
+        'ejecutivo',
+        'telefono',
+        'extension'
     ];
 
     /**
@@ -55,16 +58,19 @@ class bancos extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'nombre' => 'string',
-        'denominacionsocial' => 'string',
-        'nombrecorto' => 'string',
-        'RFC' => 'string',
-        'Entidad' => 'string',
-        'grupofinancierto' => 'string',
-        'paginainternet' => 'string',
-        'logo' => 'string',
-        'email' => 'string'
+        'id'                  => 'integer',
+        'nombre'              => 'string',
+        'denominacionsocial'  => 'string',
+        'nombrecorto'         => 'string',
+        'RFC'                 => 'string',
+        'Entidad'             => 'string',
+        'grupofinancierto'    => 'string',
+        'paginainternet'      => 'string',
+        'logo'                => 'string',
+        'email'               => 'string',
+        'ejecutivo'           => 'string',
+        'telefono'            => 'string',
+        'extension'           => 'string',
     ];
 
     /**
@@ -78,6 +84,11 @@ class bancos extends Model
         'nombrecorto' => 'required',
         'RFC' => 'required'
     ];
+
+    public function cuentas()
+    {
+      return $this->hasMany('App\Models\bcuentas', 'banco_id');
+    }
 
 
 }

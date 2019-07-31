@@ -66,6 +66,7 @@ function ConfirmDelete(id) {
   $(function () {
     $('#subclasificas-table').DataTable({
       responsive: true,
+       stateSave: true,
       "language": {
                 "url": "{{asset('appzia/plugins/datatables/Spanish.json')}}"
             }

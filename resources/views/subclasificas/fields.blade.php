@@ -7,7 +7,8 @@
 <!-- Nombre Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('nombre', 'Nombre:') !!}
-    {!! Form::text('nombre', null, ['class' => 'form-control', 'required', 'maxlength'=>'50', 'oninput'=>'this.value = this.value.toUpperCase()']) !!}
+    {!! Form::text('nombre', null, ['class' => 'form-control', 'required', 'maxlength'=>'50' ]) !!}
+    <!-- 'oninput'=>'this.value = this.value.toUpperCase()' -->
 </div>
 
 <!-- Descripcion Field -->
@@ -19,5 +20,5 @@
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
-    <a href="{!! route('subclasificas.index') !!}" class="btn btn-default">Cancelar</a>
+    <a href="{!! route('subclasificas.index') !!}" class="btn btn-secondary">Cancelar</a>
 </div>

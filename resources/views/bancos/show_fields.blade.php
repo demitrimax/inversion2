@@ -75,6 +75,25 @@
               <td>{!! $bancos->email !!}</td>
             </tr>
 
+
+            <!-- Ejecutivo Field -->
+            <tr>
+              <th>{!! Form::label('ejecutivo', 'Ejecutivo:') !!}</th>
+              <td>{!! $bancos->ejecutivo !!}</td>
+            </tr>
+
+            <!-- Telefono Field -->
+            <tr>
+              <th>{!! Form::label('telefono', 'Teléfono:') !!}</th>
+              <td>{!! $bancos->telefono !!}</td>
+            </tr>
+
+            <!-- Extensión Field -->
+            <tr>
+              <th>{!! Form::label('extension', 'Extensión:') !!}</th>
+              <td>{!! $bancos->extension !!}</td>
+            </tr>
+
           </tbody>
       </table>
 

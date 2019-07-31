@@ -25,6 +25,8 @@ class coddivisas extends Model
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
+    public $primary = 'codigo';
+
 
     protected $dates = ['deleted_at'];
     protected static $logAttributes = ['*'];
@@ -53,6 +55,11 @@ class coddivisas extends Model
     public static $rules = [
         'codigo' => 'required'
     ];
+
+    public function cuentas()
+    {
+      return $this->hasMany('App\Models\bcuentas', 'divisa');
+    }
 
 
 }

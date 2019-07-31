@@ -64,8 +64,8 @@ class bancosController extends AppBaseController
 
         $bancos = $this->bancosRepository->create($input);
 
-        Flash::success('Bancos guardado correctamente.');
-        Alert::success('Bancos guardado correctamente.');
+        Flash::success('Banco guardado correctamente.');
+        Alert::success('Banco guardado correctamente.');
 
         return redirect(route('bancos.index'));
     }
@@ -82,8 +82,8 @@ class bancosController extends AppBaseController
         $bancos = $this->bancosRepository->findWithoutFail($id);
 
         if (empty($bancos)) {
-            Flash::error('Bancos no encontrado');
-            Alert::error('Bancos no encontrado.');
+            Flash::error('Banco no encontrado');
+            Alert::error('Banco no encontrado.');
 
             return redirect(route('bancos.index'));
         }
@@ -103,8 +103,8 @@ class bancosController extends AppBaseController
         $bancos = $this->bancosRepository->findWithoutFail($id);
 
         if (empty($bancos)) {
-            Flash::error('Bancos no encontrado');
-            Alert::error('Bancos no encontrado');
+            Flash::error('Banco no encontrado');
+            Alert::error('Banco no encontrado');
 
             return redirect(route('bancos.index'));
         }
@@ -125,16 +125,16 @@ class bancosController extends AppBaseController
         $bancos = $this->bancosRepository->findWithoutFail($id);
 
         if (empty($bancos)) {
-            Flash::error('Bancos no encontrado');
-            Alert::error('Bancos no encontrado');
+            Flash::error('Banco no encontrado');
+            Alert::error('Banco no encontrado');
 
             return redirect(route('bancos.index'));
         }
 
         $bancos = $this->bancosRepository->update($request->all(), $id);
 
-        Flash::success('Bancos actualizado correctamente.');
-        Alert::success('Bancos actualizado correctamente.');
+        Flash::success('Banco actualizado correctamente.');
+        Alert::success('Banco actualizado correctamente.');
 
         return redirect(route('bancos.index'));
     }
@@ -151,16 +151,24 @@ class bancosController extends AppBaseController
         $bancos = $this->bancosRepository->findWithoutFail($id);
 
         if (empty($bancos)) {
-            Flash::error('Bancos no encontrado');
-            Alert::error('Bancos no encontrado');
+            Flash::error('Banco no encontrado');
+            Alert::error('Banco no encontrado');
 
             return redirect(route('bancos.index'));
         }
 
+        if($bancos->cuentas->count()>0)
+        {
+          Flash::error('No se puede eliminar, tiene cuentas bancarias activas.');
+          Alert::error('No se puede eliminar, tiene cuentas bancarias activas.');
+
+          return redirect(route('bancos.index'));
+        }
+
         $this->bancosRepository->delete($id);
 
-        Flash::success('Bancos borrado correctamente.');
-        Flash::success('Bancos borrado correctamente.');
+        Flash::success('Banco borrado correctamente.');
+        Flash::success('Banco borrado correctamente.');
 
         return redirect(route('bancos.index'));
     }
