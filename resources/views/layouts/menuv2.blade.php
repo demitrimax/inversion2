@@ -42,7 +42,8 @@
 
 @php
 if( Request::is('efinancieras*') || Request::is('clasificas*') || Request::is('bancos*') ||
-      Request::is('bcuentas*') || Request::is('metpagos*') || Request::is('operaciones*') || Request::is('subclasificas*') ) {
+      Request::is('bcuentas*') || Request::is('metpagos*') || Request::is('operaciones*') || Request::is('subclasificas*')
+      || Request::is('facturas*') ) {
     $varActive = "active show-sub";
 } else {
   $varActive = "";
@@ -80,6 +81,9 @@ if( Request::is('efinancieras*') || Request::is('clasificas*') || Request::is('b
   @endcan
   @can('operaciones-list')
   <li class="nav-item"><a href="{!! route('operaciones.index') !!}" class="nav-link {{ Request::is('operaciones*') ? 'active' : '' }}">Operaciones</a></li>
+  @endcan
+  @can('facturas-list')
+  <li class="nav-item"><a href="{!! route('facturas.index') !!}" class="nav-link {{ Request::is('facturas*') ? 'active' : '' }}">Facturas</a></li>
   @endcan
 </ul>
   @hasrole('administrador')

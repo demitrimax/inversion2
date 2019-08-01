@@ -90,3 +90,7 @@
     <a href="{!! route('subclasificas.index') !!}"><i class="fa fa-edit"></i><span>Subclasificas</span></a>
 </li>
 
+<li class="{{ Request::is('facturas*') ? 'active' : '' }}">
+    <a href="{!! route('facturas.index') !!}"><i class="fa fa-edit"></i><span>Facturas</span></a>
+</li>
+

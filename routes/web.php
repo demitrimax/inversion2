@@ -60,3 +60,6 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::resource('subclasificas', 'subclasificaController');
   Route::get('/profile', 'profileController@profile')->name('profile');
 });
+
+
+Route::resource('facturas', 'facturasController');

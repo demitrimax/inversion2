@@ -69,7 +69,7 @@ if(isset($operaciones->fecha)){
 <!-- Fecha Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('fecha', 'Fecha:') !!} <button type="button" class="btn btn-sm btn-primary" data-toggle="popover" title="Formato de Fecha" data-content="Escriba la fecha en formato yyyy-mm-dd o utilice el selector de fecha."><i class="fa fa-question"></i></button>
-    {!! Form::text('fecha', $fecha, ['placeholder'=>'yyy-mm-dd','class' => 'form-control datepicker-here','id'=>'fecha', 'id'=>'fcreacion', 'data-language'=>'es', 'data-date-format'=>'yyyy-mm-dd', 'required', 'pattern'=>'(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))' ]) !!}
+    {!! Form::text('fecha', $fecha, ['placeholder'=>'yyyy-mm-dd','class' => 'form-control datepicker-here','id'=>'fecha', 'id'=>'fcreacion', 'data-language'=>'es', 'data-date-format'=>'yyyy-mm-dd', 'required', 'pattern'=>'(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))' ]) !!}
 </div>
 
 <!-- Concepto Field -->
@@ -107,6 +107,34 @@ if(isset($operaciones->fecha)){
         })
         $(document).ready(function() {
             $('.select2').select2();
+        });
+        
+        $("#tipo").on('change', function() {
+          if ($(this).val() == 'Entrada'){
+              //alert('Abono');
+              //$('#monto').attr('max', null);
+              $('#monto_op').removeAttr( 'max' )
+          } else {
+              //alert('Cargo');
+              var maxmonto = $('#maxmonto').val();
+              $('#monto_op').attr('max', maxmonto);
+          }
+        });
+
+        $('#empresa_id').on('change', function(e) {
+          //console.log(e);
+          var empresaid = e.target.value;
+          //ajax
+          $.get('{{url('getCuentasempresa')}}/' + empresaid, function(data) {
+            //exito al obtener los datos
+            console.log(data);
+            $('#cuenta_id').empty();
+            $.each(data, function(index, cuentas) {
+              console.log(cuentas);
+              $('#cuenta_id').append('<option value ="' + cuentas.id + '">'+cuentas.nombre+'</option>' );
+            });
+
+          });
         });
 </script>
 
