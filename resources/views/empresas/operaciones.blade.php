@@ -1,4 +1,11 @@
+@push('css')
 
+<style>
+span.select2-container {
+    z-index:10050;
+}
+</style>
+@endpush
       @if($empresas->operaciones->count()>0)
       <table class="table table-striped table-bordered detail-view" id="corrida-table">
        <thead class="bg-primary">
@@ -104,7 +111,7 @@
 
                 <div class="form-group col-sm-6">
                     {!! Form::label('subclasifica_id', 'Categoría:') !!}
-                    {!! Form::select('subclasifica_id', $subcategoriasAgrupadas,null, ['class' => 'form-control', 'required', 'placeholder'=>'Seleccione']) !!}
+                    {!! Form::select('subclasifica_id', $subcategoriasAgrupadas,null, ['class' => 'form-control select2', 'required', 'placeholder'=>'Seleccione', 'style'=>'width: 100%;']) !!}
                 </div>
 
                 <div class="form-group col-sm-12">
@@ -141,6 +148,11 @@ $("#tipo").on('change', function() {
       var maxmonto = $('#maxmonto').val();
       $('#monto_op').attr('max', maxmonto);
   }
+});
+
+
+$(document).ready(function() {
+    $('.select2').select2();
 });
 
 function ConfirmDelOper(id) {

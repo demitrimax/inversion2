@@ -194,7 +194,7 @@ class operacionesController extends AppBaseController
         $this->operacionesRepository->delete($id);
 
         Flash::success('Operaciones borrado correctamente.');
-        Flash::success('Operaciones borrado correctamente.');
+        Alert::success('Operaciones borrado correctamente.');
 
         return redirect(route('operaciones.index'));
     }

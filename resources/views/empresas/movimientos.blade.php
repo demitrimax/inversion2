@@ -3,7 +3,20 @@
 <link href="{{asset('airdatepicker/dist/css/datepicker.min.css')}}" rel="stylesheet" type="text/css">
 <style>
  .datepicker{z-index:9999 !important}
+
+ span.select2-container {
+     z-index:10050;
+ }
+
+ .modal-open .select2-dropdown {
+z-index: 10060 !important;
+}
+
+.modal-open .select2-close-mask {
+z-index: 10055 !important;
+}
  </style>
+
   @stack('css')
 @endsection
 

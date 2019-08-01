@@ -66,4 +66,8 @@ class subclasifica extends Model
     {
         return $this->belongsTo(\App\Models\clasifica::class, 'clasifica_id');
     }
+    public function operaciones()
+    {
+      return $this->hasMany('App\Models\operaciones','subclasifica_id');
+    }
 }

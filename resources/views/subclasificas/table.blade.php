@@ -12,6 +12,7 @@
             <th>Nombre</th>
             <th>Descripcion</th>
             <th>Categoría</th>
+            <th>Operaciones</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -21,6 +22,7 @@
             <td><a href="{!! route('subclasificas.show', [$subclasifica->id]) !!}">{!! $subclasifica->nombre !!}</a></td>
             <td>{!! $subclasifica->descripcion !!}</td>
             <td>{!! $subclasifica->clasifica->nombre !!}</td>
+            <td>{!! $subclasifica->operaciones->count() !!}</td>
             <td>
                 {!! Form::open(['route' => ['subclasificas.destroy', $subclasifica->id], 'method' => 'delete', 'id'=>'form'.$subclasifica->id]) !!}
                 <div class='btn-group'>

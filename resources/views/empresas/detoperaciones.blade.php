@@ -29,8 +29,8 @@
     <thead>
         <tr>
           <th>Monto</th>
-          <th>Categoría/Subcategoria</th>
           <th>Concepto</th>
+          <th>Categoría/Subcategoria</th>
           <th>Fecha</th>
           <th>Acciones</th>
         </tr>
@@ -39,8 +39,8 @@
     @foreach($operaciones->sortBy('fecha') as $operacion)
         <tr>
             <td>{!! number_format($operacion->monto,2) !!}</td>
-            <td>{!! $operacion->subclasifica->clasifica->nombre.' : '.$operacion->subclasifica->nombre !!}</td>
             <td>{!! $operacion->concepto !!}</td>
+            <td>{!! $operacion->subclasifica->clasifica->nombre.' : '.$operacion->subclasifica->nombre !!}</td>
             <td>{!! $operacion->fecha->format('d-m-Y') !!}</td>
             <td>
                 {!! Form::open(['route' => ['operaciones.destroy', $operacion->id], 'method' => 'delete', 'id'=>'form'.$operacion->id]) !!}
@@ -58,6 +58,12 @@
         </tr>
     @endforeach
     </tbody>
+    <tfoot>
+      <tr>
+        <td> {{ number_format($operaciones->sum('monto')) }}    </td>
+        <td colspan="4">TOTAL</td>
+      </tr>
+    </tfoot>
 </table>
 
           </div>

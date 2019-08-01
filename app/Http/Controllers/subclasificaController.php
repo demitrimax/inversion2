@@ -159,6 +159,13 @@ class subclasificaController extends AppBaseController
             return redirect(route('subclasificas.index'));
         }
 
+        if($subclasifica->operaciones->count()>0){
+          Flash::error('No se puede eliminar la SubCategoría, tiene asignada operaciones.');
+          Alert::error('No se puede eliminar la SubCategoría, tiene asignada operaciones.');
+
+          return redirect(route('subclasificas.index'));
+        }
+
         $this->subclasificaRepository->delete($id);
 
         Flash::success('Subcategoría borrada correctamente.');

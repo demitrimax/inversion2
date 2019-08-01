@@ -29,7 +29,6 @@
             <div id="collapse{{$key}}" class="collapse" role="tabpanel" aria-labelledby="heading{{$key}}" style="">
               <div class="card-body">
 
-                Monto total del Mes: {{ number_format($toperacionesg->where('fechag',$fechas->fechag)->sum('montog'))}}
 
                 <table id='subclasifica' class="table">
                   <thead>
@@ -66,6 +65,18 @@
                       </tr>
 
                     @endforeach
+                    <tr>
+                      <td colspan="2">TOTAL DE EGRESOS</td>
+                      <td><b class="tx-danger">{{ number_format($tegreso = $toperacionesg->where('fechag', $fechas->fechag)->where('subclasifica.clasifica.tip', 'E')->sum('montog'),2) }}</b></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">TOTAL DE INGRESOS</td>
+                      <td><b class="tx-teal">{{ number_format($tingreso = $toperacionesg->where('fechag', $fechas->fechag)->where('subclasifica.clasifica.tip', 'I')->sum('montog'),2) }}</b></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">SALDOS</td>
+                      <td><b class="tx-purple">{{ number_format($tingreso-$tegreso,2) }}</b></td>
+                    </tr>
                   </tbody>
                 </table>
 
