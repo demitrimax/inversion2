@@ -40,7 +40,7 @@ class operacionesController extends AppBaseController
     public function index(Request $request)
     {
         $this->operacionesRepository->pushCriteria(new RequestCriteria($request));
-        $operaciones = $this->operacionesRepository->all();
+        $operaciones = $this->operacionesRepository->orderBy('fecha', 'desc')->paginate(10);
 
         return view('operaciones.index')
             ->with('operaciones', $operaciones);

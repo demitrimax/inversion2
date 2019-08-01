@@ -106,7 +106,7 @@ span.select2-container {
 
                 <div class="form-group col-sm-6">
                     {!! Form::label('numfactura', '# de Factura:') !!}
-                    {!! Form::text('numfactura', null, ['class' => 'form-control', 'required']) !!}
+                    {!! Form::text('numfactura', null, ['class' => 'form-control maxlen', 'required', 'maxlength'=>'20']) !!}
                 </div>
 
                 <div class="form-group col-sm-6">
@@ -137,7 +137,10 @@ span.select2-container {
 @endcan
 
 @push('scripts')
+<script src="{{asset('appzia/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js')}}" type="text/javascript"></script>
 <script>
+  $('.maxlen').maxlength();
+
 $("#tipo").on('change', function() {
   if ($(this).val() == 'Entrada'){
       //alert('Abono');

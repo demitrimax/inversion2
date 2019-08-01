@@ -8,17 +8,14 @@
       <div class="dropdown">
         <a href="" class="nav-link nav-link-profile" data-toggle="dropdown">
           <span class="logged-name">{{Auth::user()->name}}<span class="hidden-md-down"> </span></span>
-          <img src="{{asset('starlight/img/img3.jpg')}}" class="wd-32 rounded-circle" alt="">
+          <img src="{{ Auth::user()->avatar ? asset(Auth::user()->avatar) : asset('starlight/img/img3.jpg') }}" class="wd-32 rounded-circle" alt="">
         </a>
         <div class="dropdown-menu dropdown-menu-header wd-200">
           <ul class="list-unstyled user-profile-nav">
-            <li><a href=""><i class="icon ion-ios-person-outline"></i> Editar Perfil</a></li>
-            <li><a href=""><i class="icon ion-ios-gear-outline"></i> Settings</a></li>
-            <li><a href=""><i class="icon ion-ios-download-outline"></i> Downloads</a></li>
-            <li><a href=""><i class="icon ion-ios-star-outline"></i> Favorites</a></li>
-            <li><a href=""><i class="icon ion-ios-folder-outline"></i> Collections</a></li>
+            <li><a href="{{route('profile')}}"><i class="icon ion-ios-contact"></i> Editar Perfil</a></li>
+            <li><a href=""><i class="icon ion-ios-cog"></i> Opciones</a></li>
             <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
-                          document.getElementById('logout-form').submit();"><i class="icon ion-power"></i> Cerrar Sesión</a></li>
+                          document.getElementById('logout-form').submit();"><i class="icon ion-ios-power"></i> Cerrar Sesión</a></li>
                           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                               @csrf
                           </form>

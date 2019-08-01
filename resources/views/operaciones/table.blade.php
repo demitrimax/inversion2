@@ -10,7 +10,7 @@
         </tr>
     </thead>
     <tbody>
-    @foreach($operaciones->sortBy('fecha') as $operacion)
+    @foreach($operaciones as $operacion)
         <tr>
             <td>{!! number_format($operacion->monto,2) !!}</td>
             <td>{!! $operacion->empresa->nombre !!}</td>
@@ -35,6 +35,7 @@
     </tbody>
 </table>
 
+{{$operaciones->links()}}
 @section('scripts')
 <script>
 function ConfirmDelete(id) {

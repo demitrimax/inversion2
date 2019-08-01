@@ -58,4 +58,5 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::resource('operaciones', 'operacionesController');
 
   Route::resource('subclasificas', 'subclasificaController');
+  Route::get('/profile', 'profileController@profile')->name('profile');
 });
