@@ -4,6 +4,7 @@
             <th>Número</th>
             <th>Monto</th>
             <th>Concepto</th>
+            <th>Fecha</th>
             <th>Estado</th>
             <th>Acciones</th>
         </tr>
@@ -15,6 +16,7 @@
             <td>{!! number_format($facturas->monto) !!}</td>
             <td>{!! $facturas->concepto !!}</td>
             <td>{!! $facturas->fecha->format('d-m-y') !!}</td>
+            <td>{!! $facturas->operacion_id ? '<span class="badge badge-success">Asignada</span>' : '<span class="badge badge-warning">Pendiente</span>' !!}</td>
             <td>
                 {!! Form::open(['route' => ['facturas.destroy', $facturas->id], 'method' => 'delete', 'id'=>'form'.$facturas->id]) !!}
                 <div class='btn-group'>

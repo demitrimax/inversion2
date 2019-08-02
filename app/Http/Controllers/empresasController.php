@@ -24,6 +24,7 @@ use App\Models\movinversion;
 use App\Models\coddivisas;
 use App\Models\clasifica;
 use App\Models\subclasifica;
+use App\Models\facturas;
 use Auth;
 
 class empresasController extends AppBaseController
@@ -139,7 +140,8 @@ class empresasController extends AppBaseController
                                 ->groupBy('fechag')
                                 ->get();
         //dd($toperacionesg);
-        return view('empresas.show')->with(compact('empresas','bancos','creditos','metpago','cuental', 'proveedores', 'proyectos','divisas', 'inversiones', 'categorias', 'subcategoriasAgrupadas', 'operaciones', 'toperacionesg', 'fechasopg'));
+        $facturas = facturas::whereNull('operacion_id')->pluck('numfactura','id');
+        return view('empresas.show')->with(compact('empresas','bancos','creditos','metpago','cuental', 'proveedores', 'proyectos','divisas', 'inversiones', 'categorias', 'subcategoriasAgrupadas', 'operaciones', 'toperacionesg', 'fechasopg', 'facturas'));
     }
 
     /**
@@ -243,6 +245,18 @@ class empresasController extends AppBaseController
       $operacion->subclasifica_id = $input['subclasifica_id'];
       $operacion->concepto = $input['concepto'];
       $operacion->comentario = $input['comentario'];
+      $operacion->save();
+
+      $montos = 0;
+      foreach ($request->input('facturas') as $factura)
+      {
+        $facturas = facturas::find($factura);
+        $facturas->operacion_id = $operacion->id;
+        $facturas->save();
+        $montos += $facturas->monto;
+      }
+      //actualizar el monto de la factura con los montos de la factura
+      $operacion->monto = $montos;
       $operacion->save();
 
       //$empresas = $this->empresasRepository->create($input);

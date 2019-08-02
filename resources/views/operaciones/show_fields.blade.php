@@ -10,9 +10,20 @@
       <!-- Monto Field -->
       <tr>
         <th>{!! Form::label('monto', 'Monto:') !!}</th>
-        <td>{!! number_format($operaciones->monto,2) !!}</td>
+        <td>
+          {!! number_format($operaciones->monto,2) !!}
+          @if($operaciones->facturas->count()>0)
+              <ul class="list-group">
+                @foreach($operaciones->facturas as $factura)
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  {{$factura->numfactura}}
+                  <span class="badge badge-primary badge-pill">{!! number_format($factura->monto,2) !!}</span>
+                </li>
+                @endforeach
+              </ul>
+              @endif
+        </td>
       </tr>
-
 
       <!-- Empresa Id Field -->
       <tr>

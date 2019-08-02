@@ -49,7 +49,9 @@ class facturasController extends AppBaseController
      */
     public function create()
     {
-        return view('facturas.create');
+      $operaciones = operaciones::where('tipo','Entrada')->get();
+      $operaciones = $operaciones->pluck('operacionombre', 'id');
+        return view('facturas.create')->with(compact('operaciones'));
     }
 
     /**

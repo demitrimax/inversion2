@@ -45,11 +45,13 @@ if(isset($facturas->fecha)){
     {!! Form::textarea('observaciones', null, ['class' => 'form-control']) !!}
 </div>
 
+@isset($facturas->operacion_id)
 <!-- Concepto Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('operacion_id', 'Operación vinculada:') !!}
     {!! Form::select('operacion_id', $operaciones, null, ['class' => 'form-control', 'placeholder'=>'Seleccione' ]) !!}
 </div>
+@endisset
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">

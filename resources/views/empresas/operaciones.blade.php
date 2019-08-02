@@ -23,7 +23,7 @@ span.select2-container {
            <tr>
              <td>{{$i++}}</td>
              <td>{{$operacion->fecha->format('d-m-Y')}}</td>
-             <td><a href="{{url('operaciones/'.$operacion->id)}}">${{ number_format($operacion->monto,2).'('.$operacion->cuenta->divisa.')' }}</a></td>
+             <td>{!! $operacion->tipo == 'Entrada' ? '<span class="badge badge-success"><i class="fa fa-arrow-circle-down"></i></span>' : '<span class="badge badge-warning"><i class="fa fa-arrow-circle-up"></i></span>'  !!} <a href="{{url('operaciones/'.$operacion->id)}}">${{ number_format($operacion->monto,2).'('.$operacion->cuenta->divisa.')' }}</a></td>
              <td>{{ $operacion->subclasifica->clasifica->nombre.':'.$operacion->subclasifica->nombre }}</td>
              <td>{{ $operacion->cuenta->nomcuenta }}</td>
              <td>
@@ -94,6 +94,11 @@ span.select2-container {
                     {!! Form::select('metpago', $metpago, null, ['class' => 'form-control', 'required']) !!}
                 </div>
 
+                  <div id='variasfacturasinput' class="form-group col-sm-6" style="display:none;">
+                      {!! Form::label('facturas', 'Seleccione una o varias Facturas:') !!} <button type="button" class="btn btn-sm btn-primary" data-toggle="popover" title="Varias Facturas" data-content="Puede seleccionar una o más facturas. El monto de la operación se tomará del monto de la suma de las facturas."><i class="fa fa-question"></i></button>
+                      {!! Form::select('facturas[]', $facturas, null, ['class' => 'form-control select2', 'multiple'=>'multiple', 'style'=>'width: 100%;']) !!}
+                  </div>
+
                 <div class="form-group col-sm-6">
                     {!! Form::label('fecha', 'Fecha: (yyyy-mm-dd)') !!}
                     {!! Form::text('fecha', null, ['placeholder'=>'yyyy-mm-dd','class' => 'form-control datepicker-input', 'required', 'data-language'=>'es', 'data-date-format'=>'yyyy-mm-dd', 'pattern'=>'(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))' ]) !!}
@@ -142,20 +147,31 @@ span.select2-container {
   $('.maxlen').maxlength();
 
 $("#tipo").on('change', function() {
+  variasfacturas = document.getElementById('variasfacturasinput');
+  monto = document.getElementById('monto_op');
+  numfactura = document.getElementById('numfactura');
   if ($(this).val() == 'Entrada'){
       //alert('Abono');
       //$('#monto').attr('max', null);
       $('#monto_op').removeAttr( 'max' )
+      variasfacturas.style.display ='block';
+      numfactura.value = '(VARIAS FACTURAS)';
+      monto.value = 0;
+      monto.setAttribute('readonly', 'true');
   } else {
       //alert('Cargo');
       var maxmonto = $('#maxmonto').val();
       $('#monto_op').attr('max', maxmonto);
+      variasfacturas.style.display ='none';
+      numfactura.value = '';
+      monto.removeAttribute('readonly');
   }
 });
 
+    //$('.select2').select2();
 
-$(document).ready(function() {
-    $('.select2').select2();
+    $('.select2').select2({
+    dropdownParent: $('#RegOperacion')
 });
 
 function ConfirmDelOper(id) {

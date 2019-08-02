@@ -133,8 +133,8 @@ if(isset($operaciones->fecha)){
           if ($(this).val() == 'Entrada'){
               //alert('Abono');
               variasfacturas.style.display ='block';
-              numfactura.value = 'F-0000 (VARIAS FACTURAS)';
-              //monto.attr('readonly');
+              numfactura.value = '(VARIAS FACTURAS)';
+              monto.setAttribute('readonly');
           } else {
               //alert('Cargo');
               var maxmonto = $('#maxmonto').val();
@@ -142,6 +142,7 @@ if(isset($operaciones->fecha)){
               //monto.attr('readonly', false);
               variasfacturas.style.display ='none';
               numfactura.value = '';
+              monto.setAttribute('readonly', false);
           }
         });
 
