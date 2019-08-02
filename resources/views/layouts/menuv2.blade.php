@@ -43,7 +43,7 @@
 @php
 if( Request::is('efinancieras*') || Request::is('clasificas*') || Request::is('bancos*') ||
       Request::is('bcuentas*') || Request::is('metpagos*') || Request::is('operaciones*') || Request::is('subclasificas*')
-      || Request::is('facturas*') ) {
+      || Request::is('facturas*') || Request::is('coddivisas*') ) {
     $varActive = "active show-sub";
 } else {
   $varActive = "";

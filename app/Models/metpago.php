@@ -58,5 +58,10 @@ class metpago extends Model
         'nomcorto' => 'nullable|required|size:10'
     ];
 
+    public function operaciones()
+    {
+      return $this->hasMany('App\Models\operaciones', 'metpago');
+    }
+
 
 }

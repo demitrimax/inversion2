@@ -157,10 +157,17 @@ class metpagoController extends AppBaseController
             return redirect(route('metpagos.index'));
         }
 
+        if ($metpago->operaciones->count()>0) {
+            Flash::error('No se puede eliminar, este método de pago tiene Operaciones relacionadas');
+            Alert::error('No se puede eliminar, este método de pago tiene Operaciones relacionadas');
+
+            return redirect(route('metpagos.index'));
+        }
+
         $this->metpagoRepository->delete($id);
 
         Flash::success('Método de pago borrado correctamente.');
-        Flash::success('Método de pago borrado correctamente.');
+        Alert::success('Método de pago borrado correctamente.');
 
         return redirect(route('metpagos.index'));
     }
