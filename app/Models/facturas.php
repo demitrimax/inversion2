@@ -37,7 +37,8 @@ class facturas extends Model
         'monto',
         'fecha',
         'concepto',
-        'observaciones'
+        'observaciones',
+        'operacion_id'
     ];
 
     /**
@@ -51,7 +52,8 @@ class facturas extends Model
         'monto'         => 'float',
         'fecha'         => 'date',
         'concepto'      => 'string',
-        'observaciones' => 'string'
+        'observaciones' => 'string',
+        'operacion_id'  => 'integer'
     ];
 
     /**
@@ -60,10 +62,14 @@ class facturas extends Model
      * @var array
      */
     public static $rules = [
-        'numfactura' => 'required',
-        'monto' => 'required',
-        'concepto' => 'required'
+        'numfactura'    => 'required',
+        'monto'         => 'required',
+        'concepto'      => 'required'
     ];
 
+    public function operacion()
+    {
+      return $this->belongsTo('App\Models\operacion', 'operacion_id');
+    }
 
 }

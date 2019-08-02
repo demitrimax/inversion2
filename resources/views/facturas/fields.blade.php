@@ -12,10 +12,19 @@
     {!! Form::text('numfactura', null, ['class' => 'form-control maxlen', 'required', 'maxlength'=>'20']) !!}
 </div>
 
+@php
+//conversion de fecha
+$fecha = null;
+
+if(isset($facturas->fecha)){
+    $fecha = $facturas->fecha->format('Y-m-d');
+}
+
+@endphp
 <!-- Fecha Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('fecha', 'Fecha:') !!}<button type="button" class="btn btn-sm btn-primary" data-toggle="popover" title="Formato de Fecha" data-content="Escriba la fecha en formato yyyy-mm-dd o utilice el selector de fecha."><i class="fa fa-question"></i></button>
-    {!! Form::text('fecha', null, ['placeholder'=>'yyyy-mm-dd','class' => 'form-control datepicker-here','id'=>'fecha', 'id'=>'fcreacion', 'data-language'=>'es', 'data-date-format'=>'yyyy-mm-dd', 'required', 'pattern'=>'(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))']) !!}
+    {!! Form::text('fecha', $fecha, ['placeholder'=>'yyyy-mm-dd','class' => 'form-control datepicker-here','id'=>'fecha', 'id'=>'fcreacion', 'data-language'=>'es', 'data-date-format'=>'yyyy-mm-dd', 'required', 'pattern'=>'(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))']) !!}
 </div>
 
 <!-- Monto Field -->
@@ -34,6 +43,12 @@
 <div class="form-group col-sm-12 col-lg-12">
     {!! Form::label('observaciones', 'Observaciones:') !!}
     {!! Form::textarea('observaciones', null, ['class' => 'form-control']) !!}
+</div>
+
+<!-- Concepto Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('operacion_id', 'Operación vinculada:') !!}
+    {!! Form::select('operacion_id', $operaciones, null, ['class' => 'form-control', 'placeholder'=>'Seleccione' ]) !!}
 </div>
 
 <!-- Submit Field -->

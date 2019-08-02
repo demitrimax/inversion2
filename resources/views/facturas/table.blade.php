@@ -12,9 +12,9 @@
     @foreach($facturas as $facturas)
         <tr>
             <td>{!! $facturas->numfactura !!}</td>
-            <td>{!! $facturas->monto !!}</td>
+            <td>{!! number_format($facturas->monto) !!}</td>
             <td>{!! $facturas->concepto !!}</td>
-            <td> </td>
+            <td>{!! $facturas->fecha->format('d-m-y') !!}</td>
             <td>
                 {!! Form::open(['route' => ['facturas.destroy', $facturas->id], 'method' => 'delete', 'id'=>'form'.$facturas->id]) !!}
                 <div class='btn-group'>

@@ -11,6 +11,7 @@ use Flash;
 use Alert;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use App\Models\operaciones;
 
 class facturasController extends AppBaseController
 {
@@ -109,7 +110,10 @@ class facturasController extends AppBaseController
             return redirect(route('facturas.index'));
         }
 
-        return view('facturas.edit')->with('facturas', $facturas);
+        $operaciones = operaciones::where('tipo','Entrada')->get();
+        $operaciones = $operaciones->pluck('operacionombre', 'id');
+
+        return view('facturas.edit')->with(compact('facturas','operaciones'));
     }
 
     /**

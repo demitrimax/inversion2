@@ -22,7 +22,7 @@
 <!-- Tipo Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('tipo', 'Tipo:') !!}
-    {!! Form::select('tipo', ['Salida'=>'CARGO', 'Entrada'=>'ABONO' ], null, ['class' => 'form-control']) !!}
+    {!! Form::select('tipo', ['Salida'=>'CARGO', 'Entrada'=>'ABONO' ], null, ['class' => 'form-control', 'placeholder'=>'Seleccione', 'required']) !!}
 </div>
 
 <!-- Monto Field -->
@@ -37,6 +37,23 @@
     {!! Form::select('proveedor_id', $proveedores, null, ['class' => 'form-control']) !!}
 </div>
 
+@php
+$mostrarselector = "display:none;";
+  if (isset($operaciones->tipo))
+  {
+    if ($operaciones->tipo  == 'Entrada')
+    {
+      $mostrarselector = "display:'block';";
+    }
+
+  }
+@endphp
+<div id='variasfacturasinput' style="{{$mostrarselector}}">
+  <div class="form-group col-sm-6">
+      {!! Form::label('facturas', 'Seleccione una o varias Facturas:') !!} <button type="button" class="btn btn-sm btn-primary" data-toggle="popover" title="Varias Facturas" data-content="Puede seleccionar una o más facturas. El monto de la operación se tomará del monto de la suma de las facturas."><i class="fa fa-question"></i></button>
+      {!! Form::select('facturas[]', $facturas, null, ['class' => 'form-control select2', 'multiple'=>'multiple', 'style'=>'width: 100%;']) !!}
+  </div>
+</div>
 <!-- Numfactura Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('numfactura', 'Factura Número:') !!}
@@ -108,18 +125,26 @@ if(isset($operaciones->fecha)){
         $(document).ready(function() {
             $('.select2').select2();
         });
-        
+
         $("#tipo").on('change', function() {
+          variasfacturas = document.getElementById('variasfacturasinput');
+          monto = document.getElementById('monto');
+          numfactura = document.getElementById('numfactura');
           if ($(this).val() == 'Entrada'){
               //alert('Abono');
-              //$('#monto').attr('max', null);
-              $('#monto_op').removeAttr( 'max' )
+              variasfacturas.style.display ='block';
+              numfactura.value = 'F-0000 (VARIAS FACTURAS)';
+              //monto.attr('readonly');
           } else {
               //alert('Cargo');
               var maxmonto = $('#maxmonto').val();
               $('#monto_op').attr('max', maxmonto);
+              //monto.attr('readonly', false);
+              variasfacturas.style.display ='none';
+              numfactura.value = '';
           }
         });
+
 
         $('#empresa_id').on('change', function(e) {
           //console.log(e);

@@ -16,6 +16,8 @@ use App\Models\bcuentas;
 use App\Models\proveedores;
 use App\Models\clasifica;
 use App\Models\metpago;
+use App\Models\facturas;
+use App\Models\operaciones;
 
 class operacionesController extends AppBaseController
 {
@@ -61,6 +63,7 @@ class operacionesController extends AppBaseController
       $proveedores = proveedores::pluck('nombre','id');
       $categorias = clasifica::all();
       $metpago = metpago::pluck('nombre','id');
+      $facturas = facturas::whereNull('operacion_id')->pluck('numfactura','id');
 
       foreach($categorias as $key=>$categoria){
          foreach($categoria->subcategorias->sortBy('nombre') as $subcategoria){
@@ -68,7 +71,7 @@ class operacionesController extends AppBaseController
         }
       }
 
-        return view('operaciones.create')->with(compact('empresas','cuental','proveedores','subcategoriasAgrupadas','metpago'));
+        return view('operaciones.create')->with(compact('empresas','cuental','proveedores','subcategoriasAgrupadas','metpago', 'facturas'));
     }
 
     /**
@@ -82,10 +85,34 @@ class operacionesController extends AppBaseController
     {
         $input = $request->all();
 
-        $operaciones = $this->operacionesRepository->create($input);
+        //$operaciones = $this->operacionesRepository->create($input);
+        $operaciones = new operaciones;
+        $operaciones->monto = $input['monto'];
+        $operaciones->empresa_id = $input['empresa_id'];
+        $operaciones->cuenta_id = $input['cuenta_id'];
+        $operaciones->proveedor_id = $input['proveedor_id'];
+        $operaciones->numfactura = $input['numfactura'];
+        $operaciones->subclasifica_id = $input['subclasifica_id'];
+        $operaciones->tipo = $input['tipo'];
+        $operaciones->metpago = $input['metpago'];
+        $operaciones->concepto = $input['concepto'];
+        $operaciones->comentario = $input['comentario'];
+        $operaciones->fecha = $input['fecha'];
+        $operaciones->save();
+        $montos = 0;
+        foreach ($request->input('facturas') as $factura)
+        {
+          $facturas = facturas::find($factura);
+          $facturas->operacion_id = $operaciones->id;
+          $facturas->save();
+          $montos += $facturas->monto;
+        }
+        //actualizar el monto de la factura con los montos de la factura
+        $operaciones->monto = $montos;
+        $operaciones->save();
 
-        Flash::success('Operaciones guardado correctamente.');
-        Alert::success('Operaciones guardado correctamente.');
+        Flash::success('Operación guardada correctamente.');
+        Alert::success('Operación guardada correctamente.');
 
         return redirect(route('operaciones.index'));
     }
@@ -102,8 +129,8 @@ class operacionesController extends AppBaseController
         $operaciones = $this->operacionesRepository->findWithoutFail($id);
 
         if (empty($operaciones)) {
-            Flash::error('Operaciones no encontrado');
-            Alert::error('Operaciones no encontrado.');
+            Flash::error('Operación no encontrada');
+            Alert::error('Operación no encontrada.');
 
             return redirect(route('operaciones.index'));
         }
@@ -143,7 +170,9 @@ class operacionesController extends AppBaseController
             $subcategoriasAgrupadas[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
           }
         }
-        return view('operaciones.edit')->with(compact('operaciones','empresas', 'cuental', 'proveedores','subcategoriasAgrupadas','metpago'));
+        $facturas = facturas::whereNull('operacion_id')->pluck('numfactura','id');
+
+        return view('operaciones.edit')->with(compact('operaciones','empresas', 'cuental', 'proveedores','subcategoriasAgrupadas','metpago', 'facturas'));
     }
 
     /**
@@ -159,16 +188,16 @@ class operacionesController extends AppBaseController
         $operaciones = $this->operacionesRepository->findWithoutFail($id);
 
         if (empty($operaciones)) {
-            Flash::error('Operaciones no encontrado');
-            Alert::error('Operaciones no encontrado');
+            Flash::error('Operación no encontrada');
+            Alert::error('Operación no encontrada');
 
             return redirect(route('operaciones.index'));
         }
 
         $operaciones = $this->operacionesRepository->update($request->all(), $id);
 
-        Flash::success('Operaciones actualizado correctamente.');
-        Alert::success('Operaciones actualizado correctamente.');
+        Flash::success('Operación actualizada correctamente.');
+        Alert::success('Operación actualizada correctamente.');
 
         return redirect(route('operaciones.index'));
     }
@@ -185,16 +214,16 @@ class operacionesController extends AppBaseController
         $operaciones = $this->operacionesRepository->findWithoutFail($id);
 
         if (empty($operaciones)) {
-            Flash::error('Operaciones no encontrado');
-            Alert::error('Operaciones no encontrado');
+            Flash::error('Operación no encontrada');
+            Alert::error('Operación no encontrada');
 
             return redirect(route('operaciones.index'));
         }
 
         $this->operacionesRepository->delete($id);
 
-        Flash::success('Operaciones borrado correctamente.');
-        Alert::success('Operaciones borrado correctamente.');
+        Flash::success('Operación borrada correctamente.');
+        Alert::success('Operación borrada correctamente.');
 
         return redirect(route('operaciones.index'));
     }
