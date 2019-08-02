@@ -40,6 +40,15 @@
 </a><!-- sl-menu-link -->
 @endcan
 
+@can('tareas-list')
+<a href="{!! route('tareas.index') !!}" class="sl-menu-link {{ Request::is('tareas*') ? 'active' : '' }}">
+  <div class="sl-menu-item">
+    <i class="menu-item-icon icon ion-ios-checkmark-circle tx-20"></i>
+    <span class="menu-item-label">Tareas</span>
+  </div><!-- menu-item -->
+</a><!-- sl-menu-link -->
+@endcan
+
 @php
 if( Request::is('efinancieras*') || Request::is('clasificas*') || Request::is('bancos*') ||
       Request::is('bcuentas*') || Request::is('metpagos*') || Request::is('operaciones*') || Request::is('subclasificas*')

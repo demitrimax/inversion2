@@ -94,3 +94,7 @@
     <a href="{!! route('facturas.index') !!}"><i class="fa fa-edit"></i><span>Facturas</span></a>
 </li>
 
+<li class="{{ Request::is('tareas*') ? 'active' : '' }}">
+    <a href="{!! route('tareas.index') !!}"><i class="fa fa-edit"></i><span>Tareas</span></a>
+</li>
+

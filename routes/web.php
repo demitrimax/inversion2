@@ -63,3 +63,5 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
 
 
 Route::resource('facturas', 'facturasController');
+
+Route::resource('tareas', 'tareasController');
