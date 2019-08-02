@@ -66,5 +66,10 @@ class proveedores extends Model
         'nombre' => 'required'
     ];
 
+    public function operaciones()
+    {
+      return $this->hasMany('App\Models\operaciones', 'proveedor_id');
+    }
+
 
 }

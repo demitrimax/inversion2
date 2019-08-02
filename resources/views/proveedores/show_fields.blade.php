@@ -41,6 +41,13 @@
       <td>{!! $proveedores->contacto !!}</td>
     </tr>
     <!-- Observaciones Field -->
+
+    <!-- Contacto Field -->
+    <tr>
+      <th>{!! Form::label('operaciones', 'Operaciones Asignadas:') !!}</th>
+      <td>{!! $proveedores->operaciones->count() !!}</td>
+    </tr>
+    <!-- Observaciones Field -->
     <tr>
       <th>{!! Form::label('observaciones', 'Observaciones:') !!}</th>
       <td>{!! $proveedores->observaciones !!}</td>

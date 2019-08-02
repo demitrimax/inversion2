@@ -156,6 +156,14 @@ class proveedoresController extends AppBaseController
 
             return redirect(route('proveedores.index'));
         }
+        //Antes de Eliminar Verificar que no tenga operaciones registradas con ese proveedor
+        if($proveedores->operaciones->count()>0)
+        {
+          Flash::error('No se puede eliminar, el proveedor tiene operaciones asignadas.');
+          Alert::error('No se puede eliminar, el proveedor tiene operaciones asignadas.');
+
+          return redirect(route('proveedores.index'));
+        }
 
         $this->proveedoresRepository->delete($id);
 
