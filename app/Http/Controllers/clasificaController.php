@@ -162,6 +162,13 @@ class clasificaController extends AppBaseController
 
             return redirect(route('clasificas.index'));
         }
+        if($clasifica->proyectos->count()>0){
+          Flash::error('Categoría no se puede elminar, tiene proyectos asignados.');
+          Alert::error('Categoría no se puede elminar, tiene proyectos asignados.');
+
+            return redirect(route('clasificas.index'));
+        }
+
 
         $this->clasificaRepository->delete($id);
 

@@ -64,5 +64,10 @@ class clasifica extends Model
       return $this->hasMany('App\Models\subclasifica', 'clasifica_id');
     }
 
+    public function proyectos()
+    {
+      return $this->hasMany('App\Models\cproyectos', 'clasificacion');
+    }
+
 
 }
