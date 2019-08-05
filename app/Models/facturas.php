@@ -75,4 +75,9 @@ class facturas extends Model
       return $this->belongsTo('App\Models\operacion', 'operacion_id');
     }
 
+    public function proveedor()
+    {
+      return $this->belongsTo('App\Models\proveedores', 'proveedor_id');
+    }
+
 }

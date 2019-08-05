@@ -14,11 +14,16 @@
       <td>{!! $facturas->numfactura !!}</td>
     </tr>
 
+    <!-- Proveedor Field -->
+    <tr>
+      <th>{!! Form::label('proveedor', 'Proveedor:') !!}</th>
+      <td>{!! $facturas->proveedor->nombre !!}</td>
+    </tr>
 
     <!-- Monto Field -->
     <tr>
       <th>{!! Form::label('monto', 'Monto:') !!}</th>
-      <td>{!! $facturas->monto !!}</td>
+      <td>${!! number_format($facturas->monto,2) !!}</td>
     </tr>
 
 

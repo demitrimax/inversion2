@@ -134,7 +134,7 @@ if(isset($operaciones->fecha)){
               //alert('Abono');
               variasfacturas.style.display ='block';
               numfactura.value = '(VARIAS FACTURAS)';
-              monto.setAttribute('readonly');
+              monto.setAttribute('readonly', 'true');
           } else {
               //alert('Cargo');
               var maxmonto = $('#maxmonto').val();
@@ -142,7 +142,8 @@ if(isset($operaciones->fecha)){
               //monto.attr('readonly', false);
               variasfacturas.style.display ='none';
               numfactura.value = '';
-              monto.setAttribute('readonly', false);
+              monto.setAttribute('readonly', 'false');
+              monto.removeAttribute("readonly");
           }
         });
 
