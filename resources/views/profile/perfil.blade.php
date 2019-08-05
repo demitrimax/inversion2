@@ -7,7 +7,7 @@
 
   <div class="row">
 
-          <div class="col-lg-5">
+          <div class="col-lg-6">
             <div class="card card-primary">
               <div class="card-header card-header-default">
                 <h3 class="card-title">Perfil del Usuario</h3>
@@ -40,7 +40,7 @@
           </div>
 
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-6">
           <div class="card card-primary">
             <div class="card-header card-header-default">
               <h3 class="card-title">Tareas Asignadas</h3>
@@ -49,14 +49,14 @@
             <div class="col-md-12">
                       <h5>Progreso</h5>
                       <ul class="list-group">
-                        foreach( $vartareas as $key=>$tarea)
-                          <li class="list-group-item">
-                            if($tarea->avance_porc)
-                              <span class="badge badge-primary">$tarea->avance_porc%</span>
-                              endif
-                              $tarea->nombre
+                        @foreach( $vartareas as $key=>$tarea)
+                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="{!! route('tareas.show', [$tarea->id]) !!}">{{$tarea->nombre}}</a>
+                            @if($tarea->avance_porc)
+                              <span class="badge badge-primary">{{$tarea->avance_porc}}%</span>
+                              @endif
                           </li>
-                          endforeach
+                          @endforeach
                       </ul>
                   </div>
 

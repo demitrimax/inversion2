@@ -1,7 +1,7 @@
 <div class="sl-sideright">
   <ul class="nav nav-tabs nav-fill sidebar-tabs" role="tablist">
     <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" role="tab" href="#messages">Mensajes (2)</a>
+      <a class="nav-link active" data-toggle="tab" role="tab" href="#tareas">Tareas ({{$vartareas->count()}})</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" role="tab" href="#notifications">Notificaciones (2)</a>
@@ -10,34 +10,28 @@
 
   <!-- Tab panes -->
   <div class="tab-content">
-    <div class="tab-pane pos-absolute a-0 mg-t-60 active" id="messages" role="tabpanel">
+    <div class="tab-pane pos-absolute a-0 mg-t-60 active" id="tareas" role="tabpanel">
       <div class="media-list">
         <!-- loop starts here -->
-        <a href="" class="media-list-link">
+        @foreach($vartareas as $vtarea)
+        <a href="{!! route('tareas.show', [$vtarea->id]) !!}" class="media-list-link">
           <div class="media">
             <img src="{{asset('starlight/img/img3.jpg')}}" class="wd-40 rounded-circle" alt="">
             <div class="media-body">
-              <p class="mg-b-0 tx-medium tx-gray-800 tx-13">Donna Seay</p>
-              <span class="d-block tx-11 tx-gray-500">2 minutes ago</span>
-              <p class="tx-13 mg-t-10 mg-b-0">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring.</p>
+              <p class="mg-b-0 tx-medium tx-gray-800 tx-13">{{ $vtarea->nombre }}</p>
+              <span class="d-block tx-11 tx-gray-500">{{$vtarea->created_at->diffForHumans() }}</span>
+              <p class="tx-13 mg-t-10 mg-b-0">{!! strip_tags($vtarea->descripcion)  !!}</p>
             </div>
           </div><!-- media -->
         </a>
         <!-- loop ends here -->
+    @endforeach
 
-        <a href="" class="media-list-link">
-          <div class="media">
-            <img src="{{asset('starlight/img/img3.jpg')}}" class="wd-40 rounded-circle" alt="">
-            <div class="media-body">
-              <p class="mg-b-0 tx-medium tx-gray-800 tx-13">Donna Seay</p>
-              <span class="d-block tx-11 tx-gray-500">Jan 23, 2:32am</span>
-              <p class="tx-13 mg-t-10 mg-b-0">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring.</p>
-            </div>
-          </div><!-- media -->
-        </a>
+
       </div><!-- media-list -->
+
       <div class="pd-15">
-        <a href="" class="btn btn-secondary btn-block bd-0 rounded-0 tx-10 tx-uppercase tx-mont tx-medium tx-spacing-2">View More Messages</a>
+        <a href="{{url('profile')}}" class="btn btn-secondary btn-block bd-0 rounded-0 tx-10 tx-uppercase tx-mont tx-medium tx-spacing-2">Ver todas las tareas</a>
       </div>
     </div><!-- #messages -->
 

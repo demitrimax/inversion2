@@ -10,7 +10,7 @@
 <!-- Nombre Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('nombre', 'Nombre:') !!}
-    {!! Form::text('nombre', null, ['class' => 'form-control']) !!}
+    {!! Form::text('nombre', null, ['class' => 'form-control maxlen', 'required', 'maxlength' => '35']) !!}
 </div>
 
 <!-- Descripcion Field -->
@@ -41,12 +41,6 @@ if(isset($tareas->vencimiento)){
     {!! Form::select('user_id', $usuarios, null, ['class' => 'form-control', 'placeholder'=>'Seleccione un usuario', 'required']) !!}
 </div>
 
-
-<!-- Avance Porc Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('avance_porc', 'Porcentaje de Avance:') !!}
-    {!! Form::number('avance_porc', null, ['class' => 'form-control', 'max'=>'100', 'min'=>'0']) !!}
-</div>
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">

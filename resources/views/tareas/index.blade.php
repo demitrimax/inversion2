@@ -24,6 +24,7 @@
                         <div class="box box-primary">
                             <div class="box-body">
                                     @include('tareas.table')
+                                    <a class="btn btn-primary" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('tareas.todas') !!}">Todas las Tareas</a>
                             </div>
                         </div>
                         <div class="text-center">

@@ -59,9 +59,11 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
 
   Route::resource('subclasificas', 'subclasificaController');
   Route::get('/profile', 'profileController@profile')->name('profile');
+
+  Route::resource('facturas', 'facturasController');
+
+  Route::resource('tareas', 'tareasController');
+  Route::post('tareas/avance', 'tareasController@registroavance')->name('tareas.avanceregistro');
+
+  Route::get('tareas/todas/all', 'tareasController@todasindex')->name('tareas.todas');
 });
-
-
-Route::resource('facturas', 'facturasController');
-
-Route::resource('tareas', 'tareasController');

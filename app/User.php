@@ -55,4 +55,8 @@ class User extends Authenticatable
       }
       return $avatar;
     }
+    public function tareas()
+    {
+      return $this->hasMany('App\Models\tareas', 'user_id');
+    }
 }

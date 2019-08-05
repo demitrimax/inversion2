@@ -48,7 +48,9 @@
  <!-- ########## END: LEFT PANEL ########## -->
 
  <!-- ########## START: HEAD PANEL ########## -->
-@include('layouts.rightheader')
+ @if($vartareas->count()>0)
+    @include('layouts.rightheader')
+  @endif
  <!-- ########## END: HEAD PANEL ########## -->
 
  <!-- ########## START: RIGHT PANEL ########## -->
@@ -71,7 +73,7 @@
        <div>Made by ThemePixels.</div>
      </div>
      <div class="footer-right d-flex align-items-center">
-      
+
      </div>
    </footer>
  </div><!-- sl-mainpanel -->

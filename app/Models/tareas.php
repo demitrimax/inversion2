@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 /**
  * Class tareas
@@ -52,13 +53,13 @@ class tareas extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'nombre' => 'string',
+        'id'          => 'integer',
+        'nombre'      => 'string',
         'descripcion' => 'string',
         'vencimiento' => 'date',
-        'user_id' => 'integer',
-        'viewed_at' => 'datetime',
-        'terminado' => 'datetime',
+        'user_id'     => 'integer',
+        'viewed_at'   => 'datetime',
+        'terminado'   => 'datetime',
         'avance_porc' => 'integer'
     ];
 
@@ -77,5 +78,39 @@ class tareas extends Model
     public function user()
     {
         return $this->belongsTo(\App\User::class, 'user_id');
+    }
+    public function avances()
+    {
+      return $this->hasMany('App\Models\tareavances', 'tarea_id');
+    }
+
+    public function getEstatusdateAttribute()
+    {
+      $fechaTermino = Carbon::parse($this->vencimiento);
+      $fechaActual = Carbon::parse(date('Y-m-d'));
+
+      $diasDiferencia = $fechaActual->diffInDays($fechaTermino, false);
+      $valor = "";
+      $desc = "";
+      if ($diasDiferencia < 0 ) {
+        $valor = "danger";
+        $desc = "Vencido tiene ".$diasDiferencia." días.";
+      }
+      if ($diasDiferencia >= 0 && $diasDiferencia < 5 ) {
+        $valor = "warning";
+        $desc = "Por terminar plazo, le quedan ".$diasDiferencia." días.";
+      }
+      if ($diasDiferencia >= 5 ) {
+          $valor = "success";
+          $desc = "En tiempo, le quedan ".$diasDiferencia." días.";
+        }
+      if ($this->avance_porc == 100){
+        $valor = "info";
+        $desc = "Tarea completada.";
+      }
+
+        $estatus = ['valor' => $valor, 'descripcion' => $desc ,'diferencia' => $diasDiferencia];
+
+      return $estatus;
     }
 }
