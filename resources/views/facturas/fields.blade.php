@@ -12,6 +12,12 @@
     {!! Form::text('numfactura', null, ['class' => 'form-control maxlen', 'required', 'maxlength'=>'20']) !!}
 </div>
 
+<!-- Proveedor Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('proveedor_id', 'Proveedor:') !!}
+    {!! Form::select('proveedor_id', $proveedores, null, ['class' => 'form-control']) !!}
+</div>
+
 @php
 //conversion de fecha
 $fecha = null;
@@ -30,7 +36,7 @@ if(isset($facturas->fecha)){
 <!-- Monto Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('monto', 'Monto:') !!}
-    {!! Form::number('monto', null, ['class' => 'form-control', 'step'=>'0.01']) !!}
+    {!! Form::number('monto', null, ['class' => 'form-control', 'step'=>'0.01', 'required']) !!}
 </div>
 
 <!-- Concepto Field -->

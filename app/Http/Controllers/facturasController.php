@@ -12,6 +12,7 @@ use Alert;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Models\operaciones;
+use App\Models\proveedores;
 
 class facturasController extends AppBaseController
 {
@@ -51,7 +52,8 @@ class facturasController extends AppBaseController
     {
       $operaciones = operaciones::where('tipo','Entrada')->get();
       $operaciones = $operaciones->pluck('operacionombre', 'id');
-        return view('facturas.create')->with(compact('operaciones'));
+      $proveedores = proveedores::pluck('nombre','id');
+        return view('facturas.create')->with(compact('operaciones','proveedores'));
     }
 
     /**
@@ -111,11 +113,11 @@ class facturasController extends AppBaseController
 
             return redirect(route('facturas.index'));
         }
-
+        $proveedores = proveedores::pluck('nombre','id');
         $operaciones = operaciones::where('tipo','Entrada')->get();
         $operaciones = $operaciones->pluck('operacionombre', 'id');
 
-        return view('facturas.edit')->with(compact('facturas','operaciones'));
+        return view('facturas.edit')->with(compact('facturas','operaciones', 'proveedores'));
     }
 
     /**

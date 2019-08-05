@@ -48,9 +48,9 @@
  <!-- ########## END: LEFT PANEL ########## -->
 
  <!-- ########## START: HEAD PANEL ########## -->
- @if($vartareas->count()>0)
+
     @include('layouts.rightheader')
-  @endif
+
  <!-- ########## END: HEAD PANEL ########## -->
 
  <!-- ########## START: RIGHT PANEL ########## -->

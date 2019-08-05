@@ -43,7 +43,7 @@
         <div class="col-lg-6">
           <div class="card card-primary">
             <div class="card-header card-header-default">
-              <h3 class="card-title">Tareas Asignadas</h3>
+              <h3 class="card-title">Tareas Asignadas Pendientes</h3>
             </div>
           <div class="card-body card-profile">
             <div class="col-md-12">
@@ -63,6 +63,28 @@
           </div>
           <!-- /.box-body -->
         </div>
+        <div class="card card-primary">
+          <div class="card-header card-header-default">
+            <h3 class="card-title">Todas mis tareas</h3>
+          </div>
+        <div class="card-body card-profile">
+          <div class="col-md-12">
+                    <h5>Progreso</h5>
+                    <ul class="list-group">
+                      @foreach( Auth::user()->tareas as $key=>$tarea)
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          <a href="{!! route('tareas.show', [$tarea->id]) !!}">{{$tarea->nombre}}</a>
+                          @if($tarea->avance_porc)
+                            <span class="badge badge-primary">{{$tarea->avance_porc}}%</span>
+                            @endif
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+
+        </div>
+        <!-- /.box-body -->
+      </div>
 
       </div>
 

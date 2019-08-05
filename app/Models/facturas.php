@@ -34,6 +34,7 @@ class facturas extends Model
 
     public $fillable = [
         'numfactura',
+        'proveedor_id',
         'monto',
         'fecha',
         'concepto',
@@ -49,6 +50,7 @@ class facturas extends Model
     protected $casts = [
         'id'            =>  'integer',
         'numfactura'    => 'string',
+        'proveedor_id'  => 'integer',
         'monto'         => 'float',
         'fecha'         => 'date',
         'concepto'      => 'string',
@@ -63,6 +65,7 @@ class facturas extends Model
      */
     public static $rules = [
         'numfactura'    => 'required',
+        'proveedor_id'  => 'required',
         'monto'         => 'required',
         'concepto'      => 'required'
     ];

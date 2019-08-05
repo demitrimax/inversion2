@@ -27,7 +27,9 @@
       <a id="btnRightMenu" href="" class="pos-relative">
         <i class="icon ion-ios-notifications-outline"></i>
         <!-- start: if statement -->
+        @if($vartareas->count()>0)
         <span class="square-8 bg-danger"></span>
+        @endif
         <!-- end: if statement -->
       </a>
     </div><!-- navicon-right -->

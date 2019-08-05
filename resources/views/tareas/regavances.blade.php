@@ -17,10 +17,10 @@
             <td>
               <button type="button" class="btn btn-info btn-xs"
               data-container="body" title="" data-toggle="popover"
+              data-popover-color="default"
               data-trigger="focus" data-placement="top"
-              data-content="{{$avance->comentario}}"
-              data-original-title="" aria-describedby="popover579223">
-              <badge><i class="fa fa-info"></i></badge>
+              data-content="{{$avance->comentario}}" title="Observaciones">
+              <i class="fa fa-info"></i>
               </button>
             {{$avance->concepto}}
             </td>
