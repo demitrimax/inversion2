@@ -93,6 +93,16 @@
                       {!! Form::text('swift', null, ['class' => 'form-control']) !!}
                   </div>
 
+                  <!-- Cuenta de Efectivo Field -->
+                  <div class="form-group col-sm-6">
+                      <label class="ckbox">
+                        {!! Form::hidden('efectivo', 0) !!}
+                      {!! Form::checkbox('efectivo', 1, 0) !!}
+                      <span>Cuenta de Efectivo</span>
+                      </label>
+                  </div>
+
+
               </div>
 
             </div>

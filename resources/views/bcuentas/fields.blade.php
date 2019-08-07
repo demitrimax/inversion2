@@ -33,11 +33,33 @@
     {!! Form::label('swift', 'Swift:') !!}
     {!! Form::text('swift', null, ['class' => 'form-control']) !!}
 </div>
+@php
+  $valefectivo = 0;
+  if(isset($bcuentas->efectivo)){
+    $valefectivo = $bcuentas->efectivo;
+  }
+@endphp
+<!-- Cuenta de Efectivo Field -->
+<div class="form-group col-sm-6">
+    <label class="ckbox">
+      {!! Form::hidden('efectivo', 0) !!}
+    {!! Form::checkbox('efectivo', 1, $valefectivo) !!}
+    <span>Cuenta de Efectivo</span>
+    </label>
+</div>
+
+@php
+  $valempresa = null;
+  if($bcuentas->empresa->count()>0){
+    $valempresa = $bcuentas->empresa->last();
+    $valempresa = $valempresa->id;
+  }
+@endphp
 
 <!-- Empresa Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('empresa_id', 'Empresa:') !!}
-    {!! Form::select('empresa_id', $empresas, null, ['class' => 'form-control', 'required', 'placeholder'=>'Seleccione una empresa']) !!}
+    {!! Form::select('empresa_id', $empresas, $valempresa, ['class' => 'form-control', 'required', 'placeholder'=>'Seleccione una empresa']) !!}
 </div>
 
 

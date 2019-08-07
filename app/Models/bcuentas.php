@@ -45,7 +45,8 @@ class bcuentas extends Model
         'sucursal',
         'cliente_id',
         'divisa',
-        'swift'
+        'swift',
+        'efectivo'
     ];
 
     /**
@@ -61,7 +62,8 @@ class bcuentas extends Model
         'sucursal'           => 'string',
         'cliente_id'         => 'integer',
         'divisa'             => 'string',
-        'swift'              => 'string'
+        'swift'              => 'string',
+        'efectivo'           => 'integer',
     ];
 
     /**

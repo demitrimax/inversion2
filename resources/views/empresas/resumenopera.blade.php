@@ -61,7 +61,7 @@
                       <tr>
                         <td></td>
                         <td>{{$operacion->subclasifica->nombre}} </td>
-                        <td class="pull-right"><a href="{{route('detalle.categoria', [$empresas->id, $operacion->fechag, $operacion->subclasifica_id])}}">{{number_format($operacion->montog)}} </a></td>
+                        <td class="pull-right"><a href="{{route('detalle.categoria', [$empresas->id, $operacion->fechag, $operacion->subclasifica_id])}}" target="_blank">{{number_format($operacion->montog)}} </a></td>
                       </tr>
 
                     @endforeach
