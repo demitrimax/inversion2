@@ -66,4 +66,6 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::post('tareas/avance', 'tareasController@registroavance')->name('tareas.avanceregistro');
 
   Route::get('tareas/todas/all', 'tareasController@todasindex')->name('tareas.todas');
+
+  Route::resource('categorias', 'categoriasController');
 });
