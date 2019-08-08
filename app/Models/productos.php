@@ -6,12 +6,12 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class categorias
+ * Class productos
  * @package App\Models
- * @version August 6, 2019, 11:21 pm CDT
+ * @version August 7, 2019, 1:39 pm CDT
  *
+ * @property \App\Models\Categoria categoria
  * @property \Illuminate\Database\Eloquent\Collection
- * @property \Illuminate\Database\Eloquent\Collection catProductos
  * @property \Illuminate\Database\Eloquent\Collection
  * @property \Illuminate\Database\Eloquent\Collection
  * @property \Illuminate\Database\Eloquent\Collection
@@ -19,12 +19,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string nombre
  * @property string descripcion
  * @property string imagen
+ * @property string barcode
+ * @property integer categoria_id
+ * @property boolean inventariable
+ * @property string umedida
+ * @property integer stock_min
  */
-class categorias extends Model
+class productos extends Model
 {
     use SoftDeletes;
 
-    public $table = 'categorias';
+    public $table = 'cat_productos';
 
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
@@ -36,7 +41,12 @@ class categorias extends Model
     public $fillable = [
         'nombre',
         'descripcion',
-        'imagen'
+        'imagen',
+        'barcode',
+        'categoria_id',
+        'inventariable',
+        'umedida',
+        'stock_min'
     ];
 
     /**
@@ -48,7 +58,12 @@ class categorias extends Model
         'id' => 'integer',
         'nombre' => 'string',
         'descripcion' => 'string',
-        'imagen' => 'string'
+        'imagen' => 'string',
+        'barcode' => 'string',
+        'categoria_id' => 'integer',
+        'inventariable' => 'boolean',
+        'umedida' => 'string',
+        'stock_min' => 'integer'
     ];
 
     /**
@@ -57,14 +72,15 @@ class categorias extends Model
      * @var array
      */
     public static $rules = [
-        'nombre' => 'required'
+        'nombre' => 'required',
+        'categoria_id' => 'required'
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function productos()
+    public function categoria()
     {
-        return $this->hasMany('App\Models\productos','categoria_id');
+        return $this->belongsTo(\App\Models\categorias::class, 'categoria_id');
     }
 }

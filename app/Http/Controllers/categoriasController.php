@@ -157,6 +157,13 @@ class categoriasController extends AppBaseController
             return redirect(route('categorias.index'));
         }
 
+        if ($categorias->productos->count()>0) {
+            Flash::error('No se puede eliminar la categoria, hay productos registrados con esta.');
+            Alert::error('No se puede eliminar la categoria, hay productos registrados con esta.');
+
+            return redirect(route('categorias.index'));
+        }
+
         $this->categoriasRepository->delete($id);
 
         Flash::success('Categorias borrado correctamente.');

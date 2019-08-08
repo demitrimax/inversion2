@@ -97,6 +97,9 @@ if( Request::is('efinancieras*') || Request::is('clasificas*') || Request::is('b
   @can('categorias-list')
   <li class="nav-item"><a href="{!! route('categorias.index') !!}" class="nav-link {{ Request::is('categorias*') ? 'active' : '' }}">Categorias de Productos</a></li>
   @endcan
+  @can('productos-list')
+  <li class="nav-item"><a href="{!! route('productos.index') !!}" class="nav-link {{ Request::is('productos*') ? 'active' : '' }}">Catálogo de Productos</a></li>
+  @endcan
 </ul>
   @hasrole('administrador')
   @php

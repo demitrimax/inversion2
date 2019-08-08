@@ -18,7 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 
-
 Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::get('/home', 'HomeController@index')->name('home');
   //RUTAS DE LA CONFIGURACION
@@ -68,4 +67,6 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::get('tareas/todas/all', 'tareasController@todasindex')->name('tareas.todas');
 
   Route::resource('categorias', 'categoriasController');
+
+  Route::resource('productos', 'productosController');
 });
