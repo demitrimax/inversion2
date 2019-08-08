@@ -70,6 +70,3 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
 
   Route::resource('productos', 'productosController');
 });
-
-
-Route::resource('$bodegas', '$bodegasController');
