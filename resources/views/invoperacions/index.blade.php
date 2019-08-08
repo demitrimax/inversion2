@@ -1,6 +1,6 @@
 @extends('layouts.appv2')
 
-@section('title',config('app.name').' | Invoperacions' )
+@section('title',config('app.name').' | Operaciones del Inventario' )
 
 @section('content')
     <div class="row">

@@ -169,4 +169,9 @@ class invoperacionController extends AppBaseController
 
         return redirect(route('invoperacions.index'));
     }
+    public function entrada()
+    {
+      $proveedores = proveedores::pluck('nombre','id');
+      return view('inventario.entrada')->with(compact('proveedores'));
+    }
 }

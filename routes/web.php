@@ -69,11 +69,12 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::resource('categorias', 'categoriasController');
 
   Route::resource('productos', 'productosController');
-  
+
   Route::resource('bodegas', 'bodegasController');
+
+  Route::resource('clientes', 'clientesController');
+
+  Route::resource('invoperacions', 'invoperacionController');
+  Route::get('inventario/entrada', 'invoperacionController@entrada')->name('inventario.entrada');
+  Route::post('inventario/entrada/registro', 'invoperacionController@regentrada')->name('inventario.regentrada');
 });
-
-
-Route::resource('clientes', 'clientesController');
-
-Route::resource('invoperacions', 'invoperacionController');
