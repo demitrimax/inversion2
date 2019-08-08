@@ -31,7 +31,7 @@
 </a><!-- sl-menu-link -->
 @endcan
 @php
-if( Request::is('productos*') || Request::is('categorias*') || Request::is('ubicaciones*')) {
+if( Request::is('productos*') || Request::is('categorias*') || Request::is('bodegas*')) {
     $varActive = "active show-sub";
 } else {
   $varActive = "";

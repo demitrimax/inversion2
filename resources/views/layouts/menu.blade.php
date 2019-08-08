@@ -106,7 +106,7 @@
     <a href="{!! route('productos.index') !!}"><i class="fa fa-edit"></i><span>Productos</span></a>
 </li>
 
-<li class="{{ Request::is('$bodegas*') ? 'active' : '' }}">
-    <a href="{!! route('$bodegas.index') !!}"><i class="fa fa-edit"></i><span>$Bodegas</span></a>
-</li>
 
+<li class="{{ Request::is('bodegas*') ? 'active' : '' }}">
+    <a href="{!! route('bodegas.index') !!}"><i class="fa fa-edit"></i><span>Bodegas</span></a>
+</li>
