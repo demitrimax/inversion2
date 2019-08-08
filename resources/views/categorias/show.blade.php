@@ -9,12 +9,13 @@
         </div>
             <div class="card-body">
                 <div class="row" style="padding-left: 20px">
-                <table class="table table-striped table-bordered detail-view" id="categorias-table">
-                  <tbody>
+
                     @include('categorias.show_fields')
-                    </tbody>
-                  </table>
-                    <a href="{!! route('categorias.index') !!}" class="btn btn-default">Back</a>
+
+                    <a href="{!! route('categorias.index') !!}" class="btn btn-secondary">Regresar</a>
+                    @can('categorias-edit')
+                    <a href="{!! route('categorias.edit', [$categorias->id]) !!}" class='btn btn-primary btn-xs'>Editar</a>
+                    @endcan
                 </div>
             </div>
         </div>

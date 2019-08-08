@@ -52,7 +52,7 @@
 @php
 if( Request::is('efinancieras*') || Request::is('clasificas*') || Request::is('bancos*') ||
       Request::is('bcuentas*') || Request::is('metpagos*') || Request::is('operaciones*') || Request::is('subclasificas*')
-      || Request::is('facturas*') || Request::is('coddivisas*') ) {
+      || Request::is('facturas*') || Request::is('coddivisas*') || Request::is('categorias*') || Request::is('productos*') ) {
     $varActive = "active show-sub";
 } else {
   $varActive = "";
@@ -98,7 +98,7 @@ if( Request::is('efinancieras*') || Request::is('clasificas*') || Request::is('b
   <li class="nav-item"><a href="{!! route('categorias.index') !!}" class="nav-link {{ Request::is('categorias*') ? 'active' : '' }}">Categorias de Productos</a></li>
   @endcan
   @can('productos-list')
-  <li class="nav-item"><a href="{!! route('productos.index') !!}" class="nav-link {{ Request::is('productos*') ? 'active' : '' }}">Catálogo de Productos</a></li>
+  <li class="nav-item"><a href="{!! route('productos.index') !!}" class="nav-link {{ Request::is('productos*') ? 'active' : '' }}">Productos</a></li>
   @endcan
 </ul>
   @hasrole('administrador')

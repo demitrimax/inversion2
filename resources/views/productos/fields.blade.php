@@ -36,7 +36,7 @@
 <div class="form-group col-sm-6">
     <label class="ckbox checkbox-inline">
         {!! Form::hidden('inventariable', 0) !!}
-        {!! Form::checkbox('inventariable', '1', null) !!} <span>Inventariable</span>
+        {!! Form::checkbox('inventariable', '1', null) !!} <span>Inventariable</span>  <button type="button" class="btn btn-sm btn-primary" data-toggle="popover" title="Inventariable" data-content="El material inventariable es aquel que no sufre un rápido deterioro por su uso, como herramienta, mobiliario"><i class="fa fa-question"></i></button>
     </label>
 </div>
 
@@ -74,5 +74,8 @@
       });
       //Bootstrap-MaxLength
          $('.maxlen').maxlength();
+         $(function () {
+           $('[data-toggle="popover"]').popover()
+         })
 </script>
 @endsection
