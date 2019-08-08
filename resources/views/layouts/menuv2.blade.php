@@ -45,11 +45,12 @@ if( Request::is('productos*') || Request::is('categorias*') || Request::is('bode
 </div><!-- menu-item -->
 </a><!-- sl-menu-link -->
 <ul class="sl-menu-sub nav flex-column">
-  @can('categorias-list')
-  <li class="nav-item"><a href="{!! route('categorias.index') !!}" class="nav-link {{ Request::is('categorias*') ? 'active' : '' }}">Categorias de Productos</a></li>
-  @endcan
+
   @can('productos-list')
   <li class="nav-item"><a href="{!! route('productos.index') !!}" class="nav-link {{ Request::is('productos*') ? 'active' : '' }}">Productos</a></li>
+  @endcan
+  @can('categorias-list')
+  <li class="nav-item"><a href="{!! route('categorias.index') !!}" class="nav-link {{ Request::is('categorias*') ? 'active' : '' }}">Categorias de Productos</a></li>
   @endcan
   @can('bodegas-list')
   <li class="nav-item"><a href="{!! route('bodegas.index') !!}" class="nav-link {{ Request::is('bodegas*') ? 'active' : '' }}">Bodegas</a></li>
