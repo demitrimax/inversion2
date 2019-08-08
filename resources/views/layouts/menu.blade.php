@@ -110,3 +110,7 @@
 <li class="{{ Request::is('bodegas*') ? 'active' : '' }}">
     <a href="{!! route('bodegas.index') !!}"><i class="fa fa-edit"></i><span>Bodegas</span></a>
 </li>
+<li class="{{ Request::is('clientes*') ? 'active' : '' }}">
+    <a href="{!! route('clientes.index') !!}"><i class="fa fa-edit"></i><span>Clientes</span></a>
+</li>
+

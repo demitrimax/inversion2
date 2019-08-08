@@ -72,3 +72,6 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   
   Route::resource('bodegas', 'bodegasController');
 });
+
+
+Route::resource('clientes', 'clientesController');

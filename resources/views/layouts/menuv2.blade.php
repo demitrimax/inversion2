@@ -55,6 +55,9 @@ if( Request::is('productos*') || Request::is('categorias*') || Request::is('bode
   @can('bodegas-list')
   <li class="nav-item"><a href="{!! route('bodegas.index') !!}" class="nav-link {{ Request::is('bodegas*') ? 'active' : '' }}">Bodegas</a></li>
   @endcan
+  @can('clientes-list')
+  <li class="nav-item"><a href="{!! route('clientes.index') !!}" class="nav-link {{ Request::is('clientes*') ? 'active' : '' }}">Clientes</a></li>
+  @endcan
 
 </ul>
 
