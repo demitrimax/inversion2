@@ -75,3 +75,5 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
 
 
 Route::resource('clientes', 'clientesController');
+
+Route::resource('invoperacions', 'invoperacionController');

@@ -114,3 +114,7 @@
     <a href="{!! route('clientes.index') !!}"><i class="fa fa-edit"></i><span>Clientes</span></a>
 </li>
 
+<li class="{{ Request::is('invoperacions*') ? 'active' : '' }}">
+    <a href="{!! route('invoperacions.index') !!}"><i class="fa fa-edit"></i><span>Invoperacions</span></a>
+</li>
+
