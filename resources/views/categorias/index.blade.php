@@ -1,13 +1,13 @@
 @extends('layouts.appv2')
 
-@section('title',config('app.name').' | Categorias' )
+@section('title',config('app.name').' | Categorías' )
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
             <div class="card bg-0">
               <div class="card-header card-header-default">
-                  <h3 class="card-title">Categorias</h3>
+                  <h3 class="card-title">Categorías</h3>
               </div>
                 <div class="card-body">
                     <h1 class="pull-right">

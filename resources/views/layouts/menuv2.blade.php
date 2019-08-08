@@ -30,6 +30,32 @@
   </div><!-- menu-item -->
 </a><!-- sl-menu-link -->
 @endcan
+@php
+if( Request::is('productos*') || Request::is('categorias*') || Request::is('ubicaciones*')) {
+    $varActive = "active show-sub";
+} else {
+  $varActive = "";
+}
+@endphp
+<a href="#" class="sl-menu-link {{$varActive}}">
+<div class="sl-menu-item">
+  <i class="menu-item-icon ion-ios-cube tx-20"></i>
+  <span class="menu-item-label">Inventarios</span>
+  <i class="menu-item-arrow fa fa-angle-down"></i>
+</div><!-- menu-item -->
+</a><!-- sl-menu-link -->
+<ul class="sl-menu-sub nav flex-column">
+  @can('categorias-list')
+  <li class="nav-item"><a href="{!! route('categorias.index') !!}" class="nav-link {{ Request::is('categorias*') ? 'active' : '' }}">Categorias de Productos</a></li>
+  @endcan
+  @can('productos-list')
+  <li class="nav-item"><a href="{!! route('productos.index') !!}" class="nav-link {{ Request::is('productos*') ? 'active' : '' }}">Productos</a></li>
+  @endcan
+  @can('bodegas-list')
+  <li class="nav-item"><a href="{!! route('bodegas.index') !!}" class="nav-link {{ Request::is('bodegas*') ? 'active' : '' }}">Bodegas</a></li>
+  @endcan
+
+</ul>
 
 @can('proveedores-list')
 <a href="{!! route('proveedores.index') !!}" class="sl-menu-link {{ Request::is('proveedores*') ? 'active' : '' }}">
@@ -52,7 +78,7 @@
 @php
 if( Request::is('efinancieras*') || Request::is('clasificas*') || Request::is('bancos*') ||
       Request::is('bcuentas*') || Request::is('metpagos*') || Request::is('operaciones*') || Request::is('subclasificas*')
-      || Request::is('facturas*') || Request::is('coddivisas*') || Request::is('categorias*') || Request::is('productos*') ) {
+      || Request::is('facturas*') || Request::is('coddivisas*') ) {
     $varActive = "active show-sub";
 } else {
   $varActive = "";
@@ -94,13 +120,9 @@ if( Request::is('efinancieras*') || Request::is('clasificas*') || Request::is('b
   @can('facturas-list')
   <li class="nav-item"><a href="{!! route('facturas.index') !!}" class="nav-link {{ Request::is('facturas*') ? 'active' : '' }}">Facturas</a></li>
   @endcan
-  @can('categorias-list')
-  <li class="nav-item"><a href="{!! route('categorias.index') !!}" class="nav-link {{ Request::is('categorias*') ? 'active' : '' }}">Categorias de Productos</a></li>
-  @endcan
-  @can('productos-list')
-  <li class="nav-item"><a href="{!! route('productos.index') !!}" class="nav-link {{ Request::is('productos*') ? 'active' : '' }}">Productos</a></li>
-  @endcan
+
 </ul>
+
   @hasrole('administrador')
   @php
   if( Request::is('user*') || Request::is('permissions*') || Request::is('roles*') || Request::is('logs*') || Request::is('activity*')) {

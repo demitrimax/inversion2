@@ -1,4 +1,4 @@
-<table class="table table-responsive" id="productos-table">
+<table class="table table-responsive table-hover" id="productos-table">
     <thead>
         <tr>
             <th>Nombre</th>

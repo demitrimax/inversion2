@@ -8,6 +8,7 @@ use App\Models\movcreditos;
 use App\Models\operaciones;
 use App\Models\corridafinanciera;
 use App\Models\empresas;
+use App\Models\tareas;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -45,6 +46,7 @@ class HomeController extends Controller
         $totalpagopend = $corridafinan->sum('mpago');
         $totalinteres = $corridafinan->sum('pintereses');
         $business = empresas::get();
+        $tareas = tareas::whereNull('terminado')->limit(3)->get();
         //dd($empresas);
         //dd($oppagoshoy);
         return view('home')->
@@ -55,7 +57,8 @@ class HomeController extends Controller
                               'totalpagopend',
                               'totalinteres',
                               'pagoshoy',
-                              'business'
+                              'business',
+                              'tareas'
                             ));
     }
 }

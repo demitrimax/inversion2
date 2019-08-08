@@ -1,8 +1,8 @@
-<table class="table table-responsive" id="categorias-table">
+<table class="table table-responsive table-hover" id="categorias-table">
     <thead>
         <tr>
             <th>Nombre</th>
-            <th>Descripcion</th>
+            <th>Descripción</th>
             <th>Acciones</th>
         </tr>
     </thead>
