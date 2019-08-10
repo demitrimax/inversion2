@@ -25,6 +25,7 @@
 <link rel="stylesheet" href="{{asset('starlight/css/starlight.css')}}">
 
     @yield('css')
+    @stack('css')
 </head>
 
 <body>

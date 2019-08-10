@@ -13,6 +13,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Models\proveedores;
 use App\Models\clientes;
+use App\Models\productos;
 
 class invoperacionController extends AppBaseController
 {
@@ -172,6 +173,14 @@ class invoperacionController extends AppBaseController
     public function entrada()
     {
       $proveedores = proveedores::pluck('nombre','id');
-      return view('inventario.entrada')->with(compact('proveedores'));
+      $productos = productos::pluck('nombre','id');
+      return view('inventario.entrada')->with(compact('proveedores','productos'));
+    }
+    public function registrarEntrada(Request $request)
+    {
+      $input = $request->all();
+      dd($input);
+      
+      return view('inventario.estatus');
     }
 }
