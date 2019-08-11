@@ -26,8 +26,7 @@
     </td>
     <td>
       <div class="input-group col-md-12">
-         <!-- <input type="text" class="form-control select" id="descripcion[0]" name="descripcion[0]"  placeholder="Descripción detallada" title="Descripción detallada del producto o servicio"> -->
-         {!! Form::select('descripcion[]', $productos, null, ['class'=>'form-control select2', 'required', 'placeholder'=>'Seleccione un producto'])!!}
+         {!! Form::select('producto[]', $productos, null, ['class'=>'form-control select2', 'required', 'placeholder'=>'Seleccione un producto'])!!}
       </div>
     </td>
     <td class="ColIngImporte">
@@ -54,28 +53,7 @@
          <table class="table bg-white">
 
            <tbody>
-             <tr>
-               <td class="pull-right">
-                <b>SUBTOTAL:</b>
-               </td>
-                <td>
-                 <div class="input-group">
-                   <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-                   <input type="text" min="1" class="form-control" id="csubtotal" name="csubtotal" placeholder="00000" readonly>
-                 </div>
-               </td>
-             </tr>
-             <tr>
-               <td class="pull-right">
-                 <b>IVA:</b>
-               </td>
-               <td>
-                 <div class="input-group">
-                 <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-                 <input type="text" min="1" class="form-control" id="civa" name="civa" placeholder="00000" readonly>
-               </div>
-               </td>
-             </tr>
+
              <tr>
                <td class="pull-right">
                  <b>TOTAL</b>
@@ -123,7 +101,7 @@ $('#RegistroInventario').on('change', 'input.NCantidadProducto', function() {
   Subtotal.val(precioFinal);
 
   SumarTodosLosMontos();
-    CalcularTotales();
+    //CalcularTotales();
 })
 
 
@@ -135,7 +113,7 @@ $('#RegistroInventario').on('change', 'input.PreUnitario', function() {
    Subtotal.val(precioFinal);
    SumarTodosLosMontos();
 
-  CalcularTotales();
+  //CalcularTotales();
 });
 
 //SUMAR TODOS LOS PRECIOS
@@ -156,7 +134,7 @@ function SumarTodosLosMontos() {
     var SumaTotalMonto = ArraySumaMonto.reduce(sumaArrayMontos);
     //console.log('SumaTotalMonto',SumaTotalMonto);
     SumaTotalMonto = numeral(SumaTotalMonto);
-    $("#csubtotal").val(SumaTotalMonto.format('0,0.00'));
+    $("#cTotal").val(SumaTotalMonto.format('0,0.00'));
 }
 function CalcularTotales()
 {
@@ -194,7 +172,7 @@ $('#btnagregarotro').click(function() {
     '</td>'+
     '<td>'+
       '<div class="input-group col-md-12">'+
-         '{!! Form::select("descripcion[]", $productos, null, ["class"=>"form-control select2", "required", "placeholder"=>"Seleccione un producto"])!!}'+
+         '{!! Form::select("producto[]", $productos, null, ["class"=>"form-control select2", "required", "placeholder"=>"Seleccione un producto"])!!}'+
       '</div>'+
     '</td>'+
     '<td class="ColIngImporte">'+

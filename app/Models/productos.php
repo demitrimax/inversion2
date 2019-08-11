@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\invoperacion;
 
 /**
  * Class productos
@@ -82,5 +83,19 @@ class productos extends Model
     public function categoria()
     {
         return $this->belongsTo(\App\Models\categorias::class, 'categoria_id');
+    }
+    public function inventarios()
+    {
+      return $this->hasMany('App\Models\invdetoperaciones', 'producto_id');
+    }
+    public function getStockAttribute()
+    {
+      $entradas = invdetoperacion::where('producto_id', $this->id)
+                                  ->where('tipo_operacion', 'Entrada')
+                                  ->sum('cantidad');
+      $salidas = invdetoperacion::where('producto_id', $this->id)
+                                  ->where('tipo_operacion', 'Salida')
+                                  ->sum('cantidad');
+      return $entradas-$salidas;
     }
 }

@@ -14,6 +14,9 @@ use Response;
 use App\Models\proveedores;
 use App\Models\clientes;
 use App\Models\productos;
+use App\Models\invoperacion;
+use App\Models\invdetoperacion;
+use Auth;
 
 class invoperacionController extends AppBaseController
 {
@@ -170,17 +173,51 @@ class invoperacionController extends AppBaseController
 
         return redirect(route('invoperacions.index'));
     }
+    public function VerInventario()
+    {
+      $productos = productos::all();
+      return view('inventario.estatus')->with(compact('productos'));
+    }
     public function entrada()
     {
       $proveedores = proveedores::pluck('nombre','id');
       $productos = productos::pluck('nombre','id');
       return view('inventario.entrada')->with(compact('proveedores','productos'));
     }
-    public function registrarEntrada(Request $request)
+    public function regEntrada(Request $request)
     {
       $input = $request->all();
-      dd($input);
-      
-      return view('inventario.estatus');
+      //dd($input);
+
+      $string = $input['cTotal'];
+      $monto  = floatval($string);
+
+      $invoperacion = new invoperacion;
+      $invoperacion->usuario_id = Auth::user()->id;
+      $invoperacion->tipo_mov = 'Entrada';
+      $invoperacion->proveedor_id = $input['proveedor_id'];
+      $invoperacion->monto = $monto;
+      $invoperacion->fecha = $input['fecha'];
+      $invoperacion->save();
+
+      foreach($input['cantidad'] as $key=>$cantidad ){
+        if(!empty($input['producto'][$key])){
+          $invdetoperacion = new invdetoperacion;
+          $invdetoperacion->operacion_id = $invoperacion->id;
+          $invdetoperacion->producto_id = $input['producto'][$key];
+          $invdetoperacion->cantidad = $input['cantidad'][$key];
+          $invdetoperacion->punitario = $input['importecon'][$key];
+          $invdetoperacion->importe = $input['montoconcepto'][$key];
+          $invdetoperacion->tipo_operacion = 'Entrada';
+          $invdetoperacion->fecha = $input['fecha'];
+          $invdetoperacion->save();
+        }
+
+      }
+      Alert::success('Entrada de Producto registrado correctamente');
+      Flash::success('Entrada de Producto registrado correctamente');
+
+      //return redirect('inventario.estatus');
+      return back();
     }
 }

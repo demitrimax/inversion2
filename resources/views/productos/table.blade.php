@@ -4,7 +4,7 @@
             <th>Nombre</th>
             <th>Categoría</th>
             <th>U. Medida</th>
-            <th>Stock Min</th>
+            <th>Stock</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -14,7 +14,7 @@
             <td><a href="{!! route('productos.show', [$productos->id]) !!}">{!! $productos->nombre !!}</a> {!! $productos->inventariable ? '<span class="badge badge-warning">Inventariable<span>' : ''!!}</td>
             <td>{!! $productos->categoria->nombre !!}</td>
             <td>{!! $productos->umedida !!}</td>
-            <td>{!! $productos->stock_min !!}</td>
+            <td>{!! $productos->stock !!}</td>
             <td>
                 {!! Form::open(['route' => ['productos.destroy', $productos->id], 'method' => 'delete', 'id'=>'form'.$productos->id]) !!}
                 <div class='btn-group'>
