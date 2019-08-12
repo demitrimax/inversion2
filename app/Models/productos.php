@@ -5,6 +5,7 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\invoperacion;
+use App\Models\invdetoperacion;
 
 /**
  * Class productos
@@ -90,9 +91,11 @@ class productos extends Model
     }
     public function getStockAttribute()
     {
+
       $entradas = invdetoperacion::where('producto_id', $this->id)
                                   ->where('tipo_operacion', 'Entrada')
                                   ->sum('cantidad');
+
       $salidas = invdetoperacion::where('producto_id', $this->id)
                                   ->where('tipo_operacion', 'Salida')
                                   ->sum('cantidad');

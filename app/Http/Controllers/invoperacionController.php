@@ -16,6 +16,7 @@ use App\Models\clientes;
 use App\Models\productos;
 use App\Models\invoperacion;
 use App\Models\invdetoperacion;
+use App\Models\bodegas;
 use Auth;
 
 class invoperacionController extends AppBaseController
@@ -72,8 +73,8 @@ class invoperacionController extends AppBaseController
 
         $invoperacion = $this->invoperacionRepository->create($input);
 
-        Flash::success('Invoperacion guardado correctamente.');
-        Alert::success('Invoperacion guardado correctamente.');
+        Flash::success('Operación de Inventario guardado correctamente.');
+        Alert::success('Operación de Inventario guardado correctamente.');
 
         return redirect(route('invoperacions.index'));
     }
@@ -90,8 +91,8 @@ class invoperacionController extends AppBaseController
         $invoperacion = $this->invoperacionRepository->findWithoutFail($id);
 
         if (empty($invoperacion)) {
-            Flash::error('Invoperacion no encontrado');
-            Alert::error('Invoperacion no encontrado.');
+            Flash::error('Operación de Inventario no encontrado');
+            Alert::error('Operación de Inventario no encontrado.');
 
             return redirect(route('invoperacions.index'));
         }
@@ -112,8 +113,8 @@ class invoperacionController extends AppBaseController
         $invoperacion = $this->invoperacionRepository->findWithoutFail($id);
 
         if (empty($invoperacion)) {
-            Flash::error('Invoperacion no encontrado');
-            Alert::error('Invoperacion no encontrado');
+            Flash::error('Operación de Inventario no encontrado');
+            Alert::error('Operación de Inventario no encontrado');
 
             return redirect(route('invoperacions.index'));
         }
@@ -134,16 +135,16 @@ class invoperacionController extends AppBaseController
         $invoperacion = $this->invoperacionRepository->findWithoutFail($id);
 
         if (empty($invoperacion)) {
-            Flash::error('Invoperacion no encontrado');
-            Alert::error('Invoperacion no encontrado');
+            Flash::error('Operación de Inventario no encontrado');
+            Alert::error('Operación de Inventario no encontrado');
 
             return redirect(route('invoperacions.index'));
         }
 
         $invoperacion = $this->invoperacionRepository->update($request->all(), $id);
 
-        Flash::success('Invoperacion actualizado correctamente.');
-        Alert::success('Invoperacion actualizado correctamente.');
+        Flash::success('Operación de Inventario actualizado correctamente.');
+        Alert::success('Operación de Inventario actualizado correctamente.');
 
         return redirect(route('invoperacions.index'));
     }
@@ -160,19 +161,24 @@ class invoperacionController extends AppBaseController
         $invoperacion = $this->invoperacionRepository->findWithoutFail($id);
 
         if (empty($invoperacion)) {
-            Flash::error('Invoperacion no encontrado');
-            Alert::error('Invoperacion no encontrado');
+            Flash::error('Operación de Inventario no encontrado');
+            Alert::error('Operación de Inventario no encontrado');
 
             return redirect(route('invoperacions.index'));
         }
-
+        $detalleaeliminar = invdetoperacion::where('operacion_id',$invoperacion->id)->get();
         $this->invoperacionRepository->delete($id);
+        foreach($detalleaeliminar as $detalle){
+          $detalle->delete();
+        }
 
-        Flash::success('Invoperacion borrado correctamente.');
-        Flash::success('Invoperacion borrado correctamente.');
+
+        Flash::success('Operación de Inventario borrado correctamente.');
+        Alert::success('Operación de Inventario borrado correctamente.');
 
         return redirect(route('invoperacions.index'));
     }
+
     public function VerInventario()
     {
       $productos = productos::all();
@@ -180,17 +186,27 @@ class invoperacionController extends AppBaseController
     }
     public function entrada()
     {
-      $proveedores = proveedores::pluck('nombre','id');
-      $productos = productos::pluck('nombre','id');
-      return view('inventario.entrada')->with(compact('proveedores','productos'));
+      $proveedores = proveedores::orderBy('nombre','asc')->pluck('nombre','id');
+      $productos = productos::orderBy('nombre','asc')->pluck('nombre','id');
+      $bodegas = bodegas::pluck('nombre','id');
+      return view('inventario.entrada')->with(compact('proveedores','productos','bodegas'));
+    }
+    public function salida()
+    {
+      $proveedores = proveedores::orderBy('nombre','asc')->pluck('nombre','id');
+      $clientes = clientes::orderBy('nombre','asc')->pluck('nombre','id');
+      $productos = productos::orderBy('nombre','asc')->pluck('nombre','id');
+      $bodegas = bodegas::pluck('nombre','id');
+      return view('inventario.salida')->with(compact('clientes','productos','bodegas'));
     }
     public function regEntrada(Request $request)
     {
       $input = $request->all();
       //dd($input);
 
-      $string = $input['cTotal'];
+      $string = $input['aTotal'];
       $monto  = floatval($string);
+      //dd($monto);
 
       $invoperacion = new invoperacion;
       $invoperacion->usuario_id = Auth::user()->id;
@@ -210,12 +226,74 @@ class invoperacionController extends AppBaseController
           $invdetoperacion->importe = $input['montoconcepto'][$key];
           $invdetoperacion->tipo_operacion = 'Entrada';
           $invdetoperacion->fecha = $input['fecha'];
+          $invdetoperacion->bodega_id = $input['bodega_id'];
           $invdetoperacion->save();
         }
 
       }
       Alert::success('Entrada de Producto registrado correctamente');
       Flash::success('Entrada de Producto registrado correctamente');
+
+      //return redirect('inventario.estatus');
+      return back();
+    }
+    public function regSalida(Request $request)
+    {
+      $input = $request->all();
+      //dd($input);
+
+      $string = $input['aTotal'];
+      $monto  = floatval($string);
+      //dd($monto);
+      //verificar existencias antes
+      $flag = 0;
+      foreach($input['cantidad'] as $key=>$cantidad ){
+        if(!empty($input['producto'][$key])){
+
+          $productoid = $input['producto'][$key];
+          //$cantidad = $input['cantidad'][$key];
+          $bodega_id = $input['bodega_id'];
+          //dd($cantidad);
+          $elproducto = productos::find($productoid);
+          $stock = $elproducto->stock;
+          //dd($stock);
+          if( $cantidad > $stock) {
+            $mensaje = 'La cantidad solicitada del '.$elproducto->nombre.' sobrepasa el nivel de stock ('.$elproducto->stock.')';
+            Alert::error($mensaje);
+            Flash::error($mensaje);
+            $flag = 1;
+          }
+          if($flag == 1){
+            return back();
+          }
+
+        }
+      }
+      $invoperacion = new invoperacion;
+      $invoperacion->usuario_id = Auth::user()->id;
+      $invoperacion->tipo_mov = 'Salida';
+      $invoperacion->cliente_id = $input['cliente_id'];
+      $invoperacion->monto = $monto;
+      $invoperacion->fecha = $input['fecha'];
+      $invoperacion->save();
+
+      foreach($input['cantidad'] as $key=>$cantidad ){
+        if(!empty($input['producto'][$key])){
+          $invdetoperacion = new invdetoperacion;
+          $invdetoperacion->operacion_id = $invoperacion->id;
+          $invdetoperacion->producto_id = $input['producto'][$key];
+          $invdetoperacion->cantidad = $input['cantidad'][$key];
+          $invdetoperacion->punitario = $input['importecon'][$key];
+          $invdetoperacion->importe = $input['montoconcepto'][$key];
+          $invdetoperacion->tipo_operacion = 'Salida';
+          $invdetoperacion->fecha = $input['fecha'];
+          $invdetoperacion->bodega_id = $input['bodega_id'];
+          $invdetoperacion->save();
+        }
+
+      }
+      Alert::success('Salida de Producto registrado correctamente');
+      Flash::success('Salida de Producto registrado correctamente');
 
       //return redirect('inventario.estatus');
       return back();

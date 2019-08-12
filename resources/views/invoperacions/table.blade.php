@@ -1,22 +1,23 @@
 <table class="table table-responsive" id="invoperacions-table">
     <thead>
         <tr>
-            <th>Usuario</th>
             <th>Tipo</th>
             <th>Persona</th>
             <th>Monto</th>
             <th>Fecha</th>
+            <th>Usuario</th>
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
     @foreach($invoperacions as $invoperacion)
         <tr>
-            <td>{!! $invoperacion->usuario_id !!}</td>
+
             <td>{!! $invoperacion->tipo_mov !!}</td>
-            <td>{!! $invoperacion->proveedor_id !!}</td>
+            <td>{!! $invoperacion->personanombre !!}</td>
             <td>{!! $invoperacion->monto !!}</td>
-            <td>{!! $invoperacion->fecha !!}</td>
+            <td>{!! $invoperacion->fecha->format('d-m-Y') !!}</td>
+            <td>{!! $invoperacion->usuario->name !!}</td>
             <td>
                 {!! Form::open(['route' => ['invoperacions.destroy', $invoperacion->id], 'method' => 'delete', 'id'=>'form'.$invoperacion->id]) !!}
                 <div class='btn-group'>

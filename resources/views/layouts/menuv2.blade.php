@@ -32,7 +32,8 @@
 @endcan
 @php
 if( Request::is('productos*') || Request::is('categorias*') || Request::is('bodegas*')
-  || Request::is('clientes*') || Request::is('invoperacions*')) {
+  || Request::is('clientes*') || Request::is('invoperacions*') || Request::is('inventario/entrada*')
+  || Request::is('inventario/salida*') ) {
     $varActive = "active show-sub";
 } else {
   $varActive = "";
@@ -47,8 +48,11 @@ if( Request::is('productos*') || Request::is('categorias*') || Request::is('bode
 </a><!-- sl-menu-link -->
 <ul class="sl-menu-sub nav flex-column">
 
+  @can('inventario-salida')
+  <li class="nav-item"><a href="{!! route('inventario.salida') !!}" class="nav-link {{ Request::is('inventario/salida*') ? 'active' : '' }}">Salidas</a></li>
+  @endcan
   @can('inventario-entrada')
-  <li class="nav-item"><a href="{!! route('inventario.entrada') !!}" class="nav-link {{ Request::is('inventario/entrada*') ? 'active' : '' }}">Entrada</a></li>
+  <li class="nav-item"><a href="{!! route('inventario.entrada') !!}" class="nav-link {{ Request::is('inventario/entrada*') ? 'active' : '' }}">Entradas</a></li>
   @endcan
 
   @can('invoperacions-list')

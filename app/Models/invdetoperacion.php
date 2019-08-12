@@ -26,7 +26,8 @@ class invdetoperacion extends Model
         'punitario',
         'importe',
         'tipo_operacion',
-        'fecha'
+        'fecha',
+        'bodega_id'
     ];
 
 }

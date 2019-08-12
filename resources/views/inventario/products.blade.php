@@ -62,6 +62,7 @@
                  <div class="input-group">
                  <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
                  <input type="text" min="1" class="form-control" id="cTotal" name="cTotal" placeholder="00000" readonly>
+                 {!! Form::hidden('aTotal', null, ['class'=>'form-control', 'id'=>'aTotal'])!!}
                </div>
                </td>
              </tr>
@@ -131,10 +132,12 @@ function SumarTodosLosMontos() {
   {
     return total + numero;
   }
-    var SumaTotalMonto = ArraySumaMonto.reduce(sumaArrayMontos);
+    var SumaTotalMontoA = ArraySumaMonto.reduce(sumaArrayMontos);
     //console.log('SumaTotalMonto',SumaTotalMonto);
-    SumaTotalMonto = numeral(SumaTotalMonto);
+    SumaTotalMonto = numeral(SumaTotalMontoA);
+    console.log(SumaTotalMontoA);
     $("#cTotal").val(SumaTotalMonto.format('0,0.00'));
+    $("#aTotal").val(SumaTotalMontoA);
 }
 function CalcularTotales()
 {
@@ -193,5 +196,12 @@ $('#btnagregarotro').click(function() {
   ;
   $(newRow).appendTo($('#conceptos tbody'));
 }) ;
+
+$( "RegistroInventario" ).submit(function( event ) {
+  var total = numeral($('#cTotal'));
+    console.log(total.val());
+    event.preventDefault();
+    //return;
+  });
 </script>
 @endpush

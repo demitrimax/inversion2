@@ -90,7 +90,7 @@ class invoperacion extends Model
      **/
     public function proveedor()
     {
-        return $this->belongsTo(\App\Models\CatProveedore::class, 'proveedor_id');
+        return $this->belongsTo(\App\Models\proveedores::class, 'proveedor_id');
     }
 
     /**
@@ -98,7 +98,7 @@ class invoperacion extends Model
      **/
     public function cliente()
     {
-        return $this->belongsTo(\App\Models\CatEmpresa::class, 'cliente_id');
+        return $this->belongsTo(\App\Models\clientes::class, 'cliente_id');
     }
 
     /**
@@ -107,5 +107,16 @@ class invoperacion extends Model
     public function invDetoperacions()
     {
         return $this->hasMany(\App\Models\InvDetoperacion::class);
+    }
+    public function getPersonanombreAttribute()
+    {
+      $personanombre = 'N/D';
+      if($this->proveedor_id){
+        $personanombre = $this->proveedor->nombre;
+      }
+      elseif ($this->cliente_id){
+        $personanombre = $this->cliente->nombre;
+      }
+      return $personanombre;
     }
 }

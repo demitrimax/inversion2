@@ -1,6 +1,6 @@
 @extends('layouts.appv2')
 
-@section('title',config('app.name').' | Inventario Entrada' )
+@section('title',config('app.name').' | Inventario Salidas' )
 
 @section('css')
 <link href="{{asset('appzia/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css')}}" rel="stylesheet">
@@ -14,12 +14,11 @@
 @include('flash::message')
 
 <div class="clearfix"></div>
-
-{!! Form::open(['route'=>'inventario.regentrada', 'id'=>'RegistroInventario'])!!}
+{!! Form::open(['route'=>'inventario.regsalida', 'id'=>'RegistroInventario'])!!}
   {!! Form::hidden('usuario_id', Auth::user()->id) !!}
   {!! Form::hidden('tipo_mov', 'Entrada') !!}
 <div class="card pd-20 pd-sm-40">
-          <h6 class="card-body-title">Registro de Entradas del Inventario</h6>
+          <h6 class="card-body-title">Registro de Salidas del Inventario</h6>
           <p class="mg-b-20 mg-sm-b-30">Movimiento de entradas</p>
 
           <div class="form-layout">
@@ -27,8 +26,8 @@
 
               <div class="col-lg-8">
                 <div class="form-group">
-                  <label class="form-control-label">Proveedor: <span class="tx-danger">*</span></label>
-                  {!! Form::select('proveedor_id', $proveedores, null, ['class'=>'form-control', 'required', 'placeholder'=>'Selecciones un proveedor'])!!}
+                  <label class="form-control-label">Cliente: <span class="tx-danger">*</span></label>
+                  {!! Form::select('cliente_id', $clientes, null, ['class'=>'form-control', 'required', 'placeholder'=>'Selecciones un cliente'])!!}
                 </div>
               </div><!-- col-4 -->
               <div class="col-lg-4">
@@ -55,7 +54,7 @@
 
                   <div class="card-body bd bd-t-0">
                     @include('inventario.products')
-                    <p class="mg-b-0">Some quick example text to build on the card title and make up the bulk of the card's content. Lorem ipsum dolor sit amet consictetur...</p>
+                    <p class="mg-b-0"></p>
 
                   </div><!-- card-body -->
                 </div>
@@ -64,7 +63,7 @@
             </div>
 
             <div class="form-layout-footer">
-              <button class="btn btn-info mg-r-5" type="submit">Registrar Entrada</button>
+              <button class="btn btn-info mg-r-5" type="submit">Registrar Salida</button>
               <button class="btn btn-secondary" type="reset">Cancelar</button>
             </div><!-- form-layout-footer -->
           </div><!-- form-layout -->
