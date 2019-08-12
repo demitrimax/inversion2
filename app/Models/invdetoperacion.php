@@ -30,4 +30,9 @@ class invdetoperacion extends Model
         'bodega_id'
     ];
 
+    public function producto()
+    {
+      return $this->belongsTo('App\Models\productos', 'producto_id');
+    }
+
 }

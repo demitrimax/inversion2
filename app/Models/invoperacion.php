@@ -104,9 +104,9 @@ class invoperacion extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function invDetoperacions()
+    public function invdetoperacions()
     {
-        return $this->hasMany(\App\Models\InvDetoperacion::class);
+        return $this->hasMany('App\Models\invdetoperacion','operacion_id');
     }
     public function getPersonanombreAttribute()
     {

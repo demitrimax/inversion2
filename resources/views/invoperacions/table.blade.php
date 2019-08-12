@@ -15,7 +15,7 @@
 
             <td>{!! $invoperacion->tipo_mov !!}</td>
             <td>{!! $invoperacion->personanombre !!}</td>
-            <td>{!! $invoperacion->monto !!}</td>
+            <td>{!! number_format($invoperacion->monto,2) !!}</td>
             <td>{!! $invoperacion->fecha->format('d-m-Y') !!}</td>
             <td>{!! $invoperacion->usuario->name !!}</td>
             <td>

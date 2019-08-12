@@ -101,4 +101,8 @@ class productos extends Model
                                   ->sum('cantidad');
       return $entradas-$salidas;
     }
+    public function getNomproductostockAttribute()
+    {
+      return $this->nombre.' ('.$this->stock.')'; 
+    }
 }

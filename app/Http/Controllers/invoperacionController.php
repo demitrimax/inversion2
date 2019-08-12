@@ -195,7 +195,8 @@ class invoperacionController extends AppBaseController
     {
       $proveedores = proveedores::orderBy('nombre','asc')->pluck('nombre','id');
       $clientes = clientes::orderBy('nombre','asc')->pluck('nombre','id');
-      $productos = productos::orderBy('nombre','asc')->pluck('nombre','id');
+      $productos = productos::orderBy('nombre','asc')->get();
+      $productos = $productos->pluck('nomproductostock','id');
       $bodegas = bodegas::pluck('nombre','id');
       return view('inventario.salida')->with(compact('clientes','productos','bodegas'));
     }

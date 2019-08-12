@@ -55,7 +55,7 @@
 
                   <div class="card-body bd bd-t-0">
                     @include('inventario.products')
-                    <p class="mg-b-0">Some quick example text to build on the card title and make up the bulk of the card's content. Lorem ipsum dolor sit amet consictetur...</p>
+                    <p class="mg-b-0"></p>
 
                   </div><!-- card-body -->
                 </div>

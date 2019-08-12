@@ -5,6 +5,8 @@
                   <th>Fecha</th>
                   <th>Tipo</th>
                   <th>Cantidad</th>
+                  <th>P. Unitario</th>
+                  <th>Monto</th>
                 </tr>
               </thead>
               <tbody>
@@ -15,6 +17,8 @@
                   <td>{{$movinvent->fecha}}</td>
                   <td>{{$movinvent->tipo_operacion}}</td>
                   <td>{{$movinvent->cantidad}}</td>
+                  <td>{{number_format($movinvent->punitario,2)}}</td>
+                  <td>{{number_format($movinvent->importe,2)}}</td>
                 </tr>
                 @endforeach
               </tbody>
