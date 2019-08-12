@@ -3,7 +3,7 @@
 @section('breadcrum')
 <nav class="breadcrumb sl-breadcrumb">
   <a class="breadcrumb-item" href="{{url('/')}}">Principal</a>
-  <a class="breadcrumb-item" href="{{url('/cuentas')}}">Cuentas</a>
+  <a class="breadcrumb-item" href="{{url('/bcuentas')}}">Cuentas</a>
   <span class="breadcrumb-item active">{{$bcuentas->numcuenta}}</span>
 </nav>
 @endsection

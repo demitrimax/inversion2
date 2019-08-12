@@ -17,6 +17,9 @@
                     </tbody>
                   </table>
                     <a href="{!! route('productos.index') !!}" class="btn btn-secondary">Regresar</a>
+                    @can('productos-edit')
+                    <a href="{!! route('productos.edit', [$productos->id]) !!}" class='btn btn-primary'>Editar</a>
+                    @endcan
                 </div>
             </div>
         </div>

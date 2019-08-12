@@ -79,4 +79,6 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::get('inventario/salida', 'invoperacionController@salida')->name('inventario.salida');
   Route::post('inventario/entrada/registro', 'invoperacionController@regentrada')->name('inventario.regentrada');
   Route::post('inventario/salida/registro', 'invoperacionController@regsalida')->name('inventario.regsalida');
+  Route::get('precio/venta/producto/{id}', 'invoperacionController@precioventaproducto');
+  Route::get('precio/compra/producto/{id}', 'invoperacionController@preciocompraproducto');
 });

@@ -65,3 +65,14 @@
   <th>{!! Form::label('stock', 'Stock Actual:') !!}</th>
   <td>{!! $productos->stock !!}</td>
 </tr>
+
+<!-- Precio de Compra Field -->
+<tr>
+  <th>{!! Form::label('pcompra', 'Precio de Compra:') !!}</th>
+  <td>${!! number_format($productos->pcompra,2) !!}</td>
+</tr>
+<!-- Precio de Venta Field -->
+<tr>
+  <th>{!! Form::label('pventa', 'Precio de Venta:') !!}</th>
+  <td>${!! number_format($productos->pventa,2) !!}</td>
+</tr>

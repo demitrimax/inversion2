@@ -20,24 +20,17 @@
     <div class="content">
       <div class="row">
       <div class="col-md-6">
-        <div class="card card-primary">
-            <div class="card-body">
-                <div class="row" style="padding-left: 20px">
                     @include('empresas.show_fields')
-                </div>
-            </div>
-            <div class="card-footer tx-center bg-gray-300">
+
               <a href="{!! route('empresas.index') !!}" class="btn btn-primary">Regresar</a>
-            </div>
-          </div>
+
+
         </div>
 
             <div class="col-md-6">
-              <div class="card card-primary">
-                <div class="card-body">
+
                   @include('empresas.resumenopera')
-                </div>
-              </div>
+
             </div>
           </div>
 

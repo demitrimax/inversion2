@@ -26,7 +26,7 @@
     </td>
     <td>
       <div class="input-group col-md-12">
-         {!! Form::select('producto[]', $productos, null, ['class'=>'form-control select2', 'required', 'placeholder'=>'Seleccione un producto'])!!}
+         {!! Form::select('producto[]', $productos, null, ['class'=>'form-control select2 producto', 'required', 'placeholder'=>'Seleccione un producto'])!!}
       </div>
     </td>
     <td class="ColIngImporte">
@@ -91,6 +91,8 @@ $('#RegistroInventario').on('click', 'button.QuitarConcepto', function() {
   SumarTodosLosMontos();
   CalcularTotales();
 })
+
+
 
 //CALCULAR LA CANTIDAD POR EL PRECIO DEL PRODUCTO
 $('#RegistroInventario').on('change', 'input.NCantidadProducto', function() {
@@ -175,7 +177,7 @@ $('#btnagregarotro').click(function() {
     '</td>'+
     '<td>'+
       '<div class="input-group col-md-12">'+
-         '{!! Form::select("producto[]", $productos, null, ["class"=>"form-control select2", "required", "placeholder"=>"Seleccione un producto"])!!}'+
+         '{!! Form::select("producto[]", $productos, null, ["class"=>"form-control select2 producto", "required", "placeholder"=>"Seleccione un producto"])!!}'+
       '</div>'+
     '</td>'+
     '<td class="ColIngImporte">'+
@@ -202,6 +204,23 @@ $( "RegistroInventario" ).submit(function( event ) {
     console.log(total.val());
     event.preventDefault();
     //return;
+  });
+
+  //obtener el precio de venta del producto
+  $('.producto').on('change', function(e) {
+    //console.log(e);
+    var productoid = e.target.value;
+    //ajax
+    $.get('{{url('precio/venta/producto')}}/' + productoid, function(data) {
+      //exito al obtener los datos
+      console.log(data);
+      //$('.PreUnitario').val();
+      $.each(data, function(index, pagos) {
+        console.log(pagos);
+        $('.NMontoProducto').append('<option value ="' + pagos.id + '">'+pagos.nombre+'</option>' );
+      });
+
+    });
   });
 </script>
 @endpush

@@ -48,7 +48,9 @@ class productos extends Model
         'categoria_id',
         'inventariable',
         'umedida',
-        'stock_min'
+        'stock_min',
+        'pventa',
+        'pcompra',
     ];
 
     /**
@@ -57,15 +59,17 @@ class productos extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'nombre' => 'string',
-        'descripcion' => 'string',
-        'imagen' => 'string',
-        'barcode' => 'string',
-        'categoria_id' => 'integer',
+        'id'            => 'integer',
+        'nombre'        => 'string',
+        'descripcion'   => 'string',
+        'imagen'        => 'string',
+        'barcode'       => 'string',
+        'categoria_id'  => 'integer',
         'inventariable' => 'boolean',
-        'umedida' => 'string',
-        'stock_min' => 'integer'
+        'umedida'       => 'string',
+        'stock_min'     => 'integer',
+        'pcompra'       => 'float',
+        'pventa'        => 'float',
     ];
 
     /**
@@ -103,6 +107,6 @@ class productos extends Model
     }
     public function getNomproductostockAttribute()
     {
-      return $this->nombre.' ('.$this->stock.')'; 
+      return $this->nombre.' ('.$this->stock.')';
     }
 }
