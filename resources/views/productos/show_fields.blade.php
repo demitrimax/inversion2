@@ -59,3 +59,9 @@
   <th>{!! Form::label('stock_min', 'Stock Min:') !!}</th>
   <td>{!! $productos->stock_min !!}</td>
 </tr>
+
+<!-- Umedida Field -->
+<tr>
+  <th>{!! Form::label('stock', 'Stock Actual:') !!}</th>
+  <td>{!! $productos->stock !!}</td>
+</tr>

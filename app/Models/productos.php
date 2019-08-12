@@ -87,7 +87,7 @@ class productos extends Model
     }
     public function inventarios()
     {
-      return $this->hasMany('App\Models\invdetoperaciones', 'producto_id');
+      return $this->hasMany('App\Models\invdetoperacion', 'producto_id');
     }
     public function getStockAttribute()
     {

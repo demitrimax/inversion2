@@ -1,0 +1,21 @@
+<table class="table mg-b-0 table-primary table-hover">
+              <thead class="bg-info">
+                <tr>
+                  <th>No.  </th>
+                  <th>Fecha</th>
+                  <th>Tipo</th>
+                  <th>Cantidad</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($productos->inventarios as $key=>$movinvent)
+                <tr>
+                  <td> {{$key+1}}
+                  </td>
+                  <td>{{$movinvent->fecha}}</td>
+                  <td>{{$movinvent->tipo_operacion}}</td>
+                  <td>{{$movinvent->cantidad}}</td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>

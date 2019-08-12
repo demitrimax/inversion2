@@ -3,6 +3,8 @@
 @section('content')
 
     <div class="content">
+      <div class="row">
+        <div class="col-lg-6">
         <div class="card">
         <div class="card-header card-header-default">
           <h3 class="card-title">Productos</h3>
@@ -18,5 +20,20 @@
                 </div>
             </div>
         </div>
-    </div>
+      </div>
+
+      <div class="col-lg-6">
+
+        <div class="card">
+        <div class="card-header card-header-default">
+          <h3 class="card-title">Operaciones</h3>
+        </div>
+            <div class="card-body">
+                @include('productos.detoperaciones')
+                </div>
+            </div>
+          </div>
+
+  </div>
+  </div>
 @endsection
