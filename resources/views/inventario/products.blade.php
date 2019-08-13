@@ -3,11 +3,11 @@
 <table class="table tabla-conceptos table-responsive table-hover" id="conceptos">
   <thead class="bg-danger">
     <tr>
-      <th style="width:4%">Cantidad</th>
+      <th style="width:10%">Cantidad</th>
       <th style="width:10%;">Unidad</th>
       <th style="width:30%;">Producto</th>
-      <th style="width:13%;">P. Unitario</th>
-      <th style="width:13%;">Subtotal</th>
+      <th style="width:20%;">P. Unitario</th>
+      <th style="width:20%;">Subtotal</th>
     </tr>
   </thead>
   <tbody>
@@ -53,7 +53,22 @@
          <table class="table bg-white">
 
            <tbody>
-
+             <tr>
+               <td class="pull-right"><b>SUBTOTAL</b></td>
+               <td>
+                 <div class="input-group">
+                   <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                   {!! Form::text('csubtotal', null, ['class'=>'form-control text-right', 'id'=>'csubtotal', 'placeholder'=>'00000', 'readonly', 'step'=>'0.01'])!!}</td>
+                 </div>
+             </tr>
+             <tr>
+               <td class="pull-right"><b>IVA</b></td>
+               <td>
+                 <div class="input-group">
+                   <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                   {!! Form::text('civa', null, ['class'=>'form-control text-right', 'id'=>'civa', 'placeholder'=>'00000', 'readonly', 'step'=>'0.01'])!!}</td>
+                 </div>
+             </tr>
              <tr>
                <td class="pull-right">
                  <b>TOTAL</b>
@@ -61,11 +76,12 @@
                <td>
                  <div class="input-group">
                  <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-                 <input type="text" min="1" class="form-control" id="cTotal" name="cTotal" placeholder="00000" readonly>
+                 <input type="text" min="1" class="form-control text-right" id="cTotal" name="cTotal" placeholder="00000" readonly step="0.01">
                  {!! Form::hidden('aTotal', null, ['class'=>'form-control', 'id'=>'aTotal'])!!}
                </div>
                </td>
              </tr>
+
            </tbody>
          </table>
        </div>
@@ -104,7 +120,7 @@ $('#RegistroInventario').on('change', 'input.NCantidadProducto', function() {
   Subtotal.val(precioFinal);
 
   SumarTodosLosMontos();
-    //CalcularTotales();
+    CalcularTotales();
 })
 
 
@@ -116,7 +132,7 @@ $('#RegistroInventario').on('change', 'input.PreUnitario', function() {
    Subtotal.val(precioFinal);
    SumarTodosLosMontos();
 
-  //CalcularTotales();
+  CalcularTotales();
 });
 
 //SUMAR TODOS LOS PRECIOS
@@ -138,7 +154,7 @@ function SumarTodosLosMontos() {
     //console.log('SumaTotalMonto',SumaTotalMonto);
     SumaTotalMonto = numeral(SumaTotalMontoA);
     console.log(SumaTotalMontoA);
-    $("#cTotal").val(SumaTotalMonto.format('0,0.00'));
+    $("#csubtotal").val(SumaTotalMonto.format('0,0.00'));
     $("#aTotal").val(SumaTotalMontoA);
 }
 function CalcularTotales()
@@ -152,7 +168,7 @@ function CalcularTotales()
 }
 
     //calcular el IVA del monto ingresado en subtotal
-    $('#subtotal').on('change', function(e) {
+    $('#csubtotal').on('change', function(e) {
       var subtotal = e.target.value;
       var civa = parseFloat(subtotal * 1.16);
       $('#civa').val(civa);
@@ -214,11 +230,8 @@ $( "RegistroInventario" ).submit(function( event ) {
     $.get('{{url('precio/venta/producto')}}/' + productoid, function(data) {
       //exito al obtener los datos
       console.log(data);
-      //$('.PreUnitario').val();
-      $.each(data, function(index, pagos) {
-        console.log(pagos);
-        $('.NMontoProducto').append('<option value ="' + pagos.id + '">'+pagos.nombre+'</option>' );
-      });
+      $('.PreUnitario').val(data.pcompra);
+      $('.UnidadMedida').val(data.umedida);
 
     });
   });

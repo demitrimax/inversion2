@@ -299,10 +299,10 @@ class invoperacionController extends AppBaseController
       //return redirect('inventario.estatus');
       return back();
     }
-    public function precioventa($id)
+    public function precioventaproducto($id)
     {
       $producto = productos::find($id);
-      $precioventa = $producto->pventa;
+      $precioventa = ['nombre'=>$producto->nombre, 'pventa' => $producto->pventa, 'pcompra' => $producto->pcompra, 'umedida'=>$producto->umedida ];
       return $precioventa;
     }
 }

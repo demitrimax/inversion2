@@ -127,16 +127,16 @@ class productosController extends AppBaseController
         $productos = $this->productosRepository->findWithoutFail($id);
 
         if (empty($productos)) {
-            Flash::error('Productos no encontrado');
-            Alert::error('Productos no encontrado');
+            Flash::error('Producto no encontrado');
+            Alert::error('Producto no encontrado');
 
             return redirect(route('productos.index'));
         }
 
         $productos = $this->productosRepository->update($request->all(), $id);
 
-        Flash::success('Productos actualizado correctamente.');
-        Alert::success('Productos actualizado correctamente.');
+        Flash::success('Producto actualizado correctamente.');
+        Alert::success('Producto actualizado correctamente.');
 
         return redirect(route('productos.index'));
     }
@@ -158,11 +158,23 @@ class productosController extends AppBaseController
 
             return back();
         }
+        if($productos->stock > 0){
+          Flash::error('Producto con Stock, por lo que no se puede eliminar.');
+          Alert::error('Producto con Stock, por lo que no se puede eliminar.');
+
+          return back();
+        }
+        if($productos->inventarios->count() > 0){
+          Flash::error('Producto con movimiento en inventarios, no se puede eliminar.');
+          Alert::error('Producto con movimiento en inventarios, no se puede eliminar.');
+
+          return back();
+        }
 
         $this->productosRepository->delete($id);
 
-        Flash::success('Productos borrado correctamente.');
-        Flash::success('Productos borrado correctamente.');
+        Flash::success('Producto borrado correctamente.');
+        Alert::success('Producto borrado correctamente.');
 
         return redirect(route('productos.index'));
     }

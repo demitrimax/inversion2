@@ -50,7 +50,13 @@
 <!-- Umedida Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('umedida', 'Unidad de medida:') !!}
-    {!! Form::text('umedida', null, ['class' => 'form-control maxlen', 'required', 'maxlength'=>'30']) !!}
+    {!! Form::text('umedida', null, ['class' => 'form-control maxlen', 'required', 'maxlength'=>'10']) !!}
+</div>
+
+<!-- Medida Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('medida', 'Medida:') !!}
+    {!! Form::text('medida', null, ['class' => 'form-control maxlen', 'required', 'maxlength'=>'30']) !!}
 </div>
 
 <!-- Stock Min Field -->

@@ -4,7 +4,7 @@
             <th>Nombre</th>
             <th>Categoría</th>
             <th>U. Medida</th>
-            <th>Stock</th>
+            <th>Existencias</th>
             <th>Acciones</th>
         </tr>
     </thead>
