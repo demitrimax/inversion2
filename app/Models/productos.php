@@ -100,7 +100,12 @@ class productos extends Model
 
       $entradas = invdetoperacion::where('producto_id', $this->id)
                                   ->where('tipo_operacion', 'Entrada')
+                                  ->where('estatus','t')
                                   ->sum('cantidad');
+      $entradas_ = invdetoperacion::where('producto_id', $this->id)
+                                  ->where('tipo_operacion', 'Entrada')
+                                  ->where('estatus','p')
+                                  ->sum('parcial');
 
       $salidas = invdetoperacion::where('producto_id', $this->id)
                                   ->where('tipo_operacion', 'Salida')

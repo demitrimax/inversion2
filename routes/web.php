@@ -82,3 +82,6 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::get('precio/venta/producto/{id}', 'invoperacionController@precioventaproducto');
   Route::get('precio/compra/producto/{id}', 'invoperacionController@preciocompraproducto');
 });
+
+
+Route::resource('invproveedores', 'invproveedoresController');

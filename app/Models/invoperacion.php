@@ -90,7 +90,7 @@ class invoperacion extends Model
      **/
     public function proveedor()
     {
-        return $this->belongsTo(\App\Models\proveedores::class, 'proveedor_id');
+        return $this->belongsTo(\App\Models\invproveedores::class, 'proveedor_id');
     }
 
     /**
@@ -118,5 +118,13 @@ class invoperacion extends Model
         $personanombre = $this->cliente->nombre;
       }
       return $personanombre;
+    }
+    public function getEstatusgAttribute()
+    {
+      $estatus = 'n/d';
+      $this->estatus == 'S'  ? $estatus = 'Solicitud' : '';
+      $this->estatus == 'T'  ? $estatus = 'Surtida en Totalidad' : '';
+      $this->estatus == 'P'  ? $estatus = 'Surtida Parcialmente' : '';
+      return $estatus;
     }
 }

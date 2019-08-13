@@ -118,3 +118,7 @@
     <a href="{!! route('invoperacions.index') !!}"><i class="fa fa-edit"></i><span>Invoperacions</span></a>
 </li>
 
+<li class="{{ Request::is('invproveedores*') ? 'active' : '' }}">
+    <a href="{!! route('invproveedores.index') !!}"><i class="fa fa-edit"></i><span>Invproveedores</span></a>
+</li>
+

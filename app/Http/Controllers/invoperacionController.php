@@ -11,7 +11,7 @@ use Flash;
 use Alert;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
-use App\Models\proveedores;
+use App\Models\invproveedores;
 use App\Models\clientes;
 use App\Models\productos;
 use App\Models\invoperacion;
@@ -96,7 +96,7 @@ class invoperacionController extends AppBaseController
 
             return redirect(route('invoperacions.index'));
         }
-        $proveedores = proveedores::pluck('nombre','id');
+        $proveedores = invproveedores::pluck('nombre','id');
 
         return view('invoperacions.show')->with('invoperacion', $invoperacion);
     }
@@ -186,7 +186,7 @@ class invoperacionController extends AppBaseController
     }
     public function entrada()
     {
-      $proveedores = proveedores::orderBy('nombre','asc')->pluck('nombre','id');
+      $proveedores = invproveedores::orderBy('nombre','asc')->pluck('nombre','id');
       $productos = productos::orderBy('nombre','asc')->pluck('nombre','id');
       $bodegas = bodegas::pluck('nombre','id');
       return view('inventario.entrada')->with(compact('proveedores','productos','bodegas'));
@@ -213,8 +213,12 @@ class invoperacionController extends AppBaseController
       $invoperacion->usuario_id = Auth::user()->id;
       $invoperacion->tipo_mov = 'Entrada';
       $invoperacion->proveedor_id = $input['proveedor_id'];
-      $invoperacion->monto = $monto;
+      $invoperacion->total = $input['aTotal'];
+      $invoperacion->subtotal = $input['aSubtotal'];
+      $invoperacion->iva = $input['aIva'];
       $invoperacion->fecha = $input['fecha'];
+      $invoperacion->facturar_a = $input['facturar_a'];
+      $invoperacion->estatus = 'S';
       $invoperacion->save();
 
       foreach($input['cantidad'] as $key=>$cantidad ){
@@ -228,12 +232,13 @@ class invoperacionController extends AppBaseController
           $invdetoperacion->tipo_operacion = 'Entrada';
           $invdetoperacion->fecha = $input['fecha'];
           $invdetoperacion->bodega_id = $input['bodega_id'];
+          $invdetoperacion->estatus = 'S';
           $invdetoperacion->save();
         }
 
       }
-      Alert::success('Entrada de Producto registrado correctamente');
-      Flash::success('Entrada de Producto registrado correctamente');
+      Alert::success('Solicitud de Requisición registrado correctamente');
+      Flash::success('Solicitud de Requisición registrado correctamente');
 
       //return redirect('inventario.estatus');
       return back();

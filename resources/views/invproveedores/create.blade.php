@@ -1,17 +1,17 @@
 @extends('layouts.appv2')
-@section('title',config('app.name').' | Alta de Nuevo $MODEL_NAME_PLURAL_HUMAN$' )
+@section('title',config('app.name').' | Alta de Nuevo Invproveedores' )
 @section('content')
 <div class="row">
       <div class="col-lg-12">
           @include('adminlte-templates::common.errors')
           <div class="card bd-0">
               <div class="card-header card-header-default">
-                  <h3 class="card-title">Alta de $MODEL_NAME_HUMAN$</h3>
+                  <h3 class="card-title">Alta de Invproveedores</h3>
               </div>
               <div class="card-body">
-              {!! Form::open(['route' => '$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.store']) !!}
+              {!! Form::open(['route' => 'invproveedores.store']) !!}
 
-                  @include('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.fields')
+                  @include('invproveedores.fields')
 
               {!! Form::close() !!}
               </div>

@@ -59,6 +59,7 @@
                  <div class="input-group">
                    <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
                    {!! Form::text('csubtotal', null, ['class'=>'form-control text-right', 'id'=>'csubtotal', 'placeholder'=>'00000', 'readonly', 'step'=>'0.01'])!!}</td>
+                   {!! Form::hidden('aSubtotal', null, ['class'=>'form-control', 'id'=>'aSubtotal'])!!}
                  </div>
              </tr>
              <tr>
@@ -67,6 +68,7 @@
                  <div class="input-group">
                    <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
                    {!! Form::text('civa', null, ['class'=>'form-control text-right', 'id'=>'civa', 'placeholder'=>'00000', 'readonly', 'step'=>'0.01'])!!}</td>
+                   {!! Form::hidden('aIva', null, ['class'=>'form-control', 'id'=>'aIva'])!!}
                  </div>
              </tr>
              <tr>
@@ -155,16 +157,18 @@ function SumarTodosLosMontos() {
     SumaTotalMonto = numeral(SumaTotalMontoA);
     console.log(SumaTotalMontoA);
     $("#csubtotal").val(SumaTotalMonto.format('0,0.00'));
-    $("#aTotal").val(SumaTotalMontoA);
+    $("#aSubtotal").val(SumaTotalMontoA);
 }
 function CalcularTotales()
 {
   var Ssubtotal = numeral($("#csubtotal").val());
   var civa = numeral(parseFloat(Ssubtotal.value() * 0.16));
   $('#civa').val(civa.format('0,0.00'));
+  $('#aIva').val(civa);
   var total = numeral(Ssubtotal.value()+civa.value());
   //console.log(total);
   $('#cTotal').val(total.format('0,0.00'));
+  $('#aTotal').val(total);
 }
 
     //calcular el IVA del monto ingresado en subtotal
@@ -233,6 +237,8 @@ $( "RegistroInventario" ).submit(function( event ) {
       $('.PreUnitario').val(data.pcompra);
       $('.UnidadMedida').val(data.umedida);
 
+      SumarTodosLosMontos();
+      CalcularTotales();
     });
   });
 </script>

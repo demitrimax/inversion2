@@ -1,18 +1,18 @@
 @extends('layouts.appv2')
 
-@section('title',config('app.name').' | $MODEL_NAME_PLURAL_HUMAN$' )
+@section('title',config('app.name').' | Invproveedores' )
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
             <div class="card bg-0">
               <div class="card-header card-header-default">
-                  <h3 class="card-title">$MODEL_NAME_PLURAL_HUMAN$</h3>
+                  <h3 class="card-title">Invproveedores</h3>
               </div>
                 <div class="card-body">
                     <h1 class="pull-right">
-                      @can('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$-create')
-                       <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.create') !!}">Agregar Nuevo</a>
+                      @can('invproveedores-create')
+                       <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('invproveedores.create') !!}">Agregar Nuevo</a>
                       @endcan
                     </h1>
                     <div class="content">
@@ -23,11 +23,11 @@
                         <div class="clearfix"></div>
                         <div class="box box-primary">
                             <div class="box-body">
-                                    @include('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.table')
+                                    @include('invproveedores.table')
                             </div>
                         </div>
                         <div class="text-center">
-                            $PAGINATE$
+                            
                         </div>
                     </div>
                 </div> <!-- panel-body -->

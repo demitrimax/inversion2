@@ -33,7 +33,7 @@
 @php
 if( Request::is('productos*') || Request::is('categorias*') || Request::is('bodegas*')
   || Request::is('clientes*') || Request::is('invoperacions*') || Request::is('inventario/entrada*')
-  || Request::is('inventario/salida*') ) {
+  || Request::is('inventario/salida*') || Request::is('invproveedores*') ) {
     $varActive = "active show-sub";
 } else {
   $varActive = "";
@@ -69,6 +69,9 @@ if( Request::is('productos*') || Request::is('categorias*') || Request::is('bode
   @endcan
   @can('clientes-list')
   <li class="nav-item"><a href="{!! route('clientes.index') !!}" class="nav-link {{ Request::is('clientes*') ? 'active' : '' }}">Clientes</a></li>
+  @endcan
+  @can('invproveedores-list')
+  <li class="nav-item"><a href="{!! route('invproveedores.index') !!}" class="nav-link {{ Request::is('invproveedores*') ? 'active' : '' }}">Proveedores</a></li>
   @endcan
 
 </ul>
