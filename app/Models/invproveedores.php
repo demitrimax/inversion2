@@ -10,11 +10,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App\Models
  * @version August 13, 2019, 11:34 am CDT
  *
- * @property \Illuminate\Database\Eloquent\Collection 
- * @property \Illuminate\Database\Eloquent\Collection 
- * @property \Illuminate\Database\Eloquent\Collection 
- * @property \Illuminate\Database\Eloquent\Collection 
- * @property \Illuminate\Database\Eloquent\Collection 
+ * @property \Illuminate\Database\Eloquent\Collection
+ * @property \Illuminate\Database\Eloquent\Collection
+ * @property \Illuminate\Database\Eloquent\Collection
+ * @property \Illuminate\Database\Eloquent\Collection
+ * @property \Illuminate\Database\Eloquent\Collection
  * @property string nombre
  * @property string rfc
  * @property string domicilio
@@ -27,7 +27,7 @@ class invproveedores extends Model
     use SoftDeletes;
 
     public $table = 'inv_catproveedores';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -67,6 +67,9 @@ class invproveedores extends Model
     public static $rules = [
         'nombre' => 'required'
     ];
+    public function operaciones()
+    {
+      return $this->hasMany('App\Models\invoperacion', 'proveedor_id');
+    }
 
-    
 }

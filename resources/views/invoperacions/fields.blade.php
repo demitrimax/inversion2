@@ -5,8 +5,8 @@
 @endsection
   <!-- Usuario Id Field -->
   <div class="form-group">
-      {!! Form::label('usuario', 'Usuario:') !!}
-      {!! Form::text('usuario', Auth::user()->name, ['class' => 'form-control', 'readonly']) !!}
+      {!! Form::label('usu', 'Usuario:') !!}
+      {!! Form::text('usu', Auth::user()->name, ['class' => 'form-control', 'readonly']) !!}
       {!! Form::hidden('usuario_id', Auth::user()->id)!!}
   </div>
 
@@ -30,8 +30,8 @@
 
   <!-- Monto Field -->
   <div class="form-group">
-      {!! Form::label('monto', 'Monto:') !!}
-      {!! Form::number('monto', null, ['class' => 'form-control', 'readonly']) !!}
+      {!! Form::label('total', 'Total:') !!}
+      {!! Form::number('total', null, ['class' => 'form-control', 'readonly']) !!}
   </div>
 
   <!-- Fecha Field -->

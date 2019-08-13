@@ -164,11 +164,11 @@ function CalcularTotales()
   var Ssubtotal = numeral($("#csubtotal").val());
   var civa = numeral(parseFloat(Ssubtotal.value() * 0.16));
   $('#civa').val(civa.format('0,0.00'));
-  $('#aIva').val(civa);
+  $('#aIva').val(civa.value());
   var total = numeral(Ssubtotal.value()+civa.value());
   //console.log(total);
   $('#cTotal').val(total.format('0,0.00'));
-  $('#aTotal').val(total);
+  $('#aTotal').val(total.value());
 }
 
     //calcular el IVA del monto ingresado en subtotal
@@ -217,6 +217,7 @@ $('#btnagregarotro').click(function() {
     '</td>'
   ;
   $(newRow).appendTo($('#conceptos tbody'));
+  $('.select2').select2();
 }) ;
 
 $( "RegistroInventario" ).submit(function( event ) {
@@ -234,7 +235,11 @@ $( "RegistroInventario" ).submit(function( event ) {
     $.get('{{url('precio/venta/producto')}}/' + productoid, function(data) {
       //exito al obtener los datos
       console.log(data);
+      @if($operaciontipo == 'entrada')
       $('.PreUnitario').val(data.pcompra);
+      @else
+      $('.PreUnitario').val(data.pventa);
+      @endif
       $('.UnidadMedida').val(data.umedida);
 
       SumarTodosLosMontos();

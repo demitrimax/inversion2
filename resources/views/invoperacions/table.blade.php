@@ -2,10 +2,10 @@
     <thead>
         <tr>
             <th>Tipo</th>
-            <th>Persona</th>
+            <th>PROVEEDOR/CLIENTE</th>
             <th>Monto</th>
             <th>Fecha</th>
-            <th>Usuario</th>
+            <th>Estatus</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -17,7 +17,7 @@
             <td>{!! $invoperacion->personanombre !!}</td>
             <td>{!! number_format($invoperacion->total,2) !!}</td>
             <td>{!! $invoperacion->fecha->format('d-m-Y') !!}</td>
-            <td>{!! $invoperacion->usuario->name !!}</td>
+            <td>{!! $invoperacion->estatusg !!}</td>
             <td>
                 {!! Form::open(['route' => ['invoperacions.destroy', $invoperacion->id], 'method' => 'delete', 'id'=>'form'.$invoperacion->id]) !!}
                 <div class='btn-group'>

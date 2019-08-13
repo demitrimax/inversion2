@@ -157,6 +157,13 @@ class invproveedoresController extends AppBaseController
             return redirect(route('invproveedores.index'));
         }
 
+        if ($invproveedores->operaciones->count()>0) {
+            Flash::error('El proveedor tiene operaciones registradas');
+            Alert::error('El proveedor tiene operaciones registradas');
+
+            return back();
+        }
+
         $this->invproveedoresRepository->delete($id);
 
         Flash::success('Invproveedores borrado correctamente.');

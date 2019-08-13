@@ -112,10 +112,10 @@ class invoperacion extends Model
     {
       $personanombre = 'N/D';
       if($this->proveedor_id){
-        $personanombre = $this->proveedor->nombre;
+        $personanombre = 'Proveedor: '.$this->proveedor->nombre;
       }
       elseif ($this->cliente_id){
-        $personanombre = $this->cliente->nombre;
+        $personanombre = 'Cliente: '.$this->cliente->nombre;
       }
       return $personanombre;
     }

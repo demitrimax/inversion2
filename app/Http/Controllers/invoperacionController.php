@@ -55,7 +55,7 @@ class invoperacionController extends AppBaseController
      */
     public function create()
     {
-      $proveedores = proveedores::pluck('nombre','id');
+      $proveedores = invproveedores::pluck('nombre','id');
       $clientes = clientes::pluck('nombre','id');
         return view('invoperacions.create')->with(compact('proveedores','clientes'));
     }
@@ -70,7 +70,7 @@ class invoperacionController extends AppBaseController
     public function store(CreateinvoperacionRequest $request)
     {
         $input = $request->all();
-
+        //dd($input);
         $invoperacion = $this->invoperacionRepository->create($input);
 
         Flash::success('Operación de Inventario guardado correctamente.');
@@ -98,7 +98,7 @@ class invoperacionController extends AppBaseController
         }
         $proveedores = invproveedores::pluck('nombre','id');
 
-        return view('invoperacions.show')->with('invoperacion', $invoperacion);
+        return view('invoperacions.pedido')->with('invoperacion', $invoperacion);
     }
 
     /**
@@ -118,8 +118,10 @@ class invoperacionController extends AppBaseController
 
             return redirect(route('invoperacions.index'));
         }
+        $proveedores = invproveedores::pluck('nombre','id');
+        $clientes = clientes::pluck('nombre','id');
 
-        return view('invoperacions.edit')->with('invoperacion', $invoperacion);
+        return view('invoperacions.edit')->with(compact('invoperacion','proveedores','clientes'));
     }
 
     /**
@@ -140,7 +142,7 @@ class invoperacionController extends AppBaseController
 
             return redirect(route('invoperacions.index'));
         }
-
+        //dd($request);
         $invoperacion = $this->invoperacionRepository->update($request->all(), $id);
 
         Flash::success('Operación de Inventario actualizado correctamente.');
@@ -168,6 +170,7 @@ class invoperacionController extends AppBaseController
         }
         $detalleaeliminar = invdetoperacion::where('operacion_id',$invoperacion->id)->get();
         $this->invoperacionRepository->delete($id);
+
         foreach($detalleaeliminar as $detalle){
           $detalle->delete();
         }
@@ -189,16 +192,17 @@ class invoperacionController extends AppBaseController
       $proveedores = invproveedores::orderBy('nombre','asc')->pluck('nombre','id');
       $productos = productos::orderBy('nombre','asc')->pluck('nombre','id');
       $bodegas = bodegas::pluck('nombre','id');
-      return view('inventario.entrada')->with(compact('proveedores','productos','bodegas'));
+      $operaciontipo = 'entrada';
+      return view('inventario.entrada')->with(compact('proveedores','productos','bodegas', 'operaciontipo'));
     }
     public function salida()
     {
-      $proveedores = proveedores::orderBy('nombre','asc')->pluck('nombre','id');
       $clientes = clientes::orderBy('nombre','asc')->pluck('nombre','id');
       $productos = productos::orderBy('nombre','asc')->get();
       $productos = $productos->pluck('nomproductostock','id');
       $bodegas = bodegas::pluck('nombre','id');
-      return view('inventario.salida')->with(compact('clientes','productos','bodegas'));
+      $operaciontipo = 'salida';
+      return view('inventario.salida')->with(compact('clientes','productos','bodegas', 'operaciontipo'));
     }
     public function regEntrada(Request $request)
     {
