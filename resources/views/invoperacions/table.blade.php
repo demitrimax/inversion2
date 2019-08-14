@@ -22,7 +22,7 @@
                 {!! Form::open(['route' => ['invoperacions.destroy', $invoperacion->id], 'method' => 'delete', 'id'=>'form'.$invoperacion->id]) !!}
                 <div class='btn-group'>
                     <a href="{!! route('invoperacions.show', [$invoperacion->id]) !!}" class='btn btn-info btn-xs'><i class="fa fa-eye"></i></a>
-                    @can('invoperacions-edit')
+                    @can('invoperacions-edit0')
                     <a href="{!! route('invoperacions.edit', [$invoperacion->id]) !!}" class='btn btn-primary btn-xs'><i class="fa fa-pencil"></i></a>
                     @endcan
                     @can('invoperacions-delete')

@@ -283,8 +283,11 @@ class invoperacionController extends AppBaseController
       $invoperacion->usuario_id = Auth::user()->id;
       $invoperacion->tipo_mov = 'Salida';
       $invoperacion->cliente_id = $input['cliente_id'];
-      $invoperacion->monto = $monto;
+      $invoperacion->subtotal = $input['aSubtotal'];
+      $invoperacion->iva = $input['aIva'];
+      $invoperacion->total = $monto;
       $invoperacion->fecha = $input['fecha'];
+      $invdetoperacion->estatus = 'F';
       $invoperacion->save();
 
       foreach($input['cantidad'] as $key=>$cantidad ){
@@ -313,5 +316,43 @@ class invoperacionController extends AppBaseController
       $producto = productos::find($id);
       $precioventa = ['nombre'=>$producto->nombre, 'pventa' => $producto->pventa, 'pcompra' => $producto->pcompra, 'umedida'=>$producto->umedida ];
       return $precioventa;
+    }
+    public function surtidototalproducto($id)
+    {
+      $detoperacion = invdetoperacion::find($id);
+
+      if(empty($detoperacion)){
+        Flash::error('Operación de Inventario no encontrado');
+        Alert::error('Operación de Inventario no encontrado');
+        return back();
+      }
+
+      $detoperacion->estatus = 'T';
+      $detoperacion->save();
+      Flash::success('Surtido en su Totalidad');
+      Alert::success('Surtido en su Totalidad');
+
+      return back();
+
+    }
+    public function surtidoparcialproducto(Request $request, $id)
+    {
+      $input = $request->all();
+      $detoperacion = invdetoperacion::find($id);
+
+      if(empty($detoperacion)){
+        Flash::error('Operación de Inventario no encontrado');
+        Alert::error('Operación de Inventario no encontrado');
+        return back();
+      }
+
+      $detoperacion->estatus = 'P';
+      $detoperacion->parcial = $input['parcial'];
+      $detoperacion->save();
+      Flash::success('Surtido Parcialmente');
+      Alert::success('Surtido Parcialmente');
+
+      return back();
+
     }
 }

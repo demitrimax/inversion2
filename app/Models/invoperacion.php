@@ -125,6 +125,13 @@ class invoperacion extends Model
       $this->estatus == 'S'  ? $estatus = 'Solicitud' : '';
       $this->estatus == 'T'  ? $estatus = 'Surtida en Totalidad' : '';
       $this->estatus == 'P'  ? $estatus = 'Surtida Parcialmente' : '';
+      $this->estatus == 'G'  ? $estatus = 'Pagada' : '';
+      $this->estatus == 'F'  ? $estatus = 'Facturada' : '';
       return $estatus;
+    }
+    public function getFolioAttribute()
+    {
+      $formatFolio = '#'.$this->created_at->format('y').$this->created_at->format('m').str_pad($this->id,4,"0",STR_PAD_LEFT);
+      return $formatFolio;
     }
 }

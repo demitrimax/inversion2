@@ -11,7 +11,7 @@
               </div>
                 <div class="card-body">
                     <h1 class="pull-right">
-                      @can('invoperacions-create')
+                      @can('invoperacions-create0')
                        <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('invoperacions.create') !!}">Nueva Operación</a>
                       @endcan
                     </h1>
