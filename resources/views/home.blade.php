@@ -105,7 +105,9 @@
         </div><!-- row -->
 
         <div class="row row-sm mg-t-20">
+            @can('dashboard-grafica')
           <div class="col-xl-8">
+
             <div class="card overflow-hidden">
               <div class="card-header bg-transparent pd-y-20 d-sm-flex align-items-center justify-content-between">
                 <div class="mg-b-20 mg-sm-b-0">
@@ -145,6 +147,8 @@
                 <div id="rickshaw2" class="wd-100p ht-200 rickshaw_graph"><svg width="755" height="200"><g><path d="M0,39.99999999999999Q50.333333333333336,3.46666666666667,58.07692307692308,4.0000000000000036C69.6923076923077,4.800000000000004,104.53846153846155,40.400000000000006,116.15384615384616,48S162.6153846153846,77.6,174.23076923076923,80S220.6923076923077,76,232.30769230769232,72S278.76923076923083,35.199999999999996,290.3846153846154,39.99999999999999S336.84615384615387,108,348.46153846153845,120S394.9230769230769,160,406.53846153846155,160S453,126,464.61538461538464,120S511.0769230769231,106,522.6923076923077,100S569.1538461538462,58.00000000000001,580.7692307692308,60.00000000000001S627.2307692307692,122,638.8461538461538,120S685.3076923076923,41.99999999999999,696.9230769230769,39.99999999999999Q704.6666666666666,38.66666666666666,755,100L755,150Q704.6666666666666,119.33333333333333,696.9230769230769,120C685.3076923076923,121,650.4615384615385,159,638.8461538461538,160S592.3846153846155,131,580.7692307692308,130S534.3076923076924,147,522.6923076923077,150S476.2307692307693,157,464.61538461538464,160S418.1538461538462,180,406.53846153846155,180S360.07692307692304,166,348.46153846153845,160S302,122.4,290.3846153846154,120S243.92307692307693,134,232.30769230769232,136S185.84615384615384,141.2,174.23076923076923,140S127.76923076923077,127.8,116.15384615384616,124S69.6923076923077,102.4,58.07692307692308,102Q50.333333333333336,101.73333333333333,0,120Z" class="area" fill="#73a9e7"></path></g><g><path d="M0,120Q50.333333333333336,101.73333333333333,58.07692307692308,102C69.6923076923077,102.4,104.53846153846155,120.2,116.15384615384616,124S162.6153846153846,138.8,174.23076923076923,140S220.6923076923077,138,232.30769230769232,136S278.76923076923083,117.6,290.3846153846154,120S336.84615384615387,154,348.46153846153845,160S394.9230769230769,180,406.53846153846155,180S453,163,464.61538461538464,160S511.0769230769231,153,522.6923076923077,150S569.1538461538462,129,580.7692307692308,130S627.2307692307692,161,638.8461538461538,160S685.3076923076923,121,696.9230769230769,120Q704.6666666666666,119.33333333333333,755,150L755,200Q704.6666666666666,200,696.9230769230769,200C685.3076923076923,200,650.4615384615385,200,638.8461538461538,200S592.3846153846155,200,580.7692307692308,200S534.3076923076924,200,522.6923076923077,200S476.2307692307693,200,464.61538461538464,200S418.1538461538462,200,406.53846153846155,200S360.07692307692304,200,348.46153846153845,200S302,200,290.3846153846154,200S243.92307692307693,200,232.30769230769232,200S185.84615384615384,200,174.23076923076923,200S127.76923076923077,200,116.15384615384616,200S69.6923076923077,200,58.07692307692308,200Q50.333333333333336,200,0,200Z" class="area" fill="#2B333E"></path></g></svg></div>
               </div><!-- card-body -->
             </div><!-- card -->
+            @endcan
+
 
             <div class="card pd-20 pd-sm-25 mg-t-20"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
               <h6 class="card-body-title tx-13">Horizontal Bar Chart</h6>
@@ -152,7 +156,10 @@
               <canvas id="chartBar4" height="348" width="819" class="chartjs-render-monitor" style="display: block; width: 819px; height: 348px;"></canvas>
             </div><!-- card -->
 
+
           </div><!-- col-8 -->
+
+
           <div class="col-xl-4 mg-t-20 mg-xl-t-0">
 
             <div class="card pd-20 pd-sm-25">
@@ -169,7 +176,7 @@
 
               <div class="list-group list-group-flush">
                 @foreach($tareas as $tarea)
-                <a href="" class="list-group-item list-group-item-action media">
+                <a href="{{url('tareas/'.$tarea->id)}}" class="list-group-item list-group-item-action media">
                   <img src="{{asset($tarea->user->uavatar)}}" alt="">
                   <div class="media-body">
                     <div class="msg-top">
@@ -182,7 +189,9 @@
                 @endforeach
 
               <div class="card-footer">
+                @can('tareas-list')
                 <a href="{{route('tareas.index')}}" class="tx-12"><i class="fa fa-angle-down mg-r-3"></i> Ver todas las tareas</a>
+                @endcan
               </div><!-- card-footer -->
             </div><!-- card -->
           </div><!-- col-3 -->

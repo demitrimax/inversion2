@@ -20,6 +20,7 @@ $(function(){
     chartRangeMax: 10
   });
 
+if(typeof (document.getElementById("#rickshaw2"))!=="undefined"){
   var rs2 = new Rickshaw.Graph({
     element: document.querySelector('#rickshaw2'),
     renderer: 'area',
@@ -64,6 +65,7 @@ $(function(){
   });
   rs2.render();
 
+
   // Responsive Mode
   new ResizeSensor($('.br-mainpanel'), function(){
     rs2.configure({
@@ -72,7 +74,7 @@ $(function(){
     });
     rs2.render();
   });
-
+}
   var ctb4 = document.getElementById('chartBar4').getContext('2d');
   new Chart(ctb4, {
     type: 'horizontalBar',
