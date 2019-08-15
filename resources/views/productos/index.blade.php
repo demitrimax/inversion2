@@ -25,6 +25,7 @@
                             <div class="box-body">
                                     @include('productos.table')
                             </div>
+                            <a class="btn btn-xs btn-info" href="{{url('inventario/informe/productos')}}">Vista Reporte</a>
                         </div>
                         <div class="text-center">
 

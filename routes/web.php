@@ -83,6 +83,7 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::get('precio/compra/producto/{id}', 'invoperacionController@preciocompraproducto');
   Route::post('inventario/operacion/producto/{id}/surtidototal', 'invoperacionController@surtidototalproducto')->name('inventario.producto.surtido.total');
   Route::post('inventario/operacion/producto/{id}/surtidoparcial', 'invoperacionController@surtidoparcialproducto')->name('inventario.producto.surtido.parcial');
+  Route::get('inventario/informe/productos', 'invoperacionController@verinformeproductos')->name('inventario.informe.productos');
 });
 
 

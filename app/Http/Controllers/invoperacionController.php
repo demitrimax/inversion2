@@ -199,7 +199,7 @@ class invoperacionController extends AppBaseController
     {
       $clientes = clientes::orderBy('nombre','asc')->pluck('nombre','id');
       $productos = productos::orderBy('nombre','asc')->get();
-      $productos = $productos->pluck('nomproductostock','id');
+      $productos = $productos->where('stock', '>', 0 )->pluck('nomproductostock','id');
       $bodegas = bodegas::pluck('nombre','id');
       $operaciontipo = 'salida';
       return view('inventario.salida')->with(compact('clientes','productos','bodegas', 'operaciontipo'));
@@ -354,5 +354,10 @@ class invoperacionController extends AppBaseController
 
       return back();
 
+    }
+    public function verinformeproductos()
+    {
+      $productos = productos::all();
+      return view('productos.vreporte')->with(compact('productos'));
     }
 }
