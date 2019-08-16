@@ -1,13 +1,13 @@
 
 
-<table class="table tabla-conceptos table-responsive table-responsive-xl" id="conceptos">
-  <thead class=" {!!$operaciontipo == 'entrada' ? 'bg-teal' : 'bg-info' !!} text-white fixed">
+<table class="table tabla-conceptos table-responsive table-hover" id="conceptos">
+  <thead class="bg-danger">
     <tr>
-      <th>Cantidad</th>
-      <th>Unidad</th>
-      <th>Producto</th>
-      <th>P. Unitario</th>
-      <th>Subtotal</th>
+      <th style="width:10%">Cantidad</th>
+      <th style="width:10%;">Unidad</th>
+      <th style="width:30%;">Producto</th>
+      <th style="width:20%;">P. Unitario</th>
+      <th style="width:20%;">Subtotal</th>
     </tr>
   </thead>
   <tbody>
@@ -26,19 +26,19 @@
     </td>
     <td>
       <div class="input-group col-md-12">
-         {!! Form::select('producto[]', $productos, null, ['class'=>'form-control select2 producto', 'required', 'placeholder'=>'Seleccione un producto', 'style'=>'width: 100%;'])!!}
+         {!! Form::select('producto[]', $productos, null, ['class'=>'form-control select2 producto', 'required', 'placeholder'=>'Seleccione un producto'])!!}
       </div>
     </td>
     <td class="ColIngImporte">
       <div class="input-group IngresoImporte">
         <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-        <input type="number" min="1" step="0.01" class="form-control form-control-xs PreUnitario" id="importecon[]" name="importecon[]" placeholder="Importe" size="50">
+        <input type="number" min="1" step="0.01" class="form-control PreUnitario" id="importecon[]" name="importecon[]" placeholder="Importe">
       </div>
     </td>
     <td class="ColNMonto">
       <div class="input-group NSubtotalProducto">
         <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-        <input type="number" min="1" step="0.01" class="form-control NMontoProducto" id="montoconcepto[]" name="montoconcepto[]" placeholder="Monto" readonly size="50">
+        <input type="number" min="1" step="0.01" class="form-control NMontoProducto" id="montoconcepto[]" name="montoconcepto[]" placeholder="Monto" readonly>
         <span class="input-group-btn">
           <button type="button" class="btn btn-warning btn" id ="btnagregarotro"><i class="fa fa-plus"></i></button>
         </span>
@@ -47,12 +47,10 @@
     </tr>
   </tbody>
 </table>
-
-  <div class="row">
-    <div class="col-md-6">
-    </div>
-      <div class="col-md-6">
-         <table class="table table-responsive bg-white">
+<div class="content">
+  <div class="row justify-content-end">
+    <div class='col-4'>
+         <table class="table bg-white">
 
            <tbody>
              <tr>
@@ -89,14 +87,11 @@
            </tbody>
          </table>
        </div>
-
-       </div>
-
-
+   </div>
+</div>
 @push('css')
 <!-- select 2-->
 <link href="{{asset('starlight/lib/select2/css/select2.min.css')}}" rel="stylesheet" />
-
 @endpush
 
 @push('scripts')
@@ -202,7 +197,7 @@ $('#btnagregarotro').click(function() {
     '</td>'+
     '<td>'+
       '<div class="input-group col-md-12">'+
-         '{!! Form::select("producto[]", $productos, null, ["class"=>"form-control select2 producto", "required", "placeholder"=>"Seleccione un producto", "style"=>"width:100%;" ])!!}'+
+         '{!! Form::select("producto[]", $productos, null, ["class"=>"form-control select2 producto", "required", "placeholder"=>"Seleccione un producto"])!!}'+
       '</div>'+
     '</td>'+
     '<td class="ColIngImporte">'+

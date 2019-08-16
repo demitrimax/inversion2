@@ -1,4 +1,4 @@
-<table class="table table-bordered table-striped table-hover">
+<table class="table table-bordered table-striped table-hover table-responsive">
   <thead class="bg-primary">
     <tr>
       <th class="text-center">Categoria</th>

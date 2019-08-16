@@ -287,7 +287,7 @@ class invoperacionController extends AppBaseController
       $invoperacion->iva = $input['aIva'];
       $invoperacion->total = $monto;
       $invoperacion->fecha = $input['fecha'];
-      $invdetoperacion->estatus = 'F';
+      $invoperacion->estatus = 'F';
       $invoperacion->save();
 
       foreach($input['cantidad'] as $key=>$cantidad ){
