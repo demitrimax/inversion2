@@ -25,6 +25,7 @@ class tareasController extends AppBaseController
     {
         $this->tareasRepository = $tareasRepo;
         $this->middleware('permission:tareas-list');
+        $this->middleware('permission:tareas-mostrar');
         $this->middleware('permission:tareas-show', ['only' => ['show']]);
         $this->middleware('permission:tareas-create', ['only' => ['create','store']]);
         $this->middleware('permission:tareas-edit', ['only' => ['edit','update']]);

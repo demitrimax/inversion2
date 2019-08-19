@@ -3,11 +3,11 @@
 <table class="table tabla-conceptos table-responsive table-responsive-xl" id="conceptos">
   <thead class=" {!!$operaciontipo == 'entrada' ? 'bg-teal' : 'bg-info' !!} text-white fixed">
     <tr>
-      <th>Cantidad</th>
-      <th>Unidad</th>
-      <th>Producto</th>
-      <th>P. Unitario</th>
-      <th>Subtotal</th>
+      <th style="width:10%">Cantidad</th>
+      <th style="width:10%;">Unidad</th>
+      <th style="width:40%;">Producto</th>
+      <th style="width:20%;">P. Unitario</th>
+      <th style="width:20%;">Subtotal</th>
     </tr>
   </thead>
   <tbody>
@@ -31,13 +31,13 @@
     </td>
     <td class="ColIngImporte">
       <div class="input-group IngresoImporte">
-        <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+        <span class="input-group-addon d-none d-sm-block"><i class="fa fa-dollar"></i></span>
         <input type="number" min="1" step="0.01" class="form-control form-control-xs PreUnitario" id="importecon[]" name="importecon[]" placeholder="Importe" size="50">
       </div>
     </td>
     <td class="ColNMonto">
       <div class="input-group NSubtotalProducto">
-        <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+        <span class="input-group-addon d-none d-sm-block"><i class="fa fa-dollar"></i></span>
         <input type="number" min="1" step="0.01" class="form-control NMontoProducto" id="montoconcepto[]" name="montoconcepto[]" placeholder="Monto" readonly size="50">
         <span class="input-group-btn">
           <button type="button" class="btn btn-warning btn" id ="btnagregarotro"><i class="fa fa-plus"></i></button>
@@ -207,13 +207,13 @@ $('#btnagregarotro').click(function() {
     '</td>'+
     '<td class="ColIngImporte">'+
     '<div class="input-group IngresoImporte">'+
-      '<span class="input-group-addon"><i class="fa fa-dollar"></i></span>'+
+      '<span class="input-group-addon d-none d-sm-block"><i class="fa fa-dollar"></i></span>'+
       '<input type="number" step="0.01" min="1" class="form-control PreUnitario" id="importecon[]" name="importecon[]" placeholder="Importe">'+
       '</div>'+
     '</td>'+
     '<td class="ColNMonto">'+
       '<div class="input-group NSubtotalProducto">'+
-        '<span class="input-group-addon"><i class="fa fa-dollar"></i></span>'+
+        '<span class="input-group-addon d-none d-sm-block"><i class="fa fa-dollar"></i></span>'+
         '<input type="number" step="0.01" min="1" class="form-control NMontoProducto" id="montoconcepto[]" name="montoconcepto[]" placeholder="monto" required readonly>'+
         '<span class="input-group-btn">'+
           '<button type="button" class="btn btn-danger btn QuitarConcepto" id="quitarconcepto"><i class="fa fa-times"></i></button>'+
