@@ -122,3 +122,7 @@
     <a href="{!! route('invproveedores.index') !!}"><i class="fa fa-edit"></i><span>Invproveedores</span></a>
 </li>
 
+<li class="{{ Request::is('facturaras*') ? 'active' : '' }}">
+    <a href="{!! route('facturaras.index') !!}"><i class="fa fa-edit"></i><span>Facturaras</span></a>
+</li>
+

@@ -3,9 +3,11 @@
     <li class="nav-item">
       <a class="nav-link active" data-toggle="tab" role="tab" href="#tareas">Tareas ({{$vartareas->count()}})</a>
     </li>
+    @can('ver-notificaciones')
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" role="tab" href="#notifications">Notificaciones (2)</a>
     </li>
+    @endcan
   </ul><!-- sidebar-tabs -->
 
   <!-- Tab panes -->

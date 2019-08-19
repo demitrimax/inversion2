@@ -86,3 +86,6 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::get('inventario/informe/productos', 'invoperacionController@verinformeproductos')->name('inventario.informe.productos');
   Route::resource('invproveedores', 'invproveedoresController');
 });
+
+
+Route::resource('facturaras', 'facturaraController');

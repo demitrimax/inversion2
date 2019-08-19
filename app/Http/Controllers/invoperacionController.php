@@ -96,6 +96,7 @@ class invoperacionController extends AppBaseController
 
             return redirect(route('invoperacions.index'));
         }
+
         $proveedores = invproveedores::pluck('nombre','id');
 
         return view('invoperacions.pedido')->with('invoperacion', $invoperacion);
@@ -359,5 +360,14 @@ class invoperacionController extends AppBaseController
     {
       $productos = productos::all();
       return view('productos.vreporte')->with(compact('productos'));
+    }
+    static function cambiarestado($id)
+    {
+      $operacion = invoperacion::find($id);
+      foreach($operacion->invdetoperacions as $key=>$operaproducto){
+          $estatus[] = $operaproducto->estatus;
+      }
+
+
     }
 }
