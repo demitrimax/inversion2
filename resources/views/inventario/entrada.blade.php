@@ -40,7 +40,7 @@
               <div class="col-lg-8">
                 <div class="form-group">
                   <label class="form-control-label">Facturar a: <span class="tx-danger">*</span></label>
-                  {!! Form::text('facturar_a', null, ['class' => 'form-control', 'required'] )!!}
+                  {!! Form::select('facturara_id', $facturara, null, ['class' => 'form-control', 'required'] )!!}
                 </div>
               </div><!-- col-8 -->
               <div class="col-lg-4">

@@ -17,6 +17,7 @@ use App\Models\productos;
 use App\Models\invoperacion;
 use App\Models\invdetoperacion;
 use App\Models\bodegas;
+use App\Models\facturara;
 use Auth;
 
 class invoperacionController extends AppBaseController
@@ -194,7 +195,8 @@ class invoperacionController extends AppBaseController
       $productos = productos::orderBy('nombre','asc')->pluck('nombre','id');
       $bodegas = bodegas::pluck('nombre','id');
       $operaciontipo = 'entrada';
-      return view('inventario.entrada')->with(compact('proveedores','productos','bodegas', 'operaciontipo'));
+      $facturara = facturara::pluck('nombre', 'id');
+      return view('inventario.entrada')->with(compact('proveedores','productos','bodegas', 'operaciontipo', 'facturara'));
     }
     public function salida()
     {
@@ -222,7 +224,7 @@ class invoperacionController extends AppBaseController
       $invoperacion->subtotal = $input['aSubtotal'];
       $invoperacion->iva = $input['aIva'];
       $invoperacion->fecha = $input['fecha'];
-      $invoperacion->facturar_a = $input['facturar_a'];
+      $invoperacion->facturara_id = $input['facturara_id'];
       $invoperacion->estatus = 'S';
       $invoperacion->save();
 
