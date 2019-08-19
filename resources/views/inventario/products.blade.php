@@ -160,7 +160,7 @@ function SumarTodosLosMontos() {
     var SumaTotalMontoA = ArraySumaMonto.reduce(sumaArrayMontos);
     //console.log('SumaTotalMonto',SumaTotalMonto);
     SumaTotalMonto = numeral(SumaTotalMontoA);
-    console.log(SumaTotalMontoA);
+    //console.log(SumaTotalMontoA);
     $("#csubtotal").val(SumaTotalMonto.format('0,0.00'));
     $("#aSubtotal").val(SumaTotalMontoA);
 }
@@ -176,12 +176,13 @@ function CalcularTotales()
   $('#aTotal').val(total.value());
 }
 
-    //calcular el IVA del monto ingresado en subtotal
-    $('#csubtotal').on('change', function(e) {
-      var subtotal = e.target.value;
-      var civa = parseFloat(subtotal * 1.16);
-      $('#civa').val(civa);
-    });
+//calcular el IVA del monto ingresado en subtotal
+$('#csubtotal').on('change', function(e) {
+  var subtotal = e.target.value;
+  var civa = parseFloat(subtotal * 1.16);
+  $('#civa').val(civa);
+});
+
 var IdRow = 0;
 $('#btnagregarotro').click(function() {
   //$(this).removeClass("btn-warning");
@@ -232,23 +233,36 @@ $( "RegistroInventario" ).submit(function( event ) {
     //return;
   });
 
+
   //obtener el precio de venta del producto
-  $('.producto').on('change', function(e) {
-    console.log(e);
+  $(document).on('change', '.producto', function(e) {
+    console.log(e.target.name);
     var productoid = e.target.value;
     //ajax
     $.get('{{url('precio/venta/producto')}}/' + productoid, function(data) {
       //exito al obtener los datos
+      var PUnitario = $(e.target).parent().parent().parent().children(".ColIngImporte").children(".IngresoImporte").children(".PreUnitario");
+      var Cantidad = $(e.target).parent().parent().parent().children(".NCantidadProd").children(".NCantProd").children(".NCantidadProducto");
+      var Subtotal = $(e.target).parent().parent().parent().children(".ColNMonto").children(".NSubtotalProducto").children(".NMontoProducto");
+
+      var UnidadMedida = $(e.target).parent().parent().parent().children(".ColUMedida").children(".UMedida").children(".UnidadMedida");
+
       console.log(data);
       @if($operaciontipo == 'entrada')
-      $('.PreUnitario').val(data.pcompra);
+      PUnitario.val(data.pcompra);
       @else
-      $('.PreUnitario').val(data.pventa);
+      PUnitario.val(data.pventa);
       @endif
-      $('.UnidadMedida').val(data.umedida);
+      UnidadMedida.val(data.umedida);
+
+
+
+      var precioFinal = Number(PUnitario.val()) * Number(Cantidad.val());
+      Subtotal.val(precioFinal);
 
       SumarTodosLosMontos();
       CalcularTotales();
+
     });
   });
 </script>
