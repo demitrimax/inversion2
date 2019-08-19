@@ -341,7 +341,14 @@ class invoperacionController extends AppBaseController
     public function surtidoparcialproducto(Request $request, $id)
     {
       $input = $request->all();
-      $detoperacion = invdetoperacion::find($id);
+      $detoperacionid = $input['detoperacionid'];
+      $detoperacion = invdetoperacion::find($detoperacionid);
+
+      if(empty($detoperacionid)){
+        Flash::error('No se encontró el ID de la operación.');
+        Alert::error('No se encontró el ID de la operación.');
+        return back();
+      }
 
       if(empty($detoperacion)){
         Flash::error('Operación de Inventario no encontrado');

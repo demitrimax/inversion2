@@ -234,7 +234,7 @@ $( "RegistroInventario" ).submit(function( event ) {
 
   //obtener el precio de venta del producto
   $('.producto').on('change', function(e) {
-    //console.log(e);
+    console.log(e);
     var productoid = e.target.value;
     //ajax
     $.get('{{url('precio/venta/producto')}}/' + productoid, function(data) {

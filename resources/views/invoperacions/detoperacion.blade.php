@@ -35,15 +35,17 @@
 
         @endif
         {!! form::close()!!}
-        {!! Form::open(['route' => ['inventario.producto.surtido.parcial', $detoperacion->id], 'id'=>'formparcial'.$detoperacion->id]) !!}
-          {!! Form::hidden('parcial', null, ['id'=>'parcial'])!!}
-        {!! form::close()!!}
+
 
       </td>
     </tr>
     @endforeach
   </tbody>
 </table>
+{!! Form::open(['route' => ['inventario.producto.surtido.parcial', $invoperacion->id], 'id'=>'formparcial'.$detoperacion->id]) !!}
+  {!! Form::hidden('parcial', null, ['id'=>'parcial'])!!}
+  {!! Form::hidden('detoperacionid', null, ['id'=>'detoperacionid'])!!}
+{!! form::close()!!}
 
 <div class="row justify-content-end">
   <div class='col-4'>
@@ -124,6 +126,7 @@ const { value: surtido } = await swal.fire({
         if(surtido){
           //alert(surtido);
           $("#parcial").val(surtido);
+          $("#detoperacionid").val(id);
           //alert($('#parcial').val());
           document.forms['formparcial'+id].submit();
         }
