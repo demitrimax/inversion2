@@ -47,8 +47,10 @@
   {!! Form::hidden('detoperacionid', null, ['id'=>'detoperacionid'])!!}
 {!! form::close()!!}
 
-<div class="row justify-content-end">
-  <div class='col-4'>
+<div class="row">
+  <div class="col-md-6">
+  </div>
+  <div class='col-md-6'>
        <table class="table bg-white">
 
          <tbody>

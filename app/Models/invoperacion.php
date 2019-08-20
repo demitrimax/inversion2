@@ -56,14 +56,14 @@ class invoperacion extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'usuario_id' => 'integer',
-        'tipo_mov' => 'string',
-        'proveedor_id' => 'integer',
-        'cliente_id' => 'integer',
-        'monto' => 'float',
-        'fecha' => 'date',
-        'cancelada' => 'boolean'
+        'id'            => 'integer',
+        'usuario_id'    => 'integer',
+        'tipo_mov'      => 'string',
+        'proveedor_id'  => 'integer',
+        'cliente_id'    => 'integer',
+        'monto'         => 'float',
+        'fecha'         => 'date',
+        'cancelada'     => 'boolean'
     ];
 
     /**
@@ -72,9 +72,9 @@ class invoperacion extends Model
      * @var array
      */
     public static $rules = [
-        'usuario_id' => 'required',
-        'tipo_mov' => 'required',
-        'fecha' => 'required'
+        'usuario_id'    => 'required',
+        'tipo_mov'      => 'required',
+        'fecha'         => 'required'
     ];
 
     /**
@@ -123,11 +123,69 @@ class invoperacion extends Model
     {
       $estatus = 'n/d';
       $this->estatus == 'S'  ? $estatus = 'Solicitud' : '';
-      $this->estatus == 'T'  ? $estatus = 'Surtida en Totalidad' : '';
+      $this->estatus == 'T'  ? $estatus = 'Surtida Totalmente' : '';
       $this->estatus == 'P'  ? $estatus = 'Surtida Parcialmente' : '';
       $this->estatus == 'G'  ? $estatus = 'Pagada' : '';
       $this->estatus == 'F'  ? $estatus = 'Facturada' : '';
       return $estatus;
+    }
+    public function getEstatushAttribute()
+    {
+      $estado = 'N/D';
+      $est = 'N';
+      $label = 'primary';
+      //Estado de una Entrada o Solicitud de Entrada
+      if($this->tipo_mov == 'Entrada'){
+        $estado = 'Solicitud';
+        $est = 'S';
+        $label = 'primary';
+
+        $diferentes = $this->invdetoperacions->unique('estatus')->pluck('estatus');
+        $diferentes = $diferentes->toArray();
+        //dd($diferentes);
+
+        if(in_array('S', $diferentes) && (!in_array('P', $diferentes) &&!in_array('T', $diferentes)) ){
+          $estado = 'Surtido Parcialmente';
+          $est = 'S';
+          $label = 'warning';
+        }
+        elseif( in_array('S', $diferentes) || in_array('P', $diferentes) ){
+
+          $estado = 'Surtido Parcialmente';
+          $est = 'P';
+          $label = 'warning';
+        }
+        elseif( in_array('P', $diferentes) && in_array('T', $diferentes) ){
+
+          $estado = 'Surtido Parcialmente';
+          $est = 'P';
+          $label = 'warning';
+        }
+        elseif( in_array('S', $diferentes)){
+          $estado = 'Solicitud';
+          $est = 'S';
+          $label = 'primary';
+        }
+        elseif( in_array('P', $diferentes)){
+          $estado = 'Surtido Parcialmente';
+          $est = 'P';
+          $label = 'warning';
+        }
+        elseif( in_array('T', $diferentes)){
+          $estado = 'Surtido en Totalidad';
+          $est = 'T';
+          $label = 'success';
+        }
+
+      }
+      elseif($this->tipo_mov == 'Salida'){
+        $estado = 'Facturada';
+        $est = 'F';
+        $label = 'primary';
+      }
+      //return $estatusoperaciones;
+      $salida = ['estado' => $estado, 'letra' => $est, 'label'=>$label ];
+      return $salida;
     }
 
     public function getFolioAttribute()
