@@ -1,6 +1,6 @@
 <div class="card pd-20 pd-sm-40">
           <h6 class="card-body-title">Operación ID: {!! $invoperacion->folio !!}</h6>
-          <p class="mg-b-20 mg-sm-b-30">Tipo de Operación: {!! $invoperacion->tipo_mov !!} ({!! $invoperacion->estatusg !!})</p>
+          <p class="mg-b-20 mg-sm-b-30">Tipo de Operación: {!! $invoperacion->tipo_mov !!} <span class="badge badge-{{$invoperacion->estatush['label']}}">{!! $invoperacion->estatush['estado'] !!}</span></p>
 
           <div class="form-layout">
             <div class="row mg-b-25">

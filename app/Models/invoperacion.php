@@ -144,19 +144,23 @@ class invoperacion extends Model
         $diferentes = $diferentes->toArray();
         //dd($diferentes);
 
-        if(in_array('S', $diferentes) && (!in_array('P', $diferentes) &&!in_array('T', $diferentes)) ){
+        if( in_array('S', $diferentes) && in_array('P', $diferentes) && in_array('T', $diferentes) ){
           $estado = 'Surtido Parcialmente';
           $est = 'S';
           $label = 'warning';
         }
-        elseif( in_array('S', $diferentes) || in_array('P', $diferentes) ){
+        elseif( in_array('S', $diferentes) && in_array('P', $diferentes) ){
+          $estado = 'Surtido Parcialmente';
+          $est = 'P';
+          $label = 'warning';
+        }
+        elseif( in_array('S', $diferentes) && in_array('T', $diferentes) ){
 
           $estado = 'Surtido Parcialmente';
           $est = 'P';
           $label = 'warning';
         }
         elseif( in_array('P', $diferentes) && in_array('T', $diferentes) ){
-
           $estado = 'Surtido Parcialmente';
           $est = 'P';
           $label = 'warning';

@@ -35,4 +35,41 @@ class invdetoperacion extends Model
       return $this->belongsTo('App\Models\productos', 'producto_id');
     }
 
+    public function getEstatushAttribute()
+    {
+      $estado = 'Solicitud de Salida';
+      $est = 'S';
+      $label = 'success';
+
+      if($this->tipo_operacion == 'Entrada'){
+        if($this->estatus == 'S'){
+          $estado = 'Solicitud';
+          $est = 'S';
+          $label = 'primary';
+        }
+        if($this->estatus == 'T'){
+          $estado = 'Surtido Totalmente';
+          $est = 'T';
+          $label = 'success';
+        }
+        if($this->estatus == 'P'){
+          $estado = 'Surtido Parcialmente';
+          $est = 'P';
+          $label = 'warning';
+        }
+
+      }
+        elseif($this->tipo_operacion == 'Salida')
+        {
+          if($this->estatus == 'S'){
+            $estado = 'Solicitud';
+            $est = 'S';
+            $label = 'primary';
+          }
+        }
+
+      $salida = ['estado' => $estado, 'letra' => $est, 'label'=>$label ];
+      return $salida;
+    }
+
 }

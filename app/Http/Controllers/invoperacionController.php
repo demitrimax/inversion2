@@ -248,7 +248,7 @@ class invoperacionController extends AppBaseController
       Flash::success('Solicitud de Requisición registrado correctamente');
 
       //return redirect('inventario.estatus');
-      return back();
+      return redirect(route('invoperacions.show', [$invoperacion->id]));
     }
     public function regSalida(Request $request)
     {
@@ -311,8 +311,8 @@ class invoperacionController extends AppBaseController
       Alert::success('Salida de Producto registrado correctamente');
       Flash::success('Salida de Producto registrado correctamente');
 
-      //return redirect('inventario.estatus');
-      return back();
+      return redirect(route('invoperacions.show', [$invoperacion->id]));
+      //return back();
     }
     public function precioventaproducto($id)
     {

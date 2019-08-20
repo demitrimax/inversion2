@@ -7,6 +7,7 @@
                   <th>Cantidad</th>
                   <th>P. Unitario</th>
                   <th>Monto</th>
+                  <th>Estatus</th>
                 </tr>
               </thead>
               <tbody>
@@ -19,6 +20,7 @@
                   <td>{{$movinvent->cantidad}}</td>
                   <td>{{number_format($movinvent->punitario,2)}}</td>
                   <td>{{number_format($movinvent->importe,2)}}</td>
+                  <td><span class="badge badge-{{$movinvent->estatush['label']}}">{{$movinvent->estatush['estado']}}</span></td>
                 </tr>
                 @endforeach
               </tbody>

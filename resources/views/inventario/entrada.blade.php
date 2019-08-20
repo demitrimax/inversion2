@@ -70,7 +70,7 @@
             </div>
 
             <div class="form-layout-footer">
-              <button class="btn btn-info mg-r-5" type="submit">Registrar Entrada</button>
+              <button class="btn btn-info mg-r-5" type="submit">Registrar Solicitud</button>
               <button class="btn btn-secondary" type="reset">Cancelar</button>
             </div><!-- form-layout-footer -->
           </div><!-- form-layout -->
