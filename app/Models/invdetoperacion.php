@@ -29,6 +29,18 @@ class invdetoperacion extends Model
         'fecha',
         'bodega_id'
     ];
+    protected $casts = [
+        'id'              =>  'integer',
+        'operacion_id'    => 'integer',
+        'producto_id'     => 'integer',
+        'cantidad'        => 'integer',
+        'punitario'       => 'float',
+        'importe'         => 'float',
+        'tipo_operacion'  => 'string',
+        'fecha'           => 'date',
+        'bodega_id'       => 'integer'
+
+    ];
 
     public function producto()
     {

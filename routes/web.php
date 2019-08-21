@@ -85,7 +85,8 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::post('inventario/operacion/producto/{id}/surtidoparcial', 'invoperacionController@surtidoparcialproducto')->name('inventario.producto.surtido.parcial');
   Route::get('inventario/informe/productos', 'invoperacionController@verinformeproductos')->name('inventario.informe.productos');
   Route::get('inventario/informe/ver1', 'invoperacionController@informeVer1');
-  
+  Route::get('inventario/informe/ver2', 'invoperacionController@informeVer2');
+
   Route::resource('invproveedores', 'invproveedoresController');
   Route::resource('facturaras', 'facturaraController');
 });

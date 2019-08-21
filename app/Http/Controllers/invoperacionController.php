@@ -387,4 +387,9 @@ class invoperacionController extends AppBaseController
       $productos = productos::all();
       return view('inventario.reportev1')->with(compact('productos'));
     }
+    public function informeVer2()
+    {
+      $productos = productos::all();
+      return view('inventario.reportev2')->with(compact('productos'));
+    }
 }

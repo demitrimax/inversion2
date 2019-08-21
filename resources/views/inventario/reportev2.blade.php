@@ -19,7 +19,7 @@
                     <div class="box box-primary">
                         <div class="box-body">
                                 @include('inventario.tablever2')
-                                <a href="/reporte/version2" class="btn btn-primary">Reporte Versión 2</a>
+                              
                         </div>
 
                     </div>

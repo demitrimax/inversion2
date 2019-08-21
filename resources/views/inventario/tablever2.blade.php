@@ -29,11 +29,26 @@
       <td class="text-right">{{ number_format($producto->pventa,2) }}</td>
       <td class="text-right">{{ number_format($impventa = $producto->pventa * $producto->stock, 2) }}</td>
     </tr>
+    @if($producto->inventarios->count() > 0)
+    <tr>
+      <th colspan="2"></th>
+      <th>Fecha</th>
+      <th>Tipo</th>
+      <th>Cantidad</th>
+      <th>P. Compra</th>
+    </tr>
     @foreach($producto->inventarios as $detoperacion)
+
       <tr>
-        <td colspan="2">$detoperacion->cantidad</td>
+        <td colspan="2"></td>
+        <td>{{ $detoperacion->fecha->format('d-m-Y')}}</td>
+        <td>{{$detoperacion->tipo_operacion}}</td>
+        <td>{{$detoperacion->cantidad}}</td>
+        <td>{{ $detoperacion->tipo_operacion =='Entrada' ?  $detoperacion->punitario : ''}}</td>
+        <td></td>
       </tr>
       @endforeach
+    @endif
     @php
       $timpcosto += $impcosto;
       $timpventa += $impventa;
