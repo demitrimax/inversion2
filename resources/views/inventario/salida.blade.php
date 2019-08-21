@@ -48,6 +48,12 @@
                   {!! Form::select('bodega_id', $bodegas, null, ['class' => 'form-control', 'required'] )!!}
                 </div>
               </div><!-- col-4 -->
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label">Número de Factura: <span class="tx-danger">*</span></label>
+                  {!! Form::text('numfactura', null, ['class' => 'form-control', 'required'] )!!}
+                </div>
+              </div><!-- col-4 -->
 
             </div><!-- row -->
             <div class="row mg-b-25">

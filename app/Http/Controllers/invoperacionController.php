@@ -226,6 +226,7 @@ class invoperacionController extends AppBaseController
       $invoperacion->iva = $input['aIva'];
       $invoperacion->fecha = $input['fecha'];
       $invoperacion->facturara_id = $input['facturara_id'];
+      $invoperacion->numfactura = $input['numfactura'];
       $invoperacion->estatus = 'S';
       $invoperacion->save();
 
@@ -291,6 +292,7 @@ class invoperacionController extends AppBaseController
       $invoperacion->iva = $input['aIva'];
       $invoperacion->total = $monto;
       $invoperacion->fecha = $input['fecha'];
+      $invoperacion->numfactura = $input['numfactura'];
       $invoperacion->estatus = 'F';
       $invoperacion->save();
 

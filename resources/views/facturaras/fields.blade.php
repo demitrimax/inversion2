@@ -16,6 +16,13 @@
     {!! Form::text('direccion', null, ['class' => 'form-control']) !!}
 </div>
 
+<!-- Direccion Field -->
+<div class="form-group col-sm-6">
+    {!! Form::hidden('altaproveedor', 0) !!}
+    {!! Form::checkbox('altaproveedor', null, 0) !!}
+    {!! Form::label('proveedor', 'Alta como proveedor:') !!}
+</div>
+
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}

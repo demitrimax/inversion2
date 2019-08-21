@@ -37,7 +37,7 @@
                   {!! Form::text('fecha', Date('Y-m-d'), ['class' => 'form-control datepicker-here', 'required','id'=>'finicio', 'data-language'=>'es', 'data-date-format'=>'yyyy-mm-dd', 'pattern'=>'(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))'] )!!}
                 </div>
               </div><!-- col-4 -->
-              <div class="col-lg-8">
+              <div class="col-lg-4">
                 <div class="form-group">
                   <label class="form-control-label">Facturar a: <span class="tx-danger">*</span></label>
                   {!! Form::select('facturara_id', $facturara, null, ['class' => 'form-control', 'required'] )!!}
@@ -47,6 +47,12 @@
                 <div class="form-group">
                   <label class="form-control-label">Bodega: <span class="tx-danger">*</span></label>
                   {!! Form::select('bodega_id', $bodegas, null, ['class' => 'form-control', 'required'] )!!}
+                </div>
+              </div><!-- col-4 -->
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label">Número de Factura: <span class="tx-danger">*</span></label>
+                  {!! Form::text('numfactura', null, ['class' => 'form-control', 'required'] )!!}
                 </div>
               </div><!-- col-4 -->
 

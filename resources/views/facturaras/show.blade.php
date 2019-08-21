@@ -18,7 +18,7 @@
                     @include('facturaras.show_fields')
                     </tbody>
                   </table>
-                    <a href="{!! route('facturaras.index') !!}" class="btn btn-default">Back</a>
+                    <a href="{!! route('facturaras.index') !!}" class="btn btn-secondary">Regresar</a>
                 </div>
             </div>
         </div>

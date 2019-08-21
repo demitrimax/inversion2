@@ -68,7 +68,7 @@
 
    </div><!-- sl-pagebody -->
 
-   <footer class="sl-footer">
+   <footer class="sl-footer d-print-none">
      <div class="footer-left">
        <div class="mg-b-2">Copyright &copy; 2019. Veritas Software. All Rights Reserved.</div>
        <div>Made by ThemePixels.</div>

@@ -1,4 +1,4 @@
-<div class="sl-header">
+<div class="sl-header d-print-none">
   <div class="sl-header-left">
     <div class="navicon-left hidden-md-down"><a id="btnLeftMenu" href=""><i class="ion-ios-menu"></i></a></div>
     <div class="navicon-left hidden-lg-up"><a id="btnLeftMenuMobile" href=""><i class="ion-ios-menu"></i></a></div>
