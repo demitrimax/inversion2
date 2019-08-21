@@ -205,7 +205,8 @@ class invoperacionController extends AppBaseController
       $productos = $productos->where('stock', '>', 0 )->pluck('nomproductostock','id');
       $bodegas = bodegas::pluck('nombre','id');
       $operaciontipo = 'salida';
-      return view('inventario.salida')->with(compact('clientes','productos','bodegas', 'operaciontipo'));
+      $facturaras = facturara::pluck('nombre','id');
+      return view('inventario.salida')->with(compact('clientes','productos','bodegas', 'operaciontipo', 'facturaras'));
     }
     public function regEntrada(Request $request)
     {

@@ -1,12 +1,12 @@
 <!-- Nombre Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('nombre', 'Nombre:') !!}
+    {!! Form::label('nombre', 'Nombre:') !!} <span class="text-danger">*</span>
     {!! Form::text('nombre', null, ['class' => 'form-control maxlen', 'required', 'maxlength'=>'150']) !!}
 </div>
 
 <!-- Rfc Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('rfc', 'RFC:') !!}
+    {!! Form::label('rfc', 'RFC:') !!} <span class="text-danger">*</span>
     {!! Form::text('rfc', null, ['class' => 'form-control', 'required', 'maxlength'=>'13']) !!}
 </div>
 

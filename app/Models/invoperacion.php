@@ -43,6 +43,7 @@ class invoperacion extends Model
     public $fillable = [
         'usuario_id',
         'tipo_mov',
+        'facturara_id',
         'proveedor_id',
         'cliente_id',
         'monto',
@@ -58,6 +59,7 @@ class invoperacion extends Model
     protected $casts = [
         'id'            => 'integer',
         'usuario_id'    => 'integer',
+        'facturara_id'  => 'integer',
         'tipo_mov'      => 'string',
         'proveedor_id'  => 'integer',
         'cliente_id'    => 'integer',
@@ -107,6 +109,10 @@ class invoperacion extends Model
     public function invdetoperacions()
     {
         return $this->hasMany('App\Models\invdetoperacion','operacion_id');
+    }
+    public function facturara()
+    {
+      return $this->belongsTo('App\Models\facturara', 'facturara_id');
     }
     public function getPersonanombreAttribute()
     {
@@ -197,8 +203,5 @@ class invoperacion extends Model
       $formatFolio = '#'.$this->created_at->format('y').$this->created_at->format('m').str_pad($this->id,4,"0",STR_PAD_LEFT);
       return $formatFolio;
     }
-    public function facturara()
-    {
-      return $this->belongsTo('App\Models\facturara', 'facturara_id');
-    }
+
 }

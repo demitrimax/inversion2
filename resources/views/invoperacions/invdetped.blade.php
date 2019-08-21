@@ -14,7 +14,7 @@
               @if($invoperacion->cliente_id)
               <div class="col-md-4">
                   {!! Form::label('cliente', 'Cliente:') !!}
-                  {!! Form::text('cliente', $invoperacion->cliente_id, ['class'=>'form-control', 'readonly']) !!}
+                  {!! Form::text('cliente', $invoperacion->cliente->nombre, ['class'=>'form-control', 'readonly']) !!}
               </div><!-- col-4 -->
               @endif
               <div class="col-md-2">
@@ -22,11 +22,12 @@
                   {!! Form::text('fecha', $invoperacion->fecha->format('d-m-Y'), ['class'=>'form-control text-right', 'readonly']) !!}
               </div><!-- col-4 -->
 
+              @if($invoperacion->facturara_id)
               <div class="col-md-6">
-                  {!! Form::label('facturar_a', 'Cliente:') !!}
-                  {!! Form::text('facturar_a', $invoperacion->facturar_a, ['class'=>'form-control', 'readonly']) !!}
+                  {!! Form::label('facturar_a', 'Empresa:') !!}
+                  {!! Form::text('facturar_a', $invoperacion->facturara->nombre, ['class'=>'form-control', 'readonly']) !!}
               </div><!-- col-4 -->
-
+              @endif
 
             </div><!-- row -->
 

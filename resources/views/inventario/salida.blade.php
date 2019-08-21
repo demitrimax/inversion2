@@ -38,6 +38,12 @@
               </div><!-- col-4 -->
               <div class="col-lg-4">
                 <div class="form-group">
+                  <label class="form-control-label">Empresa: <span class="tx-danger">*</span></label>
+                  {!! Form::select('facturara_id', $facturaras, null, ['class' => 'form-control', 'required'] )!!}
+                </div>
+              </div><!-- col-4 -->
+              <div class="col-lg-4">
+                <div class="form-group">
                   <label class="form-control-label">Bodega: <span class="tx-danger">*</span></label>
                   {!! Form::select('bodega_id', $bodegas, null, ['class' => 'form-control', 'required'] )!!}
                 </div>
