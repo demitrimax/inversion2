@@ -23,11 +23,16 @@
               </div><!-- col-4 -->
 
               @if($invoperacion->facturara_id)
-              <div class="col-md-6">
+              <div class="col-md-4">
                   {!! Form::label('facturar_a', 'Empresa:') !!}
                   {!! Form::text('facturar_a', $invoperacion->facturara->nombre, ['class'=>'form-control', 'readonly']) !!}
               </div><!-- col-4 -->
               @endif
+
+              <div class="col-md-4">
+                  {!! Form::label('numfactura', 'Número de Factura:') !!}
+                  {!! Form::text('numfactura', $invoperacion->numfactura, ['class'=>'form-control', 'readonly']) !!}
+              </div><!-- col-4 -->
 
             </div><!-- row -->
 

@@ -46,7 +46,7 @@ class HomeController extends Controller
         $totalpagopend = $corridafinan->sum('mpago');
         $totalinteres = $corridafinan->sum('pintereses');
         $business = empresas::get();
-        $tareas = tareas::whereNull('terminado')->limit(3)->get();
+        $tareas = tareas::whereNull('terminado')->limit(5)->get();
         //dd($empresas);
         //dd($oppagoshoy);
         return view('home')->

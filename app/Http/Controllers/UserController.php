@@ -11,6 +11,7 @@ use DB;
 use Hash;
 use Spatie\Permission\Traits\HasRoles;
 use Alert;
+use Flash;
 
 class UserController extends Controller
 {
@@ -154,6 +155,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $usuario = User::find($id);
+        if ($usuario->tareas->count() > 0){
+          Alert::error('No se puede eliminar, Usuario con tareas asociadas');
+          Flash::error('No se puede eliminar, Usuario con tareas asociadas');
+          return back();
+        }
         User::find($id)->delete();
         return redirect()->route('user.index')
                         ->with('success','Usuario borrado correctamente.');

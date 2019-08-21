@@ -33,7 +33,8 @@
 @php
 if( Request::is('productos*') || Request::is('categorias*') || Request::is('bodegas*')
   || Request::is('clientes*') || Request::is('invoperacions*') || Request::is('inventario/entrada*')
-  || Request::is('inventario/salida*') || Request::is('invproveedores*') || Request::is('facturara*') ) {
+  || Request::is('inventario/salida*') || Request::is('invproveedores*') || Request::is('facturara*')
+  || Request::is('inventario*')) {
     $varActive = "active show-sub";
 } else {
   $varActive = "";
@@ -75,6 +76,9 @@ if( Request::is('productos*') || Request::is('categorias*') || Request::is('bode
   @endcan
   @can('facturaras-list')
   <li class="nav-item"><a href="{!! route('facturaras.index') !!}" class="nav-link {{ Request::is('facturaras*') ? 'active' : '' }}">Empresas</a></li>
+  @endcan
+  @can('inventario')
+  <li class="nav-item"><a href="{!! url('inventario/informe/ver1') !!}" class="nav-link {{ Request::is('inventario*') ? 'active' : '' }}">Reporte Inventario</a></li>
   @endcan
 
 </ul>
