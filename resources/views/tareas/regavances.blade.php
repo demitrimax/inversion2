@@ -9,6 +9,7 @@
           <tr>
             <th>Concepto</th>
             <th>Avance</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -22,9 +23,15 @@
               data-content="{{$avance->comentario}}" title="Observaciones">
               <i class="fa fa-info"></i>
               </button>
+              <button type="button" class="btn btn-warning btn-xs"><i class="fa fa-comments-o"></i></button>
             {{$avance->concepto}}
             </td>
             <td>{{$avance->avancepor}}%</td>
+            <td>
+
+              <button class="btn btn-primary btn-xs">Comentario</button>
+
+            </td>
           </tr>
           @endforeach
         </tbody>
@@ -41,6 +48,7 @@
     </div>
 </div>
 
+@can('registrar-avances')
 <!--  Modal content for the above example -->
   <div id="RegistroAvances" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -92,3 +100,4 @@
           </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
+  @endcan
