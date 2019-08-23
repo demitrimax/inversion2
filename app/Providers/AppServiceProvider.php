@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Auth;
 use App\Models\tareas;
@@ -28,6 +29,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        //\App\Blade\Components::make()->register();
+        Blade::component('components.card', 'card');
+        
         Schema::defaultStringLength(191);
         view()->composer('*', function($view)
       {

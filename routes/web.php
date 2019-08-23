@@ -89,4 +89,9 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
 
   Route::resource('invproveedores', 'invproveedoresController');
   Route::resource('facturaras', 'facturaraController');
+
+  Route::get('backup', 'BackupController@index');
+  Route::get('backup/create', 'BackupController@create');
+  Route::get('backup/download/{file_name}', 'BackupController@download');
+  Route::get('backup/delete/{file_name}', 'BackupController@delete');
 });
