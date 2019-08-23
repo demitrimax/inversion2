@@ -18,6 +18,7 @@
       $timpventa = 0;
     @endphp
     @foreach($productos->sortBy('categoria.nombre') as $producto)
+    <thead class="bg-info">
     <tr>
       <td>{{$producto->categoria->nombre}}</td>
       <td>{{$producto->nombre}}</td>
@@ -29,6 +30,7 @@
       <td class="text-right">{{ number_format($producto->pventa,2) }}</td>
       <td class="text-right">{{ number_format($impventa = $producto->pventa * $producto->stock, 2) }}</td>
     </tr>
+  </thead>
     @if($producto->inventarios->count() > 0)
     <tr>
       <th colspan="2"></th>
@@ -36,16 +38,28 @@
       <th>Tipo</th>
       <th>Cantidad</th>
       <th>P. Compra</th>
+      <th>Importe Compra</th>
+      <th>P. Venta</th>
+      <th>Importe Venta</th>
     </tr>
-    @foreach($producto->inventarios as $detoperacion)
+    @php
+    $impent = 0;
 
+    @endphp
+    @foreach($producto->inventarios as $detoperacion)
+        @php
+        $punit = 0;
+        $punit_ = 0;
+        @endphp
       <tr>
         <td colspan="2"></td>
         <td>{{ $detoperacion->fecha->format('d-m-Y')}}</td>
         <td>{{$detoperacion->tipo_operacion}}</td>
         <td>{{$detoperacion->cantidad}}</td>
-        <td>{{ $detoperacion->tipo_operacion =='Entrada' ?  $detoperacion->punitario : ''}}</td>
-        <td></td>
+        <td>{{ $detoperacion->tipo_operacion =='Entrada' ?  $punit = $detoperacion->punitario : ''}}</td>
+        <td>{{ number_format($impent = $punit * $detoperacion->cantidad,2) }}</td>
+        <td>{{ $detoperacion->tipo_operacion =='Salida' ?  $punit_ = $detoperacion->punitario : ''}}</td>
+        <td>{{ number_format($impent = $punit_ * $detoperacion->cantidad,2) }}</td>
       </tr>
       @endforeach
     @endif
