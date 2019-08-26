@@ -92,4 +92,17 @@ class BackupController extends Controller
             abort(404, "The backup file doesn't exist.");
         }
     }
+    public function createbackup()
+    {
+      //https://github.com/Laravel-Backpack/BackupManager/blob/master/src/app/Http/Controllers/BackupController.php
+      try {
+            ini_set('max_execution_time', 600);
+            Log::info('Backpack\BackupManager -- Called backup:run from admin interface');
+            Artisan::call('backup:run');
+            Log::info("Backpack\BackupManager -- backup process has started");
+        } catch (Exception $e) {
+            Response::make($e->getMessage(), 500);
+        }
+        return 'success';
+    }
 }

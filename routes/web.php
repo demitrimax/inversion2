@@ -94,4 +94,5 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::get('backup/create', 'BackupController@create');
   Route::get('backup/download/{file_name}', 'BackupController@download');
   Route::get('backup/delete/{file_name}', 'BackupController@delete');
+  Route::get('backup/createbackup', 'BackupController@createbackup');
 });
