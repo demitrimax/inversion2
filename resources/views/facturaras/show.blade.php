@@ -13,11 +13,9 @@
         </div>
             <div class="card-body">
                 <div class="row" style="padding-left: 20px">
-                <table class="table table-striped table-bordered detail-view" id="facturaras-table">
-                  <tbody>
+
                     @include('facturaras.show_fields')
-                    </tbody>
-                  </table>
+
                     <a href="{!! route('facturaras.index') !!}" class="btn btn-secondary">Regresar</a>
                 </div>
             </div>

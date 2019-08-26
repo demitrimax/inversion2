@@ -35,7 +35,8 @@ class facturara extends Model
     public $fillable = [
         'nombre',
         'rfc',
-        'direccion'
+        'direccion',
+        'plantilla_remision'
     ];
 
     /**
@@ -44,10 +45,11 @@ class facturara extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'nombre' => 'string',
-        'rfc' => 'string',
-        'direccion' => 'string'
+        'id'                    => 'integer',
+        'nombre'                => 'string',
+        'rfc'                   => 'string',
+        'direccion'             => 'string',
+        'plantilla_remision'    => 'string',
     ];
 
     /**
