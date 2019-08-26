@@ -28,9 +28,9 @@
             </td>
             <td>{{$avance->avancepor}}%</td>
             <td>
-
-              <button class="btn btn-primary btn-xs">Comentario</button>
-
+              @can('tareas-comentario')
+              <button type="button" class="btn btn-primary btn-xs waves-effect waves-light" data-toggle="modal" data-target="#ComentarioTarea">Comentario</button>
+              @endcan
             </td>
           </tr>
           @endforeach
@@ -95,6 +95,39 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
                 <button type="submit" class="btn btn-primary waves-effect waves-light">Registrar Avance</button>
+            </div>
+            {!! Form::close() !!}
+          </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  @endcan
+
+@can('tareas-comentario')
+  <div id="ComentarioTarea" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="TareasComentarios" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h4 class="modal-title" id="myLargeModalLabel">Comentario de Avance</h4>
+              </div>
+              {!! Form::open(['route' => 'tareas.avance.comentario']) !!}
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                        {!! Form::label('Comentario', 'Comentario:') !!}
+                        {!! Form::textarea('comentario', null, ['class' => 'form-control maxlen', 'required', 'maxlength' => '35']) !!}
+                        {!! Form::hidden('avance_id', $tareas->id)!!}
+                    </div>
+
+                </div>
+
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary waves-effect waves-light">Registrar Comentario</button>
             </div>
             {!! Form::close() !!}
           </div><!-- /.modal-content -->

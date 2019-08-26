@@ -26,8 +26,6 @@ class tareacomentarios extends Model
         'avance_id',
         'tarea_id',
         'comentario',
-        'contacto',
-        'observaciones'
     ];
 
 }
