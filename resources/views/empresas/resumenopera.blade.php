@@ -45,6 +45,28 @@
 
                     @endphp
 
+                @isset($saldofiscal)
+                    <tr>
+                      <td colspan="2"><b>SALDO INICIAL</b></td>
+                      @php $saldoinicial = $saldofiscal + $saldoporfuera; @endphp
+                      <td><b class="tx-purple">$ {{ number_format($saldoinicial,2)}}</b><td>
+                    </tr>
+                      @isset($saldoinicial)
+                      <tr>
+                        <td></td>
+                        <td>SALDO INICIAL FISCAL</td>
+                        <td><b class="pull-right">$ {{number_format($saldofiscal,2)}}<b></td>
+                      </tr>
+                      @endisset
+                      @isset($saldoporfuera)
+                        <tr>
+                          <td></td>
+                          <td>SALDO INICIAL X FUERA</td>
+                          <td><b class="pull-right">$ {{number_format($saldoporfuera,2)}}<b></td>
+                        </tr>
+                        @endisset
+                    @endisset
+
                     @foreach($toperacionesg->where('fechag',$fechas->fechag)->sortBy('subclasifica.clasifica.orden') as $key=>$operacion)
 
                       @if($catunicas <> $operacion->subclasifica->clasifica->nombre )
@@ -79,6 +101,10 @@
                       <td>
                         <b class="tx-purple">{{ number_format($tingreso-$tegreso,2) }}</b><br>
                         @php
+
+                        if(!isset($saldoporfuera)){
+                          $saldoporfuera = 0;
+                        }
                         $saldoporfuera = 0;
 
                         foreach($toperacionesporcuenta->where('fechag',$fechas->fechag)->where('cuenta.efectivo',1) as $key=>$saldocuentaefectivo)
