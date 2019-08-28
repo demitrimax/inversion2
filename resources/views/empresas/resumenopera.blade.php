@@ -53,6 +53,7 @@
                           @php
                             //echo $operacion->subclasifica->clasifica_id;
                             $montocat = $toperacionesg->where('fechag',$fechas->fechag)->where('subclasifica.clasifica_id', $operacion->subclasifica->clasifica_id)->sum('montog');
+
                           @endphp
                           <td> <b class="{{ $operacion->subclasifica->clasifica->tip == 'I' ? 'tx-teal' : 'tx-danger'}}">{{ number_format($montocat,2) }}</b></td>
                           </tr>
@@ -75,7 +76,22 @@
                     </tr>
                     <tr>
                       <td colspan="2">SALDOS</td>
-                      <td><b class="tx-purple">{{ number_format($tingreso-$tegreso,2) }}</b></td>
+                      <td>
+                        <b class="tx-purple">{{ number_format($tingreso-$tegreso,2) }}</b><br>
+                        @php
+                        $saldoporfuera = 0;
+
+                        foreach($toperacionesporcuenta->where('fechag',$fechas->fechag)->where('cuenta.efectivo',1) as $key=>$saldocuentaefectivo)
+                        {
+                          $saldoporfuera += $saldocuentaefectivo->montog;
+                        }
+                        $saldofiscal = $tingreso-$tegreso - $saldoporfuera;
+                        @endphp
+                            FISCAL: <b class="tx-purple">{{ number_format($saldofiscal,2) }}</b><br>
+
+                            POR FUERA: <b class="tx-purple">{{ number_format($saldoporfuera,2) }}</b><br>
+                      </td>
+
                     </tr>
                   </tbody>
                 </table>

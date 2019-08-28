@@ -12,7 +12,9 @@
         <tr>
             <td><a href="{!! route('bcuentas.show', [$bcuentas->id]) !!}">{!! $bcuentas->banco->nombrecorto !!}<a/></td>
             <td><a href="{!! route('bcuentas.show', [$bcuentas->id]) !!}">{!! $bcuentas->numcuenta !!}</a></td>
-            <td>@foreach($bcuentas->empresa as $empresa) {!! $empresa->nombre !!} @endforeach</td>
+            <td>@foreach($bcuentas->empresa as $empresa)
+              {!! $empresa->nombre !!} {!! $bcuentas->efectivo == 1 ? '<span class="badge badge-success"><i class="fa fa-dollar"></i></span>' : '' !!}
+              @endforeach</td>
             <td>
                 {!! Form::open(['route' => ['bcuentas.destroy', $bcuentas->id], 'method' => 'delete', 'id'=>'form'.$bcuentas->id]) !!}
                 <div class='btn-group'>

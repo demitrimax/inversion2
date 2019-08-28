@@ -135,13 +135,21 @@ class empresasController extends AppBaseController
                                     ->groupBy('fechag')
                                     ->orderBy('subclasifica_id', 'asc')
                                     ->get();
+        $toperacionesporcuenta = operaciones::where('empresa_id',$empresaid)
+                                ->selectRaw('*, sum(monto) as montog, count(monto) as cantidad, DATE_FORMAT(fecha, "%m-%y") as fechag')
+                                ->groupBy('cuenta_id')
+                                ->groupBy('fechag')
+                                ->orderBy('cuenta_id', 'asc')
+                                ->get();
+                                //dd($toperacionesporcuenta);
         $fechasopg = operaciones::where('empresa_id', $empresaid)
                                 ->selectRaw('*, DATE_FORMAT(fecha, "%m-%y") as fechag')
                                 ->groupBy('fechag')
                                 ->get();
         //dd($toperacionesg);
         $facturas = facturas::whereNull('operacion_id')->pluck('numfactura','id');
-        return view('empresas.show')->with(compact('empresas','bancos','creditos','metpago','cuental', 'proveedores', 'proyectos','divisas', 'inversiones', 'categorias', 'subcategoriasAgrupadas', 'operaciones', 'toperacionesg', 'fechasopg', 'facturas'));
+
+        return view('empresas.show')->with(compact('empresas','bancos','creditos','metpago','cuental', 'proveedores', 'proyectos','divisas', 'inversiones', 'categorias', 'subcategoriasAgrupadas', 'operaciones', 'toperacionesg', 'fechasopg', 'facturas', 'toperacionesporcuenta'));
     }
 
     /**
@@ -248,15 +256,19 @@ class empresasController extends AppBaseController
       $operacion->save();
 
       $montos = 0;
-      foreach ($request->input('facturas') as $factura)
-      {
-        $facturas = facturas::find($factura);
-        $facturas->operacion_id = $operacion->id;
-        $facturas->save();
-        $montos += $facturas->monto;
+      //es un arreglo?
+      if( is_array($request->input['facturas']) ) {
+        foreach ($request->input('facturas') as $factura)
+        {
+          $facturas = facturas::find($factura);
+          $facturas->operacion_id = $operacion->id;
+          $facturas->save();
+          $montos += $facturas->monto;
+        }
+        //actualizar el monto de la factura con los montos de la factura
+        $operacion->monto = $montos;
       }
-      //actualizar el monto de la factura con los montos de la factura
-      $operacion->monto = $montos;
+
       $operacion->save();
 
       //$empresas = $this->empresasRepository->create($input);

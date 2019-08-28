@@ -157,14 +157,14 @@ $("#tipo").on('change', function() {
       variasfacturas.style.display ='block';
       numfactura.value = '(VARIAS FACTURAS)';
       monto.value = 0;
-      monto.setAttribute('readonly', 'true');
+      //monto.setAttribute('readonly', 'true');
   } else {
       //alert('Cargo');
       var maxmonto = $('#maxmonto').val();
       $('#monto_op').attr('max', maxmonto);
       variasfacturas.style.display ='none';
       numfactura.value = '';
-      monto.removeAttribute('readonly');
+      //monto.removeAttribute('readonly');
   }
 });
 
