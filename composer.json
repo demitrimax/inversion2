@@ -24,7 +24,8 @@
         "realrashid/sweet-alert": "1.1.2",
         "spatie/laravel-activitylog": "3.2.2",
         "spatie/laravel-backup": "6.0.6",
-        "spatie/laravel-permission": "^2.37"
+        "spatie/laravel-permission": "^2.37",
+        "unisharp/laravel-ckeditor": "^4.7"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

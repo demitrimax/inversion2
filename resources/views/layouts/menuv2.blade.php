@@ -78,7 +78,7 @@ if( Request::is('productos*') || Request::is('categorias*') || Request::is('bode
   <li class="nav-item"><a href="{!! route('facturaras.index') !!}" class="nav-link {{ Request::is('facturaras*') ? 'active' : '' }}">Empresas</a></li>
   @endcan
   @can('inventario')
-  <li class="nav-item"><a href="{!! url('inventario/informe/ver1') !!}" class="nav-link {{ Request::is('inventario*') ? 'active' : '' }}">Reporte Inventario</a></li>
+  <li class="nav-item"><a href="{!! url('inventario/informe/ver1') !!}" class="nav-link {{ Request::is('inventario/informe*') ? 'active' : '' }}">Reporte Inventario</a></li>
   @endcan
 
 </ul>

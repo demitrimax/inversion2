@@ -19,6 +19,8 @@ use App\Models\invdetoperacion;
 use App\Models\bodegas;
 use App\Models\facturara;
 use Auth;
+use View;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 class invoperacionController extends AppBaseController
 {
@@ -286,6 +288,7 @@ class invoperacionController extends AppBaseController
       }
       $invoperacion = new invoperacion;
       $invoperacion->usuario_id = Auth::user()->id;
+      $invoperacion->facturara_id = $input['facturara_id'];
       $invoperacion->tipo_mov = 'Salida';
       $invoperacion->cliente_id = $input['cliente_id'];
       $invoperacion->subtotal = $input['aSubtotal'];
@@ -391,5 +394,24 @@ class invoperacionController extends AppBaseController
     {
       $productos = productos::all();
       return view('inventario.reportev2')->with(compact('productos'));
+    }
+
+    public function repsalidaremision($id)
+    {
+        $operacion = invoperacion::find($id);
+
+        if($operacion->facturara_id){
+          $formato = $operacion->facturara->plantilla_remision;
+        }
+        else{
+          Alert::error('Sin datos de la plantilla');
+          Flash::error('No se tienen los datos de la plantilla');
+          return back();
+        }
+        //$formatovista = view::make($formato, ['data'=>$formato]);
+        //return $formatovista->render();
+          $formato = \Blade::compileString($formato);
+
+          return $formato;
     }
 }

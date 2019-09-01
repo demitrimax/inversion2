@@ -32,7 +32,7 @@
 <div class="form-group col-sm-12">
 
     {!! Form::label('plantilla_remision', 'Plantilla de Formato de Remisión:') !!}
-    {!! Form::textarea('plantilla_remision', null, ['class'=>'form-control texteditor']) !!}
+    {!! Form::textarea('plantilla_remision', null, ['class'=>'form-control', 'id'=>'plantilla_remision', 'name'=>'plantilla_remision']) !!}
 
 </div>
 
@@ -51,26 +51,19 @@
       $(function(){
         'use strict';
 
-        // Summernote editor
-        $('.texteditor').summernote({
-          height: 150,
-          tooltip: true,
-          toolbar: [
-                    ['style', ['style']],
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['color', ['color']],
-                    ['insert', ['picture', 'link', 'video', 'table','filebrowser', 'hr']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['undo', ['undo', 'redo']],
-                    ['codeview', ['codeview']],
-                ],
-        })
+
       });
       //Bootstrap-MaxLength
          $('.maxlen').maxlength();
          $(function () {
            $('[data-toggle="popover"]').popover()
          })
+</script>
+<script src="{{ asset('vendor/ckeditor-dev-major/ckeditor.js') }}"></script>
+<script>
+      CKEDITOR.replace( 'plantilla_remision', {
+          filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+          filebrowserUploadMethod: 'form'
+      });
 </script>
 @endsection
