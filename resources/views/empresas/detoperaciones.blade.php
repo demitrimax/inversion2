@@ -28,20 +28,22 @@
               <table class="table table-responsive" id="operaciones-table">
     <thead>
         <tr>
-          <th>Monto</th>
           <th>Concepto</th>
+          <th>Monto</th>
           <th>Categoría/Subcategoria</th>
           <th>Fecha</th>
+          <th>Cuenta</th>
           <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
     @foreach($operaciones->sortBy('fecha') as $operacion)
         <tr>
-            <td>{!! number_format($operacion->monto,2) !!}</td>
             <td>{!! $operacion->concepto !!}</td>
+            <td>{!! number_format($operacion->monto,2) !!}</td>
             <td>{!! $operacion->subclasifica->clasifica->nombre.' : '.$operacion->subclasifica->nombre !!}</td>
             <td>{!! $operacion->fecha->format('d-m-Y') !!}</td>
+            <td><a href="{{route('bcuentas.show', [$operacion->cuenta->id])}}">{!! $operacion->cuenta->nomcuenta!!}</a></td>
             <td>
                 {!! Form::open(['route' => ['operaciones.destroy', $operacion->id], 'method' => 'delete', 'id'=>'form'.$operacion->id]) !!}
                 <div class='btn-group'>
@@ -60,8 +62,9 @@
     </tbody>
     <tfoot>
       <tr>
+        <td>TOTAL</td>
         <td> {{ number_format($operaciones->sum('monto')) }}    </td>
-        <td colspan="4">TOTAL</td>
+        <td colspan="4"></td>
       </tr>
     </tfoot>
 </table>
