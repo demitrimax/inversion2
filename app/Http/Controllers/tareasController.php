@@ -247,4 +247,15 @@ class tareasController extends AppBaseController
       Flash::success('Comentario guardado correctamente');
       return back();
     }
+    public function verComentariosAvance($id)
+    {
+      $avancecomentarios = tareacomentarios::where('avance_id', $id)->get();
+
+      $comentarios = [];
+      foreach($avancecomentarios as $coment){
+        $comentarios[] = ['usuario' => $coment->usuario->name, 'comentario'=>$coment->comentario];
+      }
+
+      return $comentarios;
+    }
 }

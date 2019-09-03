@@ -146,16 +146,25 @@
 
     }
     function Comentarios(id){
+      //ajax
+      var mihtml = '';
+      $.get('{{url('tareas/avance')}}/' + id + '/comentarios', function(data) {
+        //exito al obtener los datos
+        console.log(data);
+        //$('#pagoref').empty();
+        $.each(data, function(index, comentarios) {
+          console.log(comentarios);
+          mihtml += '<b>' +comentarios.usuario+':</b> '+comentarios.comentario+'<br>';
+        });
+        Swal.fire({
+            title: 'Comentarios',
+            type: 'info',
+            html: mihtml,
+            showCloseButton: true,
+          })
 
-      Swal.fire({
-          title: 'Comentarios',
-          type: 'info',
-          html:
-            '<b>Usuario 1</b>, ' +
-            'Mi comentario es el siguiente ' +
-            '',
-          showCloseButton: true,
-        })
+      });
+
     }
     </script>
 
