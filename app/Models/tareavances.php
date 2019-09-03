@@ -26,4 +26,9 @@ class tareavances extends Model
         'tarea_id'
     ];
 
+    public function comentarios()
+    {
+      return $this->hasMany('App\Models\tareacomentarios', 'avance_id');
+    }
+
 }

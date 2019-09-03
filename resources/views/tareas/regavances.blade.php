@@ -23,13 +23,15 @@
               data-content="{{$avance->comentario}}" title="Observaciones">
               <i class="fa fa-info"></i>
               </button>
-              <button type="button" class="btn btn-warning btn-xs"><i class="fa fa-comments-o"></i></button>
+              @if($avance->comentarios->count() > 0)
+              <button type="button" class="btn btn-warning btn-xs" onclick="Comentarios({{$avance->id}})"><i class="fa fa-comments-o"></i></button>
+              @endif
             {{$avance->concepto}}
             </td>
             <td>{{$avance->avancepor}}%</td>
             <td>
               @can('tareas-comentario')
-              <button type="button" class="btn btn-primary btn-xs waves-effect waves-light" data-toggle="modal" data-target="#ComentarioTarea">Comentario</button>
+              <button type="button" class="btn btn-primary btn-xs waves-effect waves-light" onclick="ComentarioAvance({{$avance->id}})">Comentario</button>
               @endcan
             </td>
           </tr>
@@ -107,8 +109,8 @@
       <div class="modal-dialog">
           <div class="modal-content">
               <div class="modal-header">
+                <h4 class="modal-title" id="myLargeModalLabel">Comentario de Avance</h4>
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                  <h4 class="modal-title" id="myLargeModalLabel">Comentario de Avance</h4>
               </div>
               {!! Form::open(['route' => 'tareas.avance.comentario']) !!}
               <div class="modal-body">
@@ -116,8 +118,9 @@
                   <div class="col-md-12">
                     <div class="form-group">
                         {!! Form::label('Comentario', 'Comentario:') !!}
-                        {!! Form::textarea('comentario', null, ['class' => 'form-control maxlen', 'required', 'maxlength' => '35']) !!}
-                        {!! Form::hidden('avance_id', $tareas->id)!!}
+                        {!! Form::textarea('comentario', null, ['class' => 'form-control', 'required']) !!}
+                        {!! Form::hidden('tarea_id', $tareas->id, ['id'=>'tarea_id'])!!}
+                        {!! Form::hidden('avance_id', null, ['id'=>'avance_id'])!!}
                     </div>
 
                 </div>
@@ -134,3 +137,26 @@
       </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
   @endcan
+
+  @section('scripts')
+  <script>
+    function ComentarioAvance(id){
+      $("#ComentarioTarea").modal("show");
+      $("#avance_id").val(id);
+
+    }
+    function Comentarios(id){
+
+      Swal.fire({
+          title: 'Comentarios',
+          type: 'info',
+          html:
+            '<b>Usuario 1</b>, ' +
+            'Mi comentario es el siguiente ' +
+            '',
+          showCloseButton: true,
+        })
+    }
+    </script>
+
+  @endsection

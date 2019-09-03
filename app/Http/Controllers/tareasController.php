@@ -14,6 +14,7 @@ use Response;
 use App\User;
 use App\Models\tareavances;
 use App\Models\tareas;
+use App\Models\tareacomentarios;
 use Auth;
 
 class tareasController extends AppBaseController
@@ -219,6 +220,31 @@ class tareasController extends AppBaseController
 
       return back();
 
+    }
+    public function regcomentarioavance(Request $request)
+    {
+      $rules = [
+          'tarea_id'    => 'required',
+          'avance_id'   => 'required',
+          'comentario'  => 'required',
+      ];
+      $messages = [
+          'tarea_id.required'            => 'Es necesario el ID de la tarea',
+          'avance_id.required'           => 'Es necesario el ID del avance',
+          'comentario.required'          => 'Es necesario un comentario.',
+      ];
+      $tareaid = $request->input('tarea_id');
+      $avanceid = $request->input('avance_id');
+      $comentario = $request->input('comentario');
 
+      $tareacomentario = new tareacomentarios;
+      $tareacomentario->tarea_id = $tareaid;
+      $tareacomentario->avance_id = $avanceid;
+      $tareacomentario->user_id = Auth::user()->id;
+      $tareacomentario->comentario = $comentario;
+      $tareacomentario->save();
+      Alert::success('Comentario guardado correctamente');
+      Flash::success('Comentario guardado correctamente');
+      return back();
     }
 }
