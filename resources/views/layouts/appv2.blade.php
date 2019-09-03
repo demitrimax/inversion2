@@ -32,12 +32,14 @@
   <!-- ########## START: LEFT PANEL ########## -->
  <div class="sl-logo"><a href=""><i class="icon ion-md-planet"></i> INVERSIÓN</a></div>
  <div class="sl-sideleft">
+   {!! Form::open(['route'=>'busqueda.total'])!!}
    <div class="input-group input-group-search">
-     <input type="search" name="search" class="form-control" placeholder="Search">
+     <input type="search" name="search" class="form-control" placeholder="Buscar">
      <span class="input-group-btn">
        <button class="btn"><i class="fa fa-search"></i></button>
      </span><!-- input-group-btn -->
    </div><!-- input-group -->
+   {!! Form::close()!!}
 
    <label class="sidebar-label">Navegación</label>
    <div class="sl-sideleft-menu">

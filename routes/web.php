@@ -20,6 +20,8 @@ Auth::routes();
 
 Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::get('/home', 'HomeController@index')->name('home');
+  //RUTA DE LA BUSQUEDA globals
+  Route::post('/buscar', 'HomeController@busqueda')->name('busqueda.total');
   //RUTAS DE LA CONFIGURACION
   Route::resource('roles','RoleController');
   Route::resource('user','UserController');

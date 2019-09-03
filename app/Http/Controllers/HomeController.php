@@ -61,4 +61,25 @@ class HomeController extends Controller
                               'tareas'
                             ));
     }
+
+    public function busqueda(Request $request)
+    {
+      $input = $request->all();
+      $abuscar = $input['search'];
+
+      //buscar en bancos
+      $bancos = App\Models\bancos::where('nombre', 'like', '%$abuscar%')
+                                    ->orWhere('denominacionsocial', 'like', '%$abuscar')
+                                    ->orWhere('grupofinanciero', 'like', '%$abuscar')
+                                    ->get();
+      $bcuentas = App\Models\bancos::where('nombre', 'like', '%$abuscar%')
+                                    ->orWhere('denominacionsocial', 'like', '%$abuscar')
+                                    ->orWhere('grupofinanciero', 'like', '%$abuscar')
+                                    ->get();
+      return view('resultadobusqueda')->with(compact(
+        'bancos',
+        'bcuentas'
+
+      ));
+    }
 }
