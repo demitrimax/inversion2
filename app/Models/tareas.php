@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Carbon\Carbon;
 
 /**
@@ -27,6 +28,7 @@ use Carbon\Carbon;
 class tareas extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     public $table = 'tareas';
 
@@ -35,6 +37,7 @@ class tareas extends Model
 
 
     protected $dates = ['deleted_at'];
+    protected static $logAttributes = ['*'];
 
 
     public $fillable = [
@@ -44,7 +47,8 @@ class tareas extends Model
         'user_id',
         'viewed_at',
         'terminado',
-        'avance_porc'
+        'avance_porc',
+        'asigna_userid',
     ];
 
     /**
@@ -60,7 +64,9 @@ class tareas extends Model
         'user_id'     => 'integer',
         'viewed_at'   => 'datetime',
         'terminado'   => 'datetime',
-        'avance_porc' => 'integer'
+        'avance_porc' => 'integer',
+        'asigna_userid' => 'integer',
+
     ];
 
     /**
@@ -69,7 +75,8 @@ class tareas extends Model
      * @var array
      */
     public static $rules = [
-        'user_id' => 'required'
+        'user_id'         => 'required',
+        'asigna_userid'   => 'required'
     ];
 
     /**
@@ -82,6 +89,10 @@ class tareas extends Model
     public function avances()
     {
       return $this->hasMany('App\Models\tareavances', 'tarea_id');
+    }
+    public function asignadopor()
+    {
+      return $this->belongsTo(\App\User::class, 'asigna_userid');
     }
 
     public function getEstatusdateAttribute()

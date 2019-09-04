@@ -68,13 +68,13 @@ class HomeController extends Controller
       $abuscar = $input['search'];
 
       //buscar en bancos
-      $bancos = App\Models\bancos::where('nombre', 'like', '%$abuscar%')
+      $bancos = \App\Models\bancos::where('nombre', 'like', '%$abuscar%')
                                     ->orWhere('denominacionsocial', 'like', '%$abuscar')
-                                    ->orWhere('grupofinanciero', 'like', '%$abuscar')
+                                    ->orWhere('grupofinancierto', 'like', '%$abuscar')
                                     ->get();
-      $bcuentas = App\Models\bancos::where('nombre', 'like', '%$abuscar%')
+      $bcuentas = \App\Models\bancos::where('nombre', 'like', '%$abuscar%')
                                     ->orWhere('denominacionsocial', 'like', '%$abuscar')
-                                    ->orWhere('grupofinanciero', 'like', '%$abuscar')
+                                    ->orWhere('grupofinancierto', 'like', '%$abuscar')
                                     ->get();
       return view('resultadobusqueda')->with(compact(
         'bancos',

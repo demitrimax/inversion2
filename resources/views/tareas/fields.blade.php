@@ -37,8 +37,13 @@ if(isset($tareas->vencimiento)){
 
 <!-- User Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('user_id', 'Usuario:') !!}
+    {!! Form::label('user_id', 'Asignar tarea a:') !!}
     {!! Form::select('user_id', $usuarios, null, ['class' => 'form-control', 'placeholder'=>'Seleccione un usuario', 'required']) !!}
+</div>
+
+<!-- Usuario que Asigna Tarea Field -->
+<div class="form-group col-sm-6">
+    {!! Form::hidden('asigna_userid', Auth::user()->id) !!}
 </div>
 
 

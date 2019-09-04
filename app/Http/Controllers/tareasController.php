@@ -16,6 +16,9 @@ use App\Models\tareavances;
 use App\Models\tareas;
 use App\Models\tareacomentarios;
 use Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AsignaTarea;
+use App\Mail\TareaEliminada;
 
 class tareasController extends AppBaseController
 {
@@ -84,6 +87,9 @@ class tareasController extends AppBaseController
 
         Flash::success('Tarea guardada correctamente.');
         Alert::success('Tarea guardada correctamente.');
+
+        //enviar email al usuario responsable de la tarea
+        Mail::to($tareas->user->email)->send(new AsignaTarea($tareas));
 
         return redirect(route('tareas.index'));
     }
@@ -190,6 +196,8 @@ class tareasController extends AppBaseController
             return redirect(route('tareas.index'));
         }
 
+        //enviar email de tarea Eliminada
+        Mail::to($tareas->user->email)->send(new TareaEliminada($tareas));
         $this->tareasRepository->delete($id);
 
         Flash::success('Tarea borrada correctamente.');
