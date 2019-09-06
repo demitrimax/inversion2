@@ -19,6 +19,7 @@ use Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AsignaTarea;
 use App\Mail\TareaEliminada;
+use App\Mail\tareaAvance;
 
 class tareasController extends AppBaseController
 {
@@ -223,8 +224,10 @@ class tareasController extends AppBaseController
       }
       $tarea->save();
 
-      Flash::success('se ha registrado avance correctamente');
+      Flash::success('se ha registrado avance correctamente.');
       Alert::success('se ha registrado avance correctamente.');
+
+      Mail::to($tarea->asignadopor->email)->send(new tareaAvance($tarea));
 
       return back();
 
