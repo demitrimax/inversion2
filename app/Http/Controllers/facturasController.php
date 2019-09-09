@@ -38,7 +38,7 @@ class facturasController extends AppBaseController
     public function index(Request $request)
     {
         $this->facturasRepository->pushCriteria(new RequestCriteria($request));
-        $facturas = $this->facturasRepository->orderBy('numfactura')->all();
+        $facturas = $this->facturasRepository->orderBy('numfactura', 'asc')->paginate(10);
 
         return view('facturas.index')
             ->with('facturas', $facturas);

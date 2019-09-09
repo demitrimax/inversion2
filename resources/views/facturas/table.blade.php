@@ -10,22 +10,22 @@
         </tr>
     </thead>
     <tbody>
-    @foreach($facturas as $facturas)
+    @foreach($facturas as $factura)
         <tr>
-            <td>{!! $facturas->numfactura !!}</td>
-            <td>{!! number_format($facturas->monto) !!}</td>
-            <td>{!! $facturas->concepto !!}</td>
-            <td>{!! $facturas->fecha->format('d-m-y') !!}</td>
-            <td>{!! $facturas->operacion_id ? '<span class="badge badge-success">Asignada</span>' : '<span class="badge badge-warning">Pendiente</span>' !!}</td>
+            <td>{!! $factura->numfactura !!}</td>
+            <td>{!! number_format($factura->monto) !!}</td>
+            <td>{!! $factura->concepto !!}</td>
+            <td>{!! $factura->fecha->format('d-m-y') !!}</td>
+            <td>{!! $factura->operacion_id ? '<span class="badge badge-success">Asignada</span>' : '<span class="badge badge-warning">Pendiente</span>' !!}</td>
             <td>
-                {!! Form::open(['route' => ['facturas.destroy', $facturas->id], 'method' => 'delete', 'id'=>'form'.$facturas->id]) !!}
+                {!! Form::open(['route' => ['facturas.destroy', $factura->id], 'method' => 'delete', 'id'=>'form'.$factura->id]) !!}
                 <div class='btn-group'>
-                    <a href="{!! route('facturas.show', [$facturas->id]) !!}" class='btn btn-info btn-xs'><i class="fa fa-eye"></i></a>
+                    <a href="{!! route('facturas.show', [$factura->id]) !!}" class='btn btn-info btn-xs'><i class="fa fa-eye"></i></a>
                     @can('facturas-edit')
-                    <a href="{!! route('facturas.edit', [$facturas->id]) !!}" class='btn btn-primary btn-xs'><i class="fa fa-pencil"></i></a>
+                    <a href="{!! route('facturas.edit', [$factura->id]) !!}" class='btn btn-primary btn-xs'><i class="fa fa-pencil"></i></a>
                     @endcan
                     @can('facturas-delete')
-                    {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($facturas->id)"]) !!}
+                    {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($factura->id)"]) !!}
                     @endcan
                 </div>
                 {!! Form::close() !!}
@@ -34,6 +34,8 @@
     @endforeach
     </tbody>
 </table>
+
+{{ $facturas->links() }}
 
 @section('scripts')
 <script>

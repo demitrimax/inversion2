@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class facturas
@@ -22,6 +23,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class facturas extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     public $table = 'cat_facturas';
 
@@ -30,6 +32,7 @@ class facturas extends Model
 
 
     protected $dates = ['deleted_at'];
+    protected static $logAttributes = ['*'];
 
 
     public $fillable = [

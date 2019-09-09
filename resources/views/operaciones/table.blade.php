@@ -36,6 +36,7 @@
     </tbody>
 </table>
 
+
 {{$operaciones->links()}}
 @section('scripts')
 <script>
