@@ -49,6 +49,8 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::post('operaciones/guardar', 'empresasController@regoper')->name('operacion.store');
   Route::post('operaciones/{id}/eliminar','empresasController@elimoper')->name('operacion.destroy');
   Route::post('inversion/{id}/eliminar','empresasController@eliminver')->name('movcredito.destroy');
+  //ruta para guardar la operacion y el inventario
+  Route::post('operaciones/empresa/{id}/inventario', 'operacionesController@operacionInventario')->name('operacion.empresa.inventario');
 
   Route::resource('bcuentas', 'bcuentasController');
   Route::resource('metpagos', 'metpagoController');
@@ -62,6 +64,7 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::get('/profile', 'profileController@profile')->name('profile');
 
   Route::resource('facturas', 'facturasController');
+  Route::get('getdetalle/facturas/{id}', 'facturasController@getDetalleFactura');
 
   Route::resource('tareas', 'tareasController');
   Route::post('tareas/avance', 'tareasController@registroavance')->name('tareas.avanceregistro');

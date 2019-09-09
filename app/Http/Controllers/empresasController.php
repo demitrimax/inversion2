@@ -241,6 +241,12 @@ class empresasController extends AppBaseController
     public function regoper(Request $request)
     {
       $input = $request->all();
+      //verificar que la operación incluya información de Inventario+
+
+      if($input['inventariable'] == "1"){
+        return redirect(route('operacion.empresa.inventario',[$input['empresa_id']]))->with('input',$input);
+      }
+      //dd($input['inventariable']);
       $operacion = new operaciones;
       $operacion->monto = $input['monto_op'];
       $operacion->empresa_id = $input['empresa_id'];

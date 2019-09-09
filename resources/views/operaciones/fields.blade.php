@@ -51,7 +51,7 @@ $mostrarselector = "display:none;";
 <div id='variasfacturasinput' style="{{$mostrarselector}}">
   <div class="form-group col-sm-6">
       {!! Form::label('facturas', 'Seleccione una o varias Facturas:') !!} <button type="button" class="btn btn-sm btn-primary" data-toggle="popover" title="Varias Facturas" data-content="Puede seleccionar una o más facturas. El monto de la operación se tomará del monto de la suma de las facturas."><i class="fa fa-question"></i></button>
-      {!! Form::select('facturas[]', $facturas, null, ['class' => 'form-control select2', 'multiple'=>'multiple', 'style'=>'width: 100%;']) !!}
+      {!! Form::select('facturas[]', $facturas, null, ['class' => 'form-control select2 lasfacturas', 'multiple'=>'multiple', 'style'=>'width: 100%;']) !!}
   </div>
 </div>
 <!-- Numfactura Field -->
@@ -134,7 +134,8 @@ if(isset($operaciones->fecha)){
               //alert('Abono');
               variasfacturas.style.display ='block';
               numfactura.value = '(VARIAS FACTURAS)';
-              monto.setAttribute('readonly', 'true');
+              $('.select2').select2();
+              //monto.setAttribute('readonly', 'true');
           } else {
               //alert('Cargo');
               var maxmonto = $('#maxmonto').val();
@@ -163,6 +164,28 @@ if(isset($operaciones->fecha)){
 
           });
         });
+
+        $('.lasfacturas').on('select2:select', function(e) { DatosdeFactura(e); });
+        $('.lasfacturas').on('select2:unselect', function(e) { DatosdeFactura(e); });
+        function DatosdeFactura(objeto)
+        {
+
+          var facturas = $('.lasfacturas').select2('data');
+          //console.log(facturas);
+          var montosfac = Number(0);
+          $.each(facturas, function (index, factura) {
+            //console.log('Factura id: '+factura.id);
+            $.get('{{url('getdetalle/facturas')}}/' + factura.id, function(data) {
+              //console.log('Inicio: '+montosfac);
+              //montosfac = parseFloat(parseFloat(montosfac).toFixed(2) + parseFloat(data.monto).toFixed(2));
+              montosfac += Number(parseFloat(data.monto).toFixed(2));
+              //console.log('Final: '+montosfac);
+              $('#monto').val(parseFloat(montosfac).toFixed(2));
+            });
+
+          });
+  
+        }
 </script>
 
 @endsection

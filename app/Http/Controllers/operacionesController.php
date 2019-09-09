@@ -100,13 +100,17 @@ class operacionesController extends AppBaseController
         $operaciones->fecha = $input['fecha'];
         $operaciones->save();
         $montos = 0;
-        foreach ($request->input('facturas') as $factura)
-        {
-          $facturas = facturas::find($factura);
-          $facturas->operacion_id = $operaciones->id;
-          $facturas->save();
-          $montos += $facturas->monto;
+        if($request->input('facturas')){
+          foreach ($request->input('facturas') as $factura)
+          {
+            $facturas = facturas::find($factura);
+            $facturas->operacion_id = $operaciones->id;
+            $facturas->save();
+            $montos += $facturas->monto;
+          }
         }
+
+
         //actualizar el monto de la factura con los montos de la factura
         $operaciones->monto = $montos;
         $operaciones->save();
@@ -226,5 +230,28 @@ class operacionesController extends AppBaseController
         Alert::success('Operación borrada correctamente.');
 
         return redirect(route('operaciones.index'));
+    }
+    public function operacionInventario($id, Request $request)
+    {
+
+      $empresa = empresas::find($id);
+      $empresaid = $id;
+      $cuentas = bcuentas::with('empresa')->whereHas('empresa', function($q) use ($empresaid) {
+        $q->where('id',$empresaid);
+      })->get();
+      //dd($cuentas);
+      $cuental = $cuentas->pluck('nomcuentasaldo', 'id');
+      $metpago = metpago::pluck('nombre','id');
+      $proveedores = proveedores::pluck('nombre','id');
+
+      $facturas = facturas::whereNull('operacion_id')->pluck('numfactura','id');
+      $categorias = clasifica::all();
+      foreach($categorias as $key=>$categoria){
+         foreach($categoria->subcategorias->sortBy('nombre') as $subcategoria){
+          $subcategoriasAgrupadas[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
+        }
+      }
+
+      return view('operaciones.newoperacioninv')->with(compact('cuental', 'empresa', 'metpago', 'facturas', 'proveedores', 'subcategoriasAgrupadas'));
     }
 }

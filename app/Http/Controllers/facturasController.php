@@ -13,6 +13,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Models\operaciones;
 use App\Models\proveedores;
+use App\Models\facturas;
 
 class facturasController extends AppBaseController
 {
@@ -37,7 +38,7 @@ class facturasController extends AppBaseController
     public function index(Request $request)
     {
         $this->facturasRepository->pushCriteria(new RequestCriteria($request));
-        $facturas = $this->facturasRepository->all();
+        $facturas = $this->facturasRepository->orderBy('numfactura')->all();
 
         return view('facturas.index')
             ->with('facturas', $facturas);
@@ -171,5 +172,11 @@ class facturasController extends AppBaseController
         Alert::success('Factura borrada correctamente.');
 
         return redirect(route('facturas.index'));
+    }
+
+    public function getDetalleFactura($id)
+    {
+      $factura = facturas::find($id);
+       return $factura;
     }
 }

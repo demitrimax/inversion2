@@ -119,6 +119,13 @@ span.select2-container {
                     {!! Form::select('subclasifica_id', $subcategoriasAgrupadas,null, ['class' => 'form-control select2', 'required', 'placeholder'=>'Seleccione', 'style'=>'width: 100%;']) !!}
                 </div>
 
+                <div class="form-group col-sm-6">
+                    <label class="ckbox">
+                      {!! Form::hidden('inventariable', 0)!!}
+                        <input type="checkbox" name="inventariable" id="inventariable" value = "1"><span>Operación de Inventario</span>
+                    </label>
+                </div>
+
                 <div class="form-group col-sm-12">
                     {!! Form::label('concepto', 'Concepto:') !!}
                     {!! Form::text('concepto', null, ['class' => 'form-control maxlen', 'required', 'maxlength'=>'50']) !!}
