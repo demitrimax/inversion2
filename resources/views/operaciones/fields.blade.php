@@ -44,11 +44,15 @@
 
 @php
 $mostrarselector = "display:none;";
+$misfacturas = null;
   if (isset($operaciones->tipo))
   {
     if ($operaciones->tipo  == 'Entrada')
     {
       $mostrarselector = "display:'block';";
+      if($operaciones->facturas->count() > 0 ){
+        $misfacturas = $operaciones->facturas;
+      }
     }
 
   }
@@ -56,7 +60,7 @@ $mostrarselector = "display:none;";
 <div id='variasfacturasinput' style="{{$mostrarselector}}">
   <div class="form-group col-sm-6">
       {!! Form::label('facturas', 'Seleccione una o varias Facturas:') !!} <button type="button" class="btn btn-sm btn-primary" data-toggle="popover" title="Varias Facturas" data-content="Puede seleccionar una o más facturas. El monto de la operación se tomará del monto de la suma de las facturas."><i class="fa fa-question"></i></button>
-      {!! Form::select('facturas[]', $facturas, null, ['class' => 'form-control select2 lasfacturas', 'multiple'=>'multiple', 'style'=>'width: 100%;']) !!}
+      {!! Form::select('facturas[]', $facturas, $misfacturas, ['class' => 'form-control select2 lasfacturas', 'multiple'=>'multiple', 'style'=>'width: 100%;']) !!}
   </div>
 </div>
 <!-- Numfactura Field -->

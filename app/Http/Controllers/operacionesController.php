@@ -173,7 +173,11 @@ class operacionesController extends AppBaseController
             $subcategoriasAgrupadas[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
           }
         }
-        $facturas = facturas::whereNull('operacion_id')->pluck('numfactura','id');
+
+        $facturas = facturas::whereNull('operacion_id')
+                              ->orWhere('operacion_id', $operaciones->id)
+                              ->orderBy('numfactura','asc')
+                              ->pluck('numfactura','id');
 
         return view('operaciones.edit')->with(compact('operaciones','empresas', 'cuental', 'proveedores','subcategoriasAgrupadas','metpago', 'facturas'));
     }
@@ -198,6 +202,27 @@ class operacionesController extends AppBaseController
         }
 
         $operaciones = $this->operacionesRepository->update($request->all(), $id);
+
+        if($request->input('facturas')){
+          $montos = 0;
+          foreach($operaciones->facturas as $factura)
+          {
+            $factua = facturas::find($factura->id);
+            $factua->operacion_id = null;
+            $factua->save();
+          }
+          foreach ($request->input('facturas') as $factura)
+          {
+            $facturas = facturas::find($factura);
+            $facturas->operacion_id = $operaciones->id;
+            $facturas->save();
+            $montos += $facturas->monto;
+          }
+          $operaciones->monto = $montos;
+          //actualizar el monto de la factura con los montos de la factura
+          $operaciones->save();
+        }
+
 
         Flash::success('Operación actualizada correctamente.');
         Alert::success('Operación actualizada correctamente.');
