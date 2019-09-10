@@ -32,11 +32,16 @@ if(isset($facturas->fecha)){
     {!! Form::label('fecha', 'Fecha:') !!}<button type="button" class="btn btn-sm btn-primary" data-toggle="popover" title="Formato de Fecha" data-content="Escriba la fecha en formato yyyy-mm-dd o utilice el selector de fecha."><i class="fa fa-question"></i></button>
     {!! Form::text('fecha', $fecha, ['placeholder'=>'yyyy-mm-dd','class' => 'form-control datepicker-here','id'=>'fecha', 'id'=>'fcreacion', 'data-language'=>'es', 'data-date-format'=>'yyyy-mm-dd', 'required', 'pattern'=>'(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))']) !!}
 </div>
-
+@php
+  $monto = null;
+  if(isset($facturas->monto)){
+    $monto = round($facturas->monto,2);
+  }
+@endphp
 <!-- Monto Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('monto', 'Monto:') !!}
-    {!! Form::number('monto', null, ['class' => 'form-control', 'step'=>'0.01', 'required']) !!}
+    {!! Form::number('monto', $monto, ['class' => 'form-control', 'step'=>'0.01', 'required']) !!}
 </div>
 
 <!-- Concepto Field -->

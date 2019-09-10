@@ -24,11 +24,16 @@
     {!! Form::label('tipo', 'Tipo:') !!}
     {!! Form::select('tipo', ['Salida'=>'CARGO', 'Entrada'=>'ABONO' ], null, ['class' => 'form-control', 'placeholder'=>'Seleccione', 'required']) !!}
 </div>
-
+@php
+  $monto = null;
+  if(isset($operaciones->monto)){
+    $monto = round($operaciones->monto,2);
+  }
+@endphp
 <!-- Monto Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('monto', 'Monto:') !!}
-    {!! Form::number('monto', null, ['class' => 'form-control', 'step'=>'0.01']) !!}
+    {!! Form::number('monto', $monto, ['class' => 'form-control', 'step'=>'0.01']) !!}
 </div>
 
 <!-- Proveedor Id Field -->
@@ -184,7 +189,7 @@ if(isset($operaciones->fecha)){
             });
 
           });
-  
+
         }
 </script>
 
