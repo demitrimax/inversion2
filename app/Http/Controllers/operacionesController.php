@@ -99,8 +99,9 @@ class operacionesController extends AppBaseController
         $operaciones->comentario = $input['comentario'];
         $operaciones->fecha = $input['fecha'];
         $operaciones->save();
-        $montos = 0;
+
         if($request->input('facturas')){
+          $montos = 0;
           foreach ($request->input('facturas') as $factura)
           {
             $facturas = facturas::find($factura);
@@ -108,12 +109,10 @@ class operacionesController extends AppBaseController
             $facturas->save();
             $montos += $facturas->monto;
           }
+          $operaciones->monto = $montos;
+          //actualizar el monto de la factura con los montos de la factura
+          $operaciones->save();
         }
-
-
-        //actualizar el monto de la factura con los montos de la factura
-        $operaciones->monto = $montos;
-        $operaciones->save();
 
         Flash::success('Operación guardada correctamente.');
         Alert::success('Operación guardada correctamente.');
