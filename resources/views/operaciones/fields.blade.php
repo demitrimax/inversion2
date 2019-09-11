@@ -104,6 +104,20 @@ if(isset($operaciones->fecha)){
     {!! Form::text('concepto', null, ['class' => 'form-control maxlen', 'maxlength'=>'50', 'required']) !!}
 </div>
 
+<div class="form-group col-sm-6">
+    <label class="ckbox">
+      {!! Form::hidden('inventariable', 0)!!}
+        <input type="checkbox" name="inventariable" id="inventariable" value = "1"><span>Operación de Inventario</span>
+    </label>
+</div>
+
+<div class="form-group col-sm-6">
+    <label class="ckbox">
+      {!! Form::hidden('comisionable', 0)!!}
+        <input type="checkbox" name="comisionable" id="comisionable" value = "1"><span>Operación Comisionable</span>
+    </label>
+</div>
+
 <!-- Comentario Field -->
 <div class="form-group col-sm-12 col-lg-12">
     {!! Form::label('comentario', 'Comentario:') !!}

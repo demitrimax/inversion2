@@ -86,6 +86,29 @@ class operacionesController extends AppBaseController
         $input = $request->all();
 
         //$operaciones = $this->operacionesRepository->create($input);
+        //operacion comisionable --- no guardar enviar a otra vista
+        if($input['comisionable'] == 1){
+          $empresaid = $input['empresa_id'];
+          $empresa = empresas::find($empresaid);
+
+          $cuentas = bcuentas::with('empresa')->whereHas('empresa', function($q) use ($empresaid) {
+            $q->where('id',$empresaid);
+          })->get();
+          //dd($cuentas);
+          $cuental = $cuentas->pluck('nomcuentasaldo', 'id');
+          $metpago = metpago::pluck('nombre','id');
+          $proveedores = proveedores::pluck('nombre','id');
+
+          $facturas = facturas::whereNull('operacion_id')->pluck('numfactura','id');
+          $categorias = clasifica::all();
+          foreach($categorias as $key=>$categoria){
+             foreach($categoria->subcategorias->sortBy('nombre') as $subcategoria){
+              $subcategoriasAgrupadas[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
+            }
+          }
+
+          return view('operaciones.newoperacioncomisionable')->with(compact('cuental', 'empresa', 'metpago', 'facturas', 'proveedores', 'subcategoriasAgrupadas', 'input'));
+        }
         $operaciones = new operaciones;
         $operaciones->monto = $input['monto'];
         $operaciones->empresa_id = $input['empresa_id'];
