@@ -24,6 +24,7 @@
       <div class="form-group col-sm-6">
           {!! Form::label('cuenta_id', 'Cuenta:') !!}
           {!! Form::select('cuenta_id', $cuental, $input['cuenta_id'], ['class' => 'form-control', 'required', 'placeholder'=>'Seleccione', 'disabled']) !!}
+          {!! Form::hidden('cuenta_id', $input['cuenta_id']) !!}
       </div>
 
 
@@ -39,6 +40,7 @@
       <div class="form-group col-sm-6">
           {!! Form::label('monto', 'Monto:') !!}
           {!! Form::number('monto', $input['monto'], ['class' => 'form-control', 'required', 'step'=>'0.01', 'max'=>$saldofinal, 'min'=>0, 'readonly']) !!}
+
       </div>
 
       <div class="form-group col-sm-6">
@@ -91,7 +93,7 @@
             <tr>
               <th style="width:40%">Categoria</th>
               <th style="width:40%;">Concepto</th>
-              <th style="width:20%;">Monto</th>
+              <th style="width:20%;" class="montoTitulo">Monto</th>
             </tr>
           </thead>
           <tbody>
@@ -104,13 +106,60 @@
             </td>
             <td class="NConcepto">
               <div class="input-group N1Concepto">
-               {!! Form::text('concepto', null, ['class'=>'form-control']) !!}
+               {!! Form::text('concepto_1', null, ['class'=>'form-control']) !!}
 
              </div>
             </td>
             <td>
               <div class="input-group col-md-12">
-                 {!! Form::number('monto', null, ['class'=>'form-control'])!!}
+                 {!! Form::number('monto_com', null, ['class'=>'form-control', 'min'=>1,'max'=>$input['monto']*0.16, 'id'=>'monto_com' ])!!}
+              </div>
+            </td>
+
+            </tr>
+          </tbody>
+        </table>
+
+
+    </div>
+    @endcard
+    @card(['title' => 'Operaciones de la Devolución', 'color'=>'default'])
+    <div class="row">
+        <!-- Tipo Field -->
+        <table class="table tabla-comision table-responsive table-responsive-xl" id="comision">
+          <thead class="bg-purple text-white fixed">
+            <tr>
+              <th style="width:30%">Categoria</th>
+              <th style="width:20%">Cuenta</th>
+              <th style="width:30%;">Concepto</th>
+              <th style="width:20%;" class="montoTitulo">Monto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+            <td class="PCantegoria">
+                <div class="input-group P1Categoria">
+                  {!! Form::select('categoria_2', $subcategoriasAgrupadas, null, ['id'=>'categoria', 'class'=> 'form-control select2', 'required'] )!!}
+
+              </div>
+            </td>
+            <td class="PCuenta">
+              <div class="input-group P1Cuenta">
+               {!! Form::select('cuenta_2', $cuental, null, ['class'=>'form-control']) !!}
+
+             </div>
+            </td>
+            <td class="PConcepto">
+              <div class="input-group P1Concepto">
+               {!! Form::text('concepto_2', null, ['class'=>'form-control']) !!}
+
+             </div>
+            </td>
+            <td>
+
+              <div class="input-group col-md-12">
+                <span class="input-group-addon d-none d-sm-block"><i class="fa fa-dollar"></i></span>
+                 {!! Form::number('monto_com2', null, ['class'=>'form-control', 'max'=>$input['monto']*0.16, 'id'=>'monto_com' ])!!}
               </div>
             </td>
 
@@ -122,12 +171,26 @@
     </div>
     @endcard
     <div class="card-footer tx-center bg-gray-300">
-                  <a class="btn btn-info" href="">Registrar</a>
-                  <a class="btn btn-secondary" href="">Cancel</a>
+                  <button class="btn btn-info" type="submit">Registrar</button>
+                  <a class="btn btn-secondary" href="url('operaciones')">Cancelar</a>
                 </div>
 
   {!! Form::close() !!}
 
   @endcard
 
+@endsection
+
+@section('scripts')
+<script src="{{asset('starlight/lib/select2/js/select2.full.min.js')}}"></script>
+<script src="{{asset('starlight/lib/numeral.js/min/numeral.min.js')}}"></script>
+<script>
+  $('#monto_com').on('change keyup', function(e) {
+    var montoT = {!! $input['monto'] !!};
+    var mRestante = numeral(parseFloat(montoT).toFixed(2) - parseFloat(e.target.value).toFixed(2));
+
+    $('.montoTitulo').text('Monto Restante: '+mRestante.format('0,0.00'));
+  });
+
+</script>
 @endsection

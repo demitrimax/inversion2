@@ -5,7 +5,7 @@ Por este medio, le informamos que se ha registrado avances en el desarrollo de l
 
 {{$tarea->nombre}}
 
-@component('mail::button', ['url' => 'tareas/'.$tarea->id])
+@component('mail::button', ['url' => url('tareas/'.$tarea->id)])
 Detalles
 @endcomponent
 

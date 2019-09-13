@@ -87,7 +87,8 @@ class operacionesController extends AppBaseController
 
         //$operaciones = $this->operacionesRepository->create($input);
         //operacion comisionable --- no guardar enviar a otra vista
-        if($input['comisionable'] == 1){
+        if(isset($input['comisionable'])){
+        if($input['comisionable'] == 1 && $input['tipo'] == 'Salida'){
           $empresaid = $input['empresa_id'];
           $empresa = empresas::find($empresaid);
 
@@ -107,8 +108,10 @@ class operacionesController extends AppBaseController
             }
           }
 
-          return view('operaciones.newoperacioncomisionable')->with(compact('cuental', 'empresa', 'metpago', 'facturas', 'proveedores', 'subcategoriasAgrupadas', 'input'));
+            return view('operaciones.newoperacioncomisionable')->with(compact('cuental', 'empresa', 'metpago', 'facturas', 'proveedores', 'subcategoriasAgrupadas', 'input'));
+          }
         }
+
         $operaciones = new operaciones;
         $operaciones->monto = $input['monto'];
         $operaciones->empresa_id = $input['empresa_id'];

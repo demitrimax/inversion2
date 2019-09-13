@@ -30,6 +30,7 @@ use App\Models\invdetoperacion;
 class productos extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     public $table = 'cat_productos';
 
@@ -38,6 +39,7 @@ class productos extends Model
 
 
     protected $dates = ['deleted_at'];
+    protected static $logAttributes = ['*'];
 
 
     public $fillable = [

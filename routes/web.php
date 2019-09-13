@@ -108,9 +108,9 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::post('ckeditor/image_upload', 'CKEditorController@upload')->name('upload');
 
   Route::get('mailable', function () {
-    $tarea = App\Models\tareas::find(8);
+    $tarea = App\Models\tareas::find(18);
 
-    return new App\Mail\AsignaTarea($tarea);
+    return new App\Mail\tareaAvance($tarea);
 });
 
 });
