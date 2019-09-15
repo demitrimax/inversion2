@@ -14,16 +14,17 @@
             <td><a href="{!! route('bcuentas.show', [$bcuentas->id]) !!}">{!! $bcuentas->numcuenta !!}</a></td>
             <td>@foreach($bcuentas->empresa as $empresa)
               {!! $empresa->nombre !!} {!! $bcuentas->efectivo == 1 ? '<span class="badge badge-success"><i class="fa fa-dollar"></i></span>' : '' !!}
+              {!! $bcuentas->porfuera == 1 ? '<span class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Cuenta por Fuera"><i class="fas fa-external-link-alt" ></i></span>' : '' !!}
               @endforeach</td>
             <td>
                 {!! Form::open(['route' => ['bcuentas.destroy', $bcuentas->id], 'method' => 'delete', 'id'=>'form'.$bcuentas->id]) !!}
                 <div class='btn-group'>
-                    <a href="{!! route('bcuentas.show', [$bcuentas->id]) !!}" class='btn btn-info btn-xs'><i class="fa fa-eye"></i></a>
+                    <a href="{!! route('bcuentas.show', [$bcuentas->id]) !!}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></a>
                     @can('bcuentas-edit')
-                    <a href="{!! route('bcuentas.edit', [$bcuentas->id]) !!}" class='btn btn-primary btn-xs'><i class="fa fa-pencil"></i></a>
+                    <a href="{!! route('bcuentas.edit', [$bcuentas->id]) !!}" class='btn btn-primary btn-xs'><i class="far fa-edit"></i></a>
                     @endcan
                     @can('bcuentas-delete')
-                    {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($bcuentas->id)"]) !!}
+                    {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($bcuentas->id)"]) !!}
                     @endcan
                 </div>
                 {!! Form::close() !!}

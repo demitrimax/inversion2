@@ -47,13 +47,30 @@
     <span>Cuenta de Efectivo</span>
     </label>
 </div>
+@php
+  $valporfuera = 0;
+  if(isset($bcuentas->porfuera)){
+    $valporfuera = $bcuentas->porfuera;
+  }
+@endphp
+<!-- Cuenta de Efectivo Field -->
+<div class="form-group col-sm-6">
+    <label class="ckbox">
+      {!! Form::hidden('porfuera', 0) !!}
+    {!! Form::checkbox('porfuera', 1, $valporfuera) !!}
+    <span>Cuenta por fuera (Dinero por fuera)</span>
+    </label>
+</div>
 
 @php
   $valempresa = null;
-  if($bcuentas->empresa->count()>0){
-    $valempresa = $bcuentas->empresa->last();
-    $valempresa = $valempresa->id;
+  if(isset($bcuentas)){
+    if($bcuentas->empresa->count()>0){
+      $valempresa = $bcuentas->empresa->last();
+      $valempresa = $valempresa->id;
+    }
   }
+
 @endphp
 
 <!-- Empresa Id Field -->

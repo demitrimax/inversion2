@@ -85,44 +85,52 @@
       </div>
     </div>
 
-    @card(['title' => 'Datos de la Comisión', 'color'=>'warning'])
+    @card(['title' => 'Datos de la Devolución', 'color'=>'warning', 'classid'=>'comision'])
     <div class="row">
         <!-- Tipo Field -->
-        <table class="table tabla-comision table-responsive table-responsive-xl" id="comision">
-          <thead class="bg-info text-white fixed">
-            <tr>
-              <th style="width:40%">Categoria</th>
-              <th style="width:40%;">Concepto</th>
-              <th style="width:20%;" class="montoTitulo">Monto</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-            <td class="NCantegoria">
-                <div class="input-group N1Categoria">
-                  {!! Form::select('categoria', $subcategoriasAgrupadas, null, ['id'=>'categoria', 'class'=> 'form-control select2', 'required'] )!!}
 
-              </div>
-            </td>
-            <td class="NConcepto">
-              <div class="input-group N1Concepto">
-               {!! Form::text('concepto_1', null, ['class'=>'form-control']) !!}
 
+                <div class="form-group col-sm-6">
+                  {!! Form::label('categoria', 'Categoria:') !!}
+                  {!! Form::select('categoria', $subcategoriasAgrupadasIng, null, ['id'=>'categoria', 'class'=> 'form-control select2', 'required'] )!!}
+                </div>
+
+
+
+              <div class="form-group col-sm-6">
+                {!! Form::label('concepto_1', 'Concepto:') !!}
+                {!! Form::text('concepto_1', null, ['class'=>'form-control']) !!}
              </div>
-            </td>
-            <td>
-              <div class="input-group col-md-12">
-                 {!! Form::number('monto_com', null, ['class'=>'form-control', 'min'=>1,'max'=>$input['monto']*0.16, 'id'=>'monto_com' ])!!}
-              </div>
-            </td>
 
-            </tr>
-          </tbody>
-        </table>
+
+              <div class="form-group col-sm-6">
+                {!! Form::label('monto_com', 'Monto Comisión:') !!}
+                {!! Form::number('monto_com', null, ['class'=>'form-control', 'min'=>1,'max'=>$input['monto']*0.16, 'id'=>'monto_com' ])!!}
+              </div>
+
+              <div class="form-group col-sm-6">
+                {!! Form::label('cuentadev', 'Cuenta deposito de Devolución:') !!}
+                {!! Form::select('cuentadev', $cuentasporfuera, null, ['class'=>'form-control' ])!!}
+              </div>
+
+              <div class="form-group col-sm-6">
+                {!! Form::label('monto_dev', 'Monto de la Devolución:') !!}
+                <div class="input-group">
+                <span class="input-group-addon d-none d-sm-block"><i class="fa fa-dollar"></i></span>
+                 {!! Form::text('monto_dev', null, ['class'=>'form-control', 'min'=>1,'max'=>$input['monto']*0.87, 'id'=>'monto_dev', 'readonly' ])!!}
+                 {!! Form::hidden('montodev', null, ['id'=>'montodev'])!!}
+               </div>
+              </div>
 
 
     </div>
+    <div class="advertencia-saldocomision">
+      @component('components.alertdismissbig')
+        El monto de comisión es superior al 16%.
+      @endcomponent
+
     @endcard
+  </div>
     @card(['title' => 'Operaciones de la Devolución', 'color'=>'default'])
     <div class="row">
         <!-- Tipo Field -->
@@ -185,11 +193,26 @@
 <script src="{{asset('starlight/lib/select2/js/select2.full.min.js')}}"></script>
 <script src="{{asset('starlight/lib/numeral.js/min/numeral.min.js')}}"></script>
 <script>
+  $('.advertencia-saldocomision').hide();
+
   $('#monto_com').on('change keyup', function(e) {
     var montoT = {!! $input['monto'] !!};
+    var comision = parseFloat(e.target.value).toFixed(2);
     var mRestante = numeral(parseFloat(montoT).toFixed(2) - parseFloat(e.target.value).toFixed(2));
 
-    $('.montoTitulo').text('Monto Restante: '+mRestante.format('0,0.00'));
+    //$('.montoTitulo').text('Monto Restante: '+mRestante.format('0,0.00'));
+    $('#monto_dev').val(mRestante.format('0,0.00'));
+    $('#montodev').val(mRestante.value());
+    var porcentaje = parseFloat(comision / montoT).toFixed(2);
+    $('.comision').text('Datos de la Comision: '+ parseInt(porcentaje*100) +'%');
+
+    if(porcentaje > 0.16 ){
+      //alert('porcentaje de la comisión supera el 16% : ' + porcentaje)
+      $('.advertencia-saldocomision').show();
+    }
+    else {
+        $('.advertencia-saldocomision').hide();
+    }
   });
 
 </script>

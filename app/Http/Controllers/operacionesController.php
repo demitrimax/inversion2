@@ -88,28 +88,35 @@ class operacionesController extends AppBaseController
         //$operaciones = $this->operacionesRepository->create($input);
         //operacion comisionable --- no guardar enviar a otra vista
         if(isset($input['comisionable'])){
-        if($input['comisionable'] == 1 && $input['tipo'] == 'Salida'){
-          $empresaid = $input['empresa_id'];
-          $empresa = empresas::find($empresaid);
 
-          $cuentas = bcuentas::with('empresa')->whereHas('empresa', function($q) use ($empresaid) {
-            $q->where('id',$empresaid);
-          })->get();
-          //dd($cuentas);
-          $cuental = $cuentas->pluck('nomcuentasaldo', 'id');
-          $metpago = metpago::pluck('nombre','id');
-          $proveedores = proveedores::pluck('nombre','id');
+            if($input['comisionable'] == 1 && $input['tipo'] == 'Salida'){
+              $empresaid = $input['empresa_id'];
+              $empresa = empresas::find($empresaid);
 
-          $facturas = facturas::whereNull('operacion_id')->pluck('numfactura','id');
-          $categorias = clasifica::all();
-          foreach($categorias as $key=>$categoria){
-             foreach($categoria->subcategorias->sortBy('nombre') as $subcategoria){
-              $subcategoriasAgrupadas[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
-            }
-          }
+              $cuentas = bcuentas::with('empresa')->whereHas('empresa', function($q) use ($empresaid) {
+                $q->where('id',$empresaid);
+              })->get();
+              //dd($cuentas);
+              $cuental = $cuentas->pluck('nomcuentasaldo', 'id');
+              $metpago = metpago::pluck('nombre','id');
+              $proveedores = proveedores::pluck('nombre','id');
 
-            return view('operaciones.newoperacioncomisionable')->with(compact('cuental', 'empresa', 'metpago', 'facturas', 'proveedores', 'subcategoriasAgrupadas', 'input'));
-          }
+              $facturas = facturas::whereNull('operacion_id')->pluck('numfactura','id');
+              $categorias = clasifica::where('tip','E')->get();
+              foreach($categorias as $key=>$categoria){
+                 foreach($categoria->subcategorias->sortBy('nombre') as $subcategoria){
+                  $subcategoriasAgrupadas[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
+                }
+              }
+              $categorias = clasifica::where('tip','I')->get();
+              foreach($categorias as $key=>$categoria){
+                 foreach($categoria->subcategorias->sortBy('nombre') as $subcategoria){
+                  $subcategoriasAgrupadasIng[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
+                }
+              }
+              $cuentasporfuera = $empresa->cuentas->where('porfuera', 1);
+                return view('operaciones.newoperacioncomisionable')->with(compact('cuental', 'empresa', 'metpago', 'facturas', 'proveedores', 'subcategoriasAgrupadas', 'subcategoriasAgrupadasIng','cuentasporfuera', 'input'));
+              }
         }
 
         $operaciones = new operaciones;

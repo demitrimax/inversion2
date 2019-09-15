@@ -44,6 +44,18 @@
                   <th>{!! Form::label('divisa', 'Moneda:') !!}</th>
                   <td>{!! $bcuentas->divisa !!}</td>
                 </tr>
+                @if($bcuentas->efectivo == 1)
+                <tr>
+                  <th>{!! Form::label('efectivo', 'Cuenta de Efectivo:') !!}</th>
+                  <td>Sí</td>
+                </tr>
+                @endif
+                @if($bcuentas->porfuera == 1)
+                <tr>
+                  <th>{!! Form::label('porfuera', 'Cuenta por Fuera:') !!}</th>
+                  <td>Sí</td>
+                </tr>
+                @endif
 
                 <tr>
                   <th>{!! Form::label('saldo', 'Saldo:') !!}</th>

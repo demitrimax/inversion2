@@ -12,7 +12,9 @@
    @foreach($empresas->cuentas as $key=>$cuenta)
      <tr>
        <td>{{$key+1}}</td>
-       <td>{{$cuenta->numcuenta.'('.$cuenta->divisa.')' }} {!! $cuenta->efectivo == 1 ? '<span class="badge badge-success"><i class="fa fa-dollar"></i></span>' : '' !!}</td>
+       <td>{{$cuenta->numcuenta.'('.$cuenta->divisa.')' }} {!! $cuenta->efectivo == 1 ? '<span class="badge badge-success"><i class="fa fa-dollar"></i></span>' : '' !!}
+         {!! $cuenta->porfuera == 1 ? '<span class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Cuenta por Fuera"><i class="fas fa-external-link-alt" ></i></span>' : '' !!}
+        </td>
        <td>{{ $cuenta->banco->nombrecorto }}</td>
        <td><a href="{!! route('bcuentas.show', [$cuenta->id]) !!}" target="_blank">${{ number_format($cuenta->saldocuenta,2) }}</a></td>
        <td>

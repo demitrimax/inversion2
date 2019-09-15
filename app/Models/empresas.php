@@ -47,11 +47,11 @@ class empresas extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'nombre' => 'string',
-        'rfc' => 'string',
-        'giro' => 'string',
-        'fcreacion' => 'date',
+        'id'            => 'integer',
+        'nombre'        => 'string',
+        'rfc'           => 'string',
+        'giro'          => 'string',
+        'fcreacion'     => 'date',
         'observaciones' => 'string'
     ];
 

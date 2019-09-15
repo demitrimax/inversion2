@@ -46,7 +46,8 @@ class bcuentas extends Model
         'cliente_id',
         'divisa',
         'swift',
-        'efectivo'
+        'efectivo',
+        'porfuera',
     ];
 
     /**
@@ -64,6 +65,7 @@ class bcuentas extends Model
         'divisa'             => 'string',
         'swift'              => 'string',
         'efectivo'           => 'integer',
+        'porfuera'           => 'integer',
     ];
 
     /**
