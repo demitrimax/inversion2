@@ -18,12 +18,12 @@
             <td>
                 {!! Form::open(['route' => ['clientes.destroy', $clientes->id], 'method' => 'delete', 'id'=>'form'.$clientes->id]) !!}
                 <div class='btn-group'>
-                    <a href="{!! route('clientes.show', [$clientes->id]) !!}" class='btn btn-info btn-xs'><i class="fa fa-eye"></i></a>
+                    <a href="{!! route('clientes.show', [$clientes->id]) !!}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></a>
                     @can('clientes-edit')
-                    <a href="{!! route('clientes.edit', [$clientes->id]) !!}" class='btn btn-primary btn-xs'><i class="fa fa-pencil"></i></a>
+                    <a href="{!! route('clientes.edit', [$clientes->id]) !!}" class='btn btn-primary btn-xs'><i class="far fa-edit"></i></a>
                     @endcan
                     @can('clientes-delete')
-                    {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($clientes->id)"]) !!}
+                    {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($clientes->id)"]) !!}
                     @endcan
                 </div>
                 {!! Form::close() !!}

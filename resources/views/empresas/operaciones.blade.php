@@ -31,7 +31,7 @@ span.select2-container {
                <div class='btn-group'>
 
                    @can('operacion-delete')
-                   {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelOper($operacion->id)"]) !!}
+                   {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelOper($operacion->id)"]) !!}
                    {!! Form::hidden('redirect', 'empresas.show') !!}
                    {!! Form::hidden('empresa_id', $empresas->id) !!}
                    @endcan

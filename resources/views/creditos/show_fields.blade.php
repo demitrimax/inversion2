@@ -146,7 +146,7 @@
             </tbody>
           </table>
           @can('creditos-edit')
-          <a href="{!! route('creditos.edit', [$creditos->id]) !!}" class='btn btn-primary'><i class="fa fa-pencil"></i> Editar</a>
+          <a href="{!! route('creditos.edit', [$creditos->id]) !!}" class='btn btn-primary'><i class="far fa-edit"></i> Editar</a>
           @endcan
         </div>
     </div>

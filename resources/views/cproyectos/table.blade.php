@@ -18,12 +18,12 @@
             <td>
                 {!! Form::open(['route' => ['cproyectos.destroy', $cproyectos->id], 'method' => 'delete', 'id'=>'form'.$cproyectos->id]) !!}
                 <div class='btn-group'>
-                    <a href="{!! route('cproyectos.show', [$cproyectos->id]) !!}" class='btn btn-info'><i class="fa fa-eye"></i></a>
+                    <a href="{!! route('cproyectos.show', [$cproyectos->id]) !!}" class='btn btn-info'><i class="far fa-eye"></i></a>
                     @can('cproyectos-edit')
-                    <a href="{!! route('cproyectos.edit', [$cproyectos->id]) !!}" class='btn btn-primary'><i class="fa fa-pencil"></i></a>
+                    <a href="{!! route('cproyectos.edit', [$cproyectos->id]) !!}" class='btn btn-primary'><i class="far fa-edit"></i></a>
                     @endcan
                     @can('cproyectos-delete')
-                    {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger', 'onclick' => "ConfirmDelete($cproyectos->id)"]) !!}
+                    {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'button', 'class' => 'btn btn-danger', 'onclick' => "ConfirmDelete($cproyectos->id)"]) !!}
                     @endcan
                 </div>
                 {!! Form::close() !!}

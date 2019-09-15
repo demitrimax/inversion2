@@ -14,12 +14,12 @@
             <td>
                 {!! Form::open(['route' => ['metpagos.destroy', $metpago->id], 'method' => 'delete', 'id'=>'form'.$metpago->id]) !!}
                 <div class='btn-group'>
-                    <a href="{!! route('metpagos.show', [$metpago->id]) !!}" class='btn btn-info btn-xs'><i class="fa fa-eye"></i></a>
+                    <a href="{!! route('metpagos.show', [$metpago->id]) !!}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></a>
                     @can('metpagos-edit')
-                    <a href="{!! route('metpagos.edit', [$metpago->id]) !!}" class='btn btn-primary btn-xs'><i class="fa fa-pencil"></i></a>
+                    <a href="{!! route('metpagos.edit', [$metpago->id]) !!}" class='btn btn-primary btn-xs'><i class="far fa-edit"></i></a>
                     @endcan
                     @can('metpagos-delete')
-                    {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($metpago->id)"]) !!}
+                    {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($metpago->id)"]) !!}
                     @endcan
                 </div>
                 {!! Form::close() !!}

@@ -14,12 +14,12 @@
             <td>
                 {!! Form::open(['route' => ['clasificas.destroy', $clasifica->id], 'method' => 'delete', 'id'=>'form'.$clasifica->id]) !!}
                 <div class='btn-group'>
-                    <a href="{!! route('clasificas.show', [$clasifica->id]) !!}" class='btn btn-info btn-xs'><i class="fa fa-eye"></i></a>
+                    <a href="{!! route('clasificas.show', [$clasifica->id]) !!}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></a>
                     @can('clasificas-edit')
-                    <a href="{!! route('clasificas.edit', [$clasifica->id]) !!}" class='btn btn-primary btn-xs'><i class="fa fa-pencil"></i></a>
+                    <a href="{!! route('clasificas.edit', [$clasifica->id]) !!}" class='btn btn-primary btn-xs'><i class="far fa-edit"></i></a>
                     @endcan
                     @can('clasificas-delete')
-                    {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($clasifica->id)"]) !!}
+                    {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($clasifica->id)"]) !!}
                     @endcan
                 </div>
                 {!! Form::close() !!}

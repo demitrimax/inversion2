@@ -14,12 +14,12 @@
             <td>
                 {!! Form::open(['route' => ['coddivisas.destroy', $coddivisas->codigo], 'method' => 'delete', 'id'=>'form'.$coddivisas->codigo]) !!}
                 <div class='btn-group'>
-                    <a href="{!! route('coddivisas.show', [$coddivisas->codigo]) !!}" class='btn btn-info btn-xs'><i class="fa fa-eye"></i></a>
+                    <a href="{!! route('coddivisas.show', [$coddivisas->codigo]) !!}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></a>
                     @can('coddivisas-edit')
-                    <a href="{!! route('coddivisas.edit', [$coddivisas->codigo]) !!}" class='btn btn-primary btn-xs'><i class="fa fa-pencil"></i></a>
+                    <a href="{!! route('coddivisas.edit', [$coddivisas->codigo]) !!}" class='btn btn-primary btn-xs'><i class="far fa-edit"></i></a>
                     @endcan
                     @can('coddivisas-delete')
-                    {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete('$coddivisas->codigo')"]) !!}
+                    {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete('$coddivisas->codigo')"]) !!}
                     @endcan
                 </div>
                 {!! Form::close() !!}

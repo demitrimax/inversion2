@@ -21,7 +21,7 @@
     <div class="col-md-12">
           <div class="card bg-0">
             <div class="card-header card-header-default">
-               <h3 class="card-title"><i class="fa fa-pencil-square-o"></i> Editar Usuario</h3>
+               <h3 class="card-title"><i class="far fa-edit-square-o"></i> Editar Usuario</h3>
 
             </div>
             <!-- /.box-header -->

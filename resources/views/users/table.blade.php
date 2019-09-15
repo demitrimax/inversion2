@@ -24,9 +24,9 @@
             <td>
                 {!! Form::open(['route' => ['users.destroy', $users->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
-                    <a href="{!! route('users.show', [$users->id]) !!}" class='btn btn-info'><i class="fa fa-eye"></i></a>
+                    <a href="{!! route('users.show', [$users->id]) !!}" class='btn btn-info'><i class="far fa-eye"></i></a>
                     <a href="{!! route('users.edit', [$users->id]) !!}" class='btn btn-primary'><i class="fa fa-edit"></i></a>
-                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('Estás seguro de eliminar el usuario?')"]) !!}
+                    {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger', 'onclick' => "return confirm('Estás seguro de eliminar el usuario?')"]) !!}
                 </div>
                 {!! Form::close() !!}
             </td>

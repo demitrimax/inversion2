@@ -21,13 +21,13 @@
          {!! Form::open(['route' => ['bcuentas.destroy', $cuenta->id], 'method' => 'delete', 'id'=>'form'.$cuenta->id]) !!}
          <div class='btn-group'>
             @can('bcuentas-list')
-             <a href="{!! route('bcuentas.show', [$cuenta->id]) !!}" class='btn btn-info btn-xs'><i class="fa fa-eye"></i></a>
+             <a href="{!! route('bcuentas.show', [$cuenta->id]) !!}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></a>
              @endcan
              @can('bcuentas-edit')
-               <a href="{!! route('bcuentas.edit', [$cuenta->id]) !!}" class='btn btn-primary btn-xs'><i class="fa fa-pencil"></i></a>
+               <a href="{!! route('bcuentas.edit', [$cuenta->id]) !!}" class='btn btn-primary btn-xs'><i class="far fa-edit"></i></a>
              @endcan
              @can('bcuentas-delete')
-             {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($cuenta->id)"]) !!}
+             {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($cuenta->id)"]) !!}
              {!! Form::hidden('redirect', 'empresas.show') !!}
              {!! Form::hidden('empresa_id', $empresas->id) !!}
              @endcan

@@ -26,12 +26,12 @@
             <td>
                 {!! Form::open(['route' => ['subclasificas.destroy', $subclasifica->id], 'method' => 'delete', 'id'=>'form'.$subclasifica->id]) !!}
                 <div class='btn-group'>
-                    <a href="{!! route('subclasificas.show', [$subclasifica->id]) !!}" class='btn btn-info btn-xs'><i class="fa fa-eye"></i></a>
+                    <a href="{!! route('subclasificas.show', [$subclasifica->id]) !!}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></a>
                     @can('subclasificas-edit')
-                    <a href="{!! route('subclasificas.edit', [$subclasifica->id]) !!}" class='btn btn-primary btn-xs'><i class="fa fa-pencil"></i></a>
+                    <a href="{!! route('subclasificas.edit', [$subclasifica->id]) !!}" class='btn btn-primary btn-xs'><i class="far fa-edit"></i></a>
                     @endcan
                     @can('subclasificas-delete')
-                    {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($subclasifica->id)"]) !!}
+                    {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($subclasifica->id)"]) !!}
                     @endcan
                 </div>
                 {!! Form::close() !!}

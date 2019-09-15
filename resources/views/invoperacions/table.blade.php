@@ -24,12 +24,12 @@
             <td>
                 {!! Form::open(['route' => ['invoperacions.destroy', $invoperacion->id], 'method' => 'delete', 'id'=>'form'.$invoperacion->id]) !!}
                 <div class='btn-group'>
-                    <a href="{!! route('invoperacions.show', [$invoperacion->id]) !!}" class='btn btn-info btn-xs'><i class="fa fa-eye"></i></a>
+                    <a href="{!! route('invoperacions.show', [$invoperacion->id]) !!}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></a>
                     @can('invoperacions-edit0')
-                    <a href="{!! route('invoperacions.edit', [$invoperacion->id]) !!}" class='btn btn-primary btn-xs'><i class="fa fa-pencil"></i></a>
+                    <a href="{!! route('invoperacions.edit', [$invoperacion->id]) !!}" class='btn btn-primary btn-xs'><i class="far fa-edit"></i></a>
                     @endcan
                     @can('invoperacions-delete')
-                    {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($invoperacion->id)"]) !!}
+                    {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($invoperacion->id)"]) !!}
                     @endcan
                 </div>
                 {!! Form::close() !!}

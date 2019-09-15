@@ -20,12 +20,12 @@
             <td>
                 {!! Form::open(['route' => ['facturas.destroy', $factura->id], 'method' => 'delete', 'id'=>'form'.$factura->id]) !!}
                 <div class='btn-group'>
-                    <a href="{!! route('facturas.show', [$factura->id]) !!}" class='btn btn-info btn-xs'><i class="fa fa-eye"></i></a>
+                    <a href="{!! route('facturas.show', [$factura->id]) !!}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></a>
                     @can('facturas-edit')
-                    <a href="{!! route('facturas.edit', [$factura->id]) !!}" class='btn btn-primary btn-xs'><i class="fa fa-pencil"></i></a>
+                    <a href="{!! route('facturas.edit', [$factura->id]) !!}" class='btn btn-primary btn-xs'><i class="far fa-edit"></i></a>
                     @endcan
                     @can('facturas-delete')
-                    {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($factura->id)"]) !!}
+                    {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($factura->id)"]) !!}
                     @endcan
                 </div>
                 {!! Form::close() !!}

@@ -14,12 +14,12 @@
             <td>
                 {!! Form::open(['route' => ['categorias.destroy', $categorias->id], 'method' => 'delete', 'id'=>'form'.$categorias->id]) !!}
                 <div class='btn-group'>
-                    <a href="{!! route('categorias.show', [$categorias->id]) !!}" class='btn btn-info btn-xs'><i class="fa fa-eye"></i></a>
+                    <a href="{!! route('categorias.show', [$categorias->id]) !!}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></a>
                     @can('categorias-edit')
-                    <a href="{!! route('categorias.edit', [$categorias->id]) !!}" class='btn btn-primary btn-xs'><i class="fa fa-pencil"></i></a>
+                    <a href="{!! route('categorias.edit', [$categorias->id]) !!}" class='btn btn-primary btn-xs'><i class="far fa-edit"></i></a>
                     @endcan
                     @can('categorias-delete')
-                    {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($categorias->id)"]) !!}
+                    {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($categorias->id)"]) !!}
                     @endcan
                 </div>
                 {!! Form::close() !!}

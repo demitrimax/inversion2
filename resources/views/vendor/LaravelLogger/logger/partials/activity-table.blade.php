@@ -57,7 +57,7 @@ if (Request::is('activity/cleared')) {
                 </th>
                 @if(Request::is('activity/cleared'))
                     <th>
-                        <i class="fa fa-trash-o fa-fw" aria-hidden="true"></i>
+                        <i class="far fa-trash-alt fa-fw" aria-hidden="true"></i>
                         {!! trans('LaravelLogger::laravel-logger.dashboard.labels.deleteDate') !!}
                     </th>
                 @endif

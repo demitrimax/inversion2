@@ -42,7 +42,7 @@ z-index: 10055 !important;
                <div class='btn-group'>
 
                    @can('movcreditos-delete')
-                   {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelInver($inversion->id)"]) !!}
+                   {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelInver($inversion->id)"]) !!}
                    {!! Form::hidden('redirect', 'empresas.show') !!}
                    {!! Form::hidden('empresa_id', $empresas->id) !!}
                    @endcan

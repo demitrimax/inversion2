@@ -166,12 +166,12 @@
           </a>
           -
           <a id="delete-log" href="?del={{ \Illuminate\Support\Facades\Crypt::encrypt($current_file) }}{{ ($current_folder) ? '&f=' . \Illuminate\Support\Facades\Crypt::encrypt($current_folder) : '' }}">
-            <span class="fa fa-trash"></span> Delete file
+            <span class="far fa-trash-alt"></span> Delete file
           </a>
           @if(count($files) > 1)
             -
             <a id="delete-all-log" href="?delall=true{{ ($current_folder) ? '&f=' . \Illuminate\Support\Facades\Crypt::encrypt($current_folder) : '' }}">
-              <span class="fa fa-trash-alt"></span> Delete all files
+              <span class="far fa-trash-alt"></span> Delete all files
             </a>
           @endif
         @endif
