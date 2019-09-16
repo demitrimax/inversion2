@@ -10,7 +10,7 @@
 <!-- Empresa Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('empresa_id', 'Empresa:') !!}
-    {!! Form::select('empresa_id', $empresas, null, ['class' => 'form-control']) !!}
+    {!! Form::select('empresa_id', $empresas, null, ['class' => 'form-control', 'placeholder'=>'Seleccione una empresa']) !!}
 </div>
 
 <!-- Cuenta Id Field -->
@@ -110,11 +110,19 @@ if(isset($operaciones->fecha)){
         <input type="checkbox" name="inventariable" id="inventariable" value = "1"><span>Operación de Inventario</span>
     </label>
 </div>
-
+@php
+$comisionable = "";
+if(isset($operaciones->comisionable))
+{
+  if($operaciones->comisionable == 1){
+    $comisionable = "checked";
+  }
+}
+@endphp
 <div class="form-group col-sm-6">
     <label class="ckbox">
       {!! Form::hidden('comisionable', 0)!!}
-        <input type="checkbox" name="comisionable" id="comisionable" value = "1"><span>Operación Comisionable</span>
+        <input type="checkbox" name="comisionable" id="comisionable" value = "1" {!! $comisionable !!}><span>Operación Comisionable</span>
     </label>
 </div>
 

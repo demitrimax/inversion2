@@ -9,13 +9,20 @@
         </div>
             <div class="card-body">
                 <div class="row" style="padding-left: 20px">
-
-                    @include('operaciones.show_fields')
-
-                  @can('operaciones-edit')
-                  <a href="{!! route('operaciones.edit', [$operaciones->id]) !!}" class='btn btn-primary'>Editar</a>
-                  @endcan
-                    <a href="{!! route('operaciones.index') !!}" class="btn btn-secondary">Regresar</a>
+                    <div class="{!! $operaciones->comisionable == 1 ? 'col-md-6' : 'col-md-12' !!}">
+                      @include('operaciones.show_fields')
+                    </div>
+                    @if($operaciones->comisionable == 1)
+                      <div class="col-md-6">
+                        @include('operaciones.vinculadas')
+                      </div>
+                    @endif
+                    <div class="col-md-12">
+                      @can('operaciones-edit')
+                      <a href="{!! route('operaciones.edit', [$operaciones->id]) !!}" class='btn btn-primary'>Editar</a>
+                      @endcan
+                        <a href="{!! route('operaciones.index') !!}" class="btn btn-secondary">Regresar</a>
+                  </div>
                 </div>
             </div>
         </div>

@@ -12,7 +12,7 @@
   @endcomponent
 
   @card(['title' => 'Registro de Operación Comisionable', 'color'=>'info'])
-  {!! Form::open(['route' => 'operacion.store']) !!}
+  {!! Form::open(['url' => 'operacion/comisionable/save']) !!}
 
   <div class="row">
   <!-- Tipo Field -->
@@ -46,12 +46,9 @@
       <div class="form-group col-sm-6">
           {!! Form::label('metpago', 'Método de Pago:') !!}
           {!! Form::select('metpago', $metpago, null, ['class' => 'form-control', 'required', 'disabled']) !!}
+          {!! Form::hidden('metpago', $input['metpago']) !!}
       </div>
 
-        <div id='variasfacturasinput' class="form-group col-sm-6" style="display:none;">
-            {!! Form::label('facturas', 'Seleccione una o varias Facturas:') !!} <button type="button" class="btn btn-sm btn-primary" data-toggle="popover" title="Varias Facturas" data-content="Puede seleccionar una o más facturas. El monto de la operación se tomará del monto de la suma de las facturas."><i class="fa fa-question"></i></button>
-            {!! Form::select('facturas[]', $facturas, null, ['class' => 'form-control select2', 'multiple'=>'multiple', 'style'=>'width: 100%;']) !!}
-        </div>
 
       <div class="form-group col-sm-6">
           {!! Form::label('fecha', 'Fecha: (yyyy-mm-dd)') !!}
@@ -61,6 +58,7 @@
       <div class="form-group col-sm-6">
           {!! Form::label('proveedor_id', 'Proveedor:') !!}
           {!! Form::select('proveedor_id', $proveedores, $input['proveedor_id'], ['class' => 'form-control', 'required', 'disabled']) !!}
+          {!! Form::hidden('proveedor_id', $input['proveedor_id']) !!}
       </div>
 
       <div class="form-group col-sm-6">
@@ -71,6 +69,7 @@
       <div class="form-group col-sm-6">
           {!! Form::label('subclasifica_id', 'Categoría:') !!}
           {!! Form::select('subclasifica_id', $subcategoriasAgrupadas, $input['subclasifica_id'], ['class' => 'form-control select2', 'required', 'placeholder'=>'Seleccione', 'style'=>'width: 100%;', 'disabled']) !!}
+          {!! Form::hidden('subclasifica_id', $input['subclasifica_id']) !!}
       </div>
 
 
@@ -91,8 +90,8 @@
 
 
                 <div class="form-group col-sm-6">
-                  {!! Form::label('categoria', 'Categoria:') !!}
-                  {!! Form::select('categoria', $subcategoriasAgrupadasIng, null, ['id'=>'categoria', 'class'=> 'form-control select2', 'required'] )!!}
+                  {!! Form::label('categoriadev', 'CategorÍa:') !!}
+                  {!! Form::select('categoriadev', $subcategoriasAgrupadasIng, null, ['id'=>'categoria', 'class'=> 'form-control select2', 'required', 'style'=>'width: 100%;'] )!!}
                 </div>
 
 
@@ -110,7 +109,7 @@
 
               <div class="form-group col-sm-6">
                 {!! Form::label('cuentadev', 'Cuenta deposito de Devolución:') !!}
-                {!! Form::select('cuentadev', $cuentasporfuera, null, ['class'=>'form-control' ])!!}
+                {!! Form::select('cuentadev', $cuentasporfuera, null, ['class'=>'form-control', 'required' ])!!}
               </div>
 
               <div class="form-group col-sm-6">
@@ -131,15 +130,16 @@
 
     @endcard
   </div>
-    @card(['title' => 'Operaciones de la Devolución', 'color'=>'default'])
+    @card(['title' => 'Operaciones de la Devolución', 'color'=>'default', 'classid'=>'secoperaciones'])
     <div class="row">
         <!-- Tipo Field -->
-        <table class="table tabla-comision table-responsive table-responsive-xl" id="comision">
+        <table class="table tabla-gastosdevolucion table-responsive table-responsive-xl" id="gastosdevolucion">
           <thead class="bg-purple text-white fixed">
             <tr>
-              <th style="width:30%">Categoria</th>
-              <th style="width:20%">Cuenta</th>
-              <th style="width:30%;">Concepto</th>
+              <th style="width:20%">Categoria</th>
+              <th style="width:20%">Proveedor</th>
+              <th style="width:20%">Factura</th>
+              <th style="width:20%;">Concepto</th>
               <th style="width:20%;" class="montoTitulo">Monto</th>
             </tr>
           </thead>
@@ -147,31 +147,39 @@
             <tr>
             <td class="PCantegoria">
                 <div class="input-group P1Categoria">
-                  {!! Form::select('categoria_2', $subcategoriasAgrupadas, null, ['id'=>'categoria', 'class'=> 'form-control select2', 'required'] )!!}
+                  {!! Form::select('categoria_2[]', $subcategoriasAgrupadas, null, ['id'=>'categoria', 'class'=> 'form-control select2', 'required', 'style'=>'width: 100%;'] )!!}
 
               </div>
             </td>
-            <td class="PCuenta">
-              <div class="input-group P1Cuenta">
-               {!! Form::select('cuenta_2', $cuental, null, ['class'=>'form-control']) !!}
+            <td class="PProveedor">
+              <div class="input-group P1Proveedor">
+               {!! Form::select('proveedor_2[]', $proveedores, null, ['class'=>'form-control']) !!}
+
+             </div>
+            </td>
+            <td class="PFactura">
+              <div class="input-group P1Factura">
+               {!! Form::text('factura_2[]', null, ['class'=>'form-control']) !!}
 
              </div>
             </td>
             <td class="PConcepto">
               <div class="input-group P1Concepto">
-               {!! Form::text('concepto_2', null, ['class'=>'form-control']) !!}
+               {!! Form::text('concepto_2[]', null, ['class'=>'form-control']) !!}
 
              </div>
             </td>
             <td>
-
               <div class="input-group col-md-12">
                 <span class="input-group-addon d-none d-sm-block"><i class="fa fa-dollar"></i></span>
-                 {!! Form::number('monto_com2', null, ['class'=>'form-control', 'max'=>$input['monto']*0.16, 'id'=>'monto_com' ])!!}
+                 {!! Form::number('monto_2[]', null, ['class'=>'form-control montoOp', 'id'=>'monto_2[]', 'step'=>'0.01' ])!!}
+                 <span class="input-group-btn">
+                   <button type="button" class="btn btn-warning btn" id ="btnagregarotro"><i class="fa fa-plus"></i></button>
+                 </span>
               </div>
             </td>
-
             </tr>
+
           </tbody>
         </table>
 
@@ -188,11 +196,19 @@
   @endcard
 
 @endsection
+@push('css')
+<!-- select 2-->
+<link href="{{asset('starlight/lib/select2/css/select2.min.css')}}" rel="stylesheet" />
+
+@endpush
 
 @section('scripts')
 <script src="{{asset('starlight/lib/select2/js/select2.full.min.js')}}"></script>
 <script src="{{asset('starlight/lib/numeral.js/min/numeral.min.js')}}"></script>
 <script>
+$(document).ready(function() {
+    $('.select2').select2();
+});
   $('.advertencia-saldocomision').hide();
 
   $('#monto_com').on('change keyup', function(e) {
@@ -204,7 +220,9 @@
     $('#monto_dev').val(mRestante.format('0,0.00'));
     $('#montodev').val(mRestante.value());
     var porcentaje = parseFloat(comision / montoT).toFixed(2);
-    $('.comision').text('Datos de la Comision: '+ parseInt(porcentaje*100) +'%');
+    $('.comision').text('Datos de la Devolución (Comisión: '+ parseInt(porcentaje*100) +'%)');
+
+    $('.secoperaciones').text('Operaciones de la Devolución (Restante:'+mRestante.format('0,0.00')+' )')
 
     if(porcentaje > 0.16 ){
       //alert('porcentaje de la comisión supera el 16% : ' + porcentaje)
@@ -214,6 +232,89 @@
         $('.advertencia-saldocomision').hide();
     }
   });
+
+  $('#gastosdevolucion').on('click', 'button.QuitarConcepto', function() {
+    console.log("prueba");
+    $(this).parent().parent().parent().parent().remove();
+    SumarTodosLosMontos();
+  });
+
+  $('#gastosdevolucion').on('change', 'input.montoOp', function() {
+
+     SumarTodosLosMontos();
+
+  });
+
+  function SumarTodosLosMontos() {
+    var ItemMonto = $('.montoOp');
+    var ArraySumaMonto = [];
+    //console.log(ItemMonto.length);
+    for (var i=0; i < ItemMonto.length; i++  )
+    {
+          ArraySumaMonto.push(Number($(ItemMonto[i]).val()));
+          console.log($(ItemMonto[i]).val());
+    }
+      //console.log('ArraySumaMonto',ArraySumaMonto);
+      function sumaArrayMontos(total, numero)
+      {
+        return total + numero;
+      }
+
+        var SumaTotalMontoA = ArraySumaMonto.reduce(sumaArrayMontos);
+        //console.log('SumaTotalMonto',SumaTotalMonto);
+        SumaTotalMonto = numeral(SumaTotalMontoA);
+        //console.log(SumaTotalMontoA);
+        var montoRestante = $('#montodev').val();
+        var totalRestante = numeral(montoRestante - SumaTotalMontoA);
+
+        $('.secoperaciones').text('Operaciones de la Devolución (Restante:'+totalRestante.format('0,0.00')+' )')
+}
+
+
+  var IdRow = 0;
+  $('#btnagregarotro').click(function() {
+    //$(this).removeClass("btn-warning");
+      IdRow = IdRow+1;
+      var newRow =
+      '<tr id="r'+IdRow+'">'+
+      '<td class="PCantegoria">'+
+          '<div class="input-group P1Categoria">'+
+            '{!! Form::select("categoria_2[]", $subcategoriasAgrupadas, null, ["id"=>"categoria", "class"=> "form-control select2", "required", "style"=>"width: 100%;"] )!!}'+
+
+        '</div>'+
+      '</td>'+
+      '<td class="PProveedor">'+
+        '<div class="input-group P1Proveedor">'+
+        ' {!! Form::select("proveedor_2[]", $proveedores, null, ["class"=>"form-control"]) !!}'+
+
+       '</div>'+
+      '</td>'+
+      '<td class="PFactura">'+
+        '<div class="input-group P1Factura">'+
+         '{!! Form::text("factura_2[]", null, ["class"=>"form-control"]) !!}'+
+
+       '</div>'+
+      '</td>'+
+      '<td class="PConcepto">'+
+        '<div class="input-group P1Concepto">'+
+         '{!! Form::text("concepto_2[]", null, ["class"=>"form-control"]) !!}'+
+
+       '</div>'+
+    '  </td>'+
+      '<td>'+
+        '<div class="input-group col-md-12">'+
+          '<span class="input-group-addon d-none d-sm-block"><i class="fa fa-dollar"></i></span>'+
+           '{!! Form::number("monto_2[]", null, ["class"=>"form-control montoOp", "id"=>"monto_2[]", "step"=>"0.01" ])!!}'+
+           '<span class="input-group-btn">'+
+             '<button type="button" class="btn btn-danger btn QuitarConcepto" id="quitarconcepto"><i class="fa fa-times"></i></button>'+
+           '</span>'+
+        '</div>'+
+      '</td>'+
+      '</tr>';
+    $(newRow).appendTo($('#gastosdevolucion tbody'));
+    $('.select2').select2();
+
+  }) ;
 
 </script>
 @endsection

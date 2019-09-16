@@ -136,6 +136,11 @@ class operaciones extends Model
        return $this->hasMany('App\Models\facturas', 'operacion_id');
     }
 
+    public function comisionadas()
+    {
+      return $this->hasMany('App\Models\opcomisionables', 'id_operacion');
+    }
+
     public function getMesanioAttribute()
     {
       $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');

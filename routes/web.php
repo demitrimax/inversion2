@@ -59,6 +59,7 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
   Route::resource('operaciones', 'operacionesController');
+  Route::post('operacion/comisionable/save', 'operacionesController@saveOperacionComisionable');
 
   Route::resource('subclasificas', 'subclasificaController');
   Route::get('/profile', 'profileController@profile')->name('profile');

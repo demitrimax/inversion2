@@ -20,4 +20,13 @@ class opcomisionables extends Model
 
     protected $dates = ['deleted_at'];
     protected static $logAttributes = ['*'];
+
+    public function Origen()
+    {
+      return $this->belongsTo('App\Models\operaciones', 'id_operacion');
+    }
+    public function Comisionada()
+    {
+      return $this->belongsTo('App\Models\operaciones', 'id_op_comision');
+    }
 }

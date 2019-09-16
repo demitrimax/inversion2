@@ -18,6 +18,7 @@ use App\Models\clasifica;
 use App\Models\metpago;
 use App\Models\facturas;
 use App\Models\operaciones;
+use App\Models\opcomisionables;
 
 class operacionesController extends AppBaseController
 {
@@ -114,7 +115,7 @@ class operacionesController extends AppBaseController
                   $subcategoriasAgrupadasIng[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
                 }
               }
-              $cuentasporfuera = $empresa->cuentas->where('porfuera', 1);
+              $cuentasporfuera = $empresa->cuentas->where('porfuera', 1)->pluck('nomcuentasaldo','id');
                 return view('operaciones.newoperacioncomisionable')->with(compact('cuental', 'empresa', 'metpago', 'facturas', 'proveedores', 'subcategoriasAgrupadas', 'subcategoriasAgrupadasIng','cuentasporfuera', 'input'));
               }
         }
@@ -311,4 +312,73 @@ class operacionesController extends AppBaseController
 
       return view('operaciones.newoperacioninv')->with(compact('cuental', 'empresa', 'metpago', 'facturas', 'proveedores', 'subcategoriasAgrupadas'));
     }
+
+    public function saveOperacionComisionable(Request $request)
+    {
+      $input = $request->all();
+
+      $operaciones = new operaciones;
+      $operaciones->monto = $input['monto'];
+      $operaciones->empresa_id = $input['empresa_id'];
+      $operaciones->cuenta_id = $input['cuenta_id'];
+      $operaciones->proveedor_id = $input['proveedor_id'];
+      $operaciones->numfactura = $input['numfactura'];
+      $operaciones->subclasifica_id = $input['subclasifica_id'];
+      $operaciones->tipo = 'Salida';
+      $operaciones->metpago = $input['metpago'];
+      $operaciones->concepto = $input['concepto'];
+      $operaciones->comentario = $input['comentario'];
+      $operaciones->fecha = $input['fecha'];
+      $operaciones->comisionable = 1; //IDENTIFICADOR DE OPERACION COMISIONABLE
+      $operaciones->save();
+
+      //operación de ingreso de la devolucióno
+      $operacionDev = new operaciones;
+      $operacionDev->monto = $input['montodev'];
+      $operacionDev->empresa_id = $input['empresa_id'];
+      $operacionDev->cuenta_id = $input['cuentadev'];
+      $operacionDev->proveedor_id = $input['proveedor_id']; //EL MISMO PROVEEDOR AL QUE SE LE PIDE LA FACTURA
+      $operacionDev->numfactura = 'FACTURA DEVOLUCION';
+      $operacionDev->subclasifica_id = $input['categoriadev'];
+      $operacionDev->tipo = 'Entrada';
+      $operacionDev->metpago = $input['metpago'];
+      $operacionDev->concepto = $input['concepto_1'];
+      $operacionDev->comentario = 'Operación de Devolución generada automaticamente';
+      $operacionDev->fecha = $input['fecha'];
+      $operacionDev->save();
+
+      $op_comisionable = new opcomisionables;
+      $op_comisionable->id_operacion = $operaciones->id;
+      $op_comisionable->id_op_comision = $operacionDev->id;
+      $op_comisionable->save();
+
+
+      foreach($input['factura_2'] as $key=>$operacion ){
+        if(!empty($input['factura_2'][$key])){
+          $operacionSalida = new operaciones;
+          $operacionSalida->monto = $input['monto_2'][$key];
+          $operacionSalida->empresa_id = $input['empresa_id'];
+          $operacionSalida->cuenta_id = $input['cuentadev'];
+          $operacionSalida->proveedor_id = $input['proveedor_2'][$key];
+          $operacionSalida->numfactura = $input['factura_2'][$key];
+          $operacionSalida->subclasifica_id = $input['categoria_2'][$key];
+          $operacionSalida->tipo = 'Salida';
+          $operacionSalida->metpago = $input['metpago'];
+          $operacionSalida->concepto = $input['concepto_2'][$key];
+          $operacionSalida->comentario = 'Gasto Generado automaticamente por operación comisionable';
+          $operacionSalida->fecha = $input['fecha'];
+          $operacionSalida->save();
+          //guardar el registro de la relación
+          $op_comisionable = new opcomisionables;
+          $op_comisionable->id_operacion = $operaciones->id;
+          $op_comisionable->id_op_comision = $operacionSalida->id;
+          $op_comisionable->save();
+        }
+    }
+
+    Alert::success('Operación Comisionable guardada correctamente');
+    Flash::success('Operación Comisionable guardada correctamente');
+
+    return redirect(route('operaciones.show', [$operaciones->id]));
+  }
 }

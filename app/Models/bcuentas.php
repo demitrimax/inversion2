@@ -131,6 +131,8 @@ class bcuentas extends Model
     }
     public function getNomcuentasaldoAttribute()
     {
-      return $this->banco->nombrecorto.'-'.$this->numcuenta.'($'.number_format($this->saldocuenta,2).')'.$this->divisa;
+      $pf = "";
+      if($this->porfuera == 1){ $pf = "[PF]"; }
+      return $this->banco->nombrecorto.'-'.$this->numcuenta.'($'.number_format($this->saldocuenta,2).')'.$this->divisa.' '.$pf;
     }
 }
