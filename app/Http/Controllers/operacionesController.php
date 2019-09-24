@@ -87,9 +87,11 @@ class operacionesController extends AppBaseController
         $input = $request->all();
 
         //$operaciones = $this->operacionesRepository->create($input);
-        //operacion comisionable --- no guardar enviar a otra vista
-        if(isset($input['comisionable'])){
+        //operacion comisionable --- guardar los atributos de la comisión.
 
+        $operaciones = new operaciones;
+        if(isset($input['comisionable'])){
+          /*
             if($input['comisionable'] == 1 && $input['tipo'] == 'Salida'){
               $empresaid = $input['empresa_id'];
               $empresa = empresas::find($empresaid);
@@ -118,10 +120,13 @@ class operacionesController extends AppBaseController
               $cuentasporfuera = $empresa->cuentas->where('porfuera', 1)->pluck('nomcuentasaldo','id');
                 return view('operaciones.newoperacioncomisionable')->with(compact('cuental', 'empresa', 'metpago', 'facturas', 'proveedores', 'subcategoriasAgrupadas', 'subcategoriasAgrupadasIng','cuentasporfuera', 'input'));
               }
+              */
+              $operaciones->comisionable = 1;
+              $operaciones->monto_comision = $input['monto'];
         }
 
-        $operaciones = new operaciones;
-        $operaciones->monto = $input['monto'];
+
+        $operaciones->monto = $input['monto_comision'];
         $operaciones->empresa_id = $input['empresa_id'];
         $operaciones->cuenta_id = $input['cuenta_id'];
         $operaciones->proveedor_id = $input['proveedor_id'];
@@ -132,6 +137,7 @@ class operacionesController extends AppBaseController
         $operaciones->concepto = $input['concepto'];
         $operaciones->comentario = $input['comentario'];
         $operaciones->fecha = $input['fecha'];
+
         $operaciones->save();
 
         if($request->input('facturas')){

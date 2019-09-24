@@ -104,7 +104,7 @@
 
               <div class="form-group col-sm-6">
                 {!! Form::label('monto_com', 'Monto Comisión:') !!}
-                {!! Form::number('monto_com', null, ['class'=>'form-control', 'min'=>1,'max'=>$input['monto']*0.16, 'id'=>'monto_com' ])!!}
+                {!! Form::number('monto_com', null, ['class'=>'form-control', 'min'=>1,'max'=>$input['monto']*0.16, 'id'=>'monto_com', 'step'=>0.01 ])!!}
               </div>
 
               <div class="form-group col-sm-6">

@@ -13,7 +13,7 @@
     @foreach($operaciones as $operacion)
         <tr>
             <td> {!! $operacion->tipo == 'Entrada' ? '<span class="badge badge-success"><i class="fa fa-arrow-circle-down"></i></span>' : '<span class="badge badge-warning"><i class="fa fa-arrow-circle-up"></i></span>'  !!}
-              {!! number_format($operacion->monto,2) !!}
+              {!! $operacion->comisionable == 1 ? number_format($operacion->monto_comision,2) : number_format($operacion->monto,2) !!}
               {!! $operacion->comisionable == 1 ? '<span class="badge badge-info"><i class="far fa-plus-square"></i></span>' : '' !!}
             </td>
             <td>{!! $operacion->empresa->nombre !!}</td>

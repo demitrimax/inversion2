@@ -11,12 +11,13 @@
       <tr>
         <th>{!! Form::label('monto', 'Monto:') !!}</th>
         <td>
-          {!! number_format($operaciones->monto,2) !!}
+          {!! $operaciones->comisionable == 1 ? number_format($operaciones->monto_comision,2) : number_format($operaciones->monto,2) !!}
           @if($operaciones->facturas->count()>0)
               <ul class="list-group">
                 @foreach($operaciones->facturas as $factura)
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   {{$factura->numfactura}}
+
                   <span class="badge badge-primary badge-pill">{!! number_format($factura->monto,2) !!}</span>
                 </li>
                 @endforeach
@@ -24,6 +25,13 @@
               @endif
         </td>
       </tr>
+      @if($operaciones->comisionable == 1)
+      <!-- Empresa Id Field -->
+      <tr>
+        <th>{!! Form::label('comisionable', 'Monto Comisionable:') !!}</th>
+        <td>{!! number_format($operaciones->monto,2) !!}</td>
+      </tr>
+    @endif
 
       <!-- Empresa Id Field -->
       <tr>

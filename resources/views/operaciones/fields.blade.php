@@ -10,7 +10,7 @@
 <!-- Empresa Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('empresa_id', 'Empresa:') !!}
-    {!! Form::select('empresa_id', $empresas, null, ['class' => 'form-control', 'placeholder'=>'Seleccione una empresa']) !!}
+    {!! Form::select('empresa_id', $empresas, null, ['class' => 'form-control', 'placeholder'=>'Seleccione una empresa', 'required']) !!}
 </div>
 
 <!-- Cuenta Id Field -->
@@ -126,6 +126,22 @@ if(isset($operaciones->comisionable))
     </label>
 </div>
 
+<div id="comision">
+    <!-- Concepto Field -->
+    <div class="form-group col-sm-6">
+        {!! Form::label('monto_comision', 'Monto de la Comisión:') !!}
+        {!! Form::number('monto_comision', null, ['class' => 'form-control maxlen', 'maxlength'=>'50', 'id'=>'monto_comision']) !!}
+    </div>
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <strong class="d-block d-sm-inline-block-force">Comisión!</strong> Al crear una operación comisionable, el monto de la comisión es lo que se toma como monto de la operación, el monto solo para efectos visuales.
+          </div>
+
+</div>
+
+
 <!-- Comentario Field -->
 <div class="form-group col-sm-12 col-lg-12">
     {!! Form::label('comentario', 'Comentario:') !!}
@@ -150,11 +166,25 @@ if(isset($operaciones->comisionable))
      //Bootstrap-MaxLength
         $('.maxlen').maxlength();
 
+        $('#comision').hide();
+
         $(function () {
           $('[data-toggle="popover"]').popover()
         })
         $(document).ready(function() {
             $('.select2').select2();
+        });
+        $('#comisionable').on('click', function(e) {
+
+          if($(e.target).prop("checked") == true){
+              $('#comision').show('slow');
+              $('#monto_comision').prop('required', true);
+            }
+            else {
+                $('#comision').hide('slow');
+                $('#monto_comision').removeProp('required');
+                $('#monto_comision').removeAttr('required');
+            }
         });
 
         $("#tipo").on('change', function() {

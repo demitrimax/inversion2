@@ -1,4 +1,4 @@
-<h5>Operaciones Relacionadas</h5>
+<h5>Operaciones Vinculadas</h5>
 <table class="table table-bordered table-hover table-primary">
   <thead>
     <tr>
@@ -19,3 +19,4 @@
     @endforeach
   </tbody>
 </table>
+<button class="btn btn-teal mg-b-10">Nueva Operación Vinculada</button>
