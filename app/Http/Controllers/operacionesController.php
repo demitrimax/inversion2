@@ -178,7 +178,23 @@ class operacionesController extends AppBaseController
             return redirect(route('operaciones.index'));
         }
 
-        return view('operaciones.show')->with('operaciones', $operaciones);
+        $empresaid = $operaciones->empresa_id;
+        $empresa = empresas::find($empresaid);
+
+        $cuentas = bcuentas::with('empresa')->whereHas('empresa', function($q) use ($empresaid) {
+          $q->where('id',$empresaid);
+        })->get();
+        $cuental = $cuentas->pluck('nomcuentasaldo', 'id');
+        $metpago = metpago::pluck('nombre','id');
+        $proveedores = proveedores::pluck('nombre','id');
+        $categorias = clasifica::where('tip','E')->get();
+        foreach($categorias as $key=>$categoria){
+           foreach($categoria->subcategorias->sortBy('nombre') as $subcategoria){
+            $subcategoriasAgrupadas[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
+          }
+        }
+
+        return view('operaciones.show')->with(compact('operaciones', 'cuental', 'metpago', 'proveedores', 'subcategoriasAgrupadas'));
     }
 
     /**
@@ -328,17 +344,18 @@ class operacionesController extends AppBaseController
       $operaciones->empresa_id = $input['empresa_id'];
       $operaciones->cuenta_id = $input['cuenta_id'];
       $operaciones->proveedor_id = $input['proveedor_id'];
-      $operaciones->numfactura = $input['numfactura'];
+      //$operaciones->numfactura = $input['numfactura'];
       $operaciones->subclasifica_id = $input['subclasifica_id'];
       $operaciones->tipo = 'Salida';
       $operaciones->metpago = $input['metpago'];
       $operaciones->concepto = $input['concepto'];
-      $operaciones->comentario = $input['comentario'];
+      //$operaciones->comentario = $input['comentario'];
       $operaciones->fecha = $input['fecha'];
-      $operaciones->comisionable = 1; //IDENTIFICADOR DE OPERACION COMISIONABLE
+      //$operaciones->comisionable = 1; //IDENTIFICADOR DE OPERACION COMISIONABLE
       $operaciones->save();
 
       //operación de ingreso de la devolucióno
+      /*
       $operacionDev = new operaciones;
       $operacionDev->monto = $input['montodev'];
       $operacionDev->empresa_id = $input['empresa_id'];
@@ -352,13 +369,14 @@ class operacionesController extends AppBaseController
       $operacionDev->comentario = 'Operación de Devolución generada automaticamente';
       $operacionDev->fecha = $input['fecha'];
       $operacionDev->save();
-
+      */
+      $op_origen = $input['operacion_origen'];
       $op_comisionable = new opcomisionables;
-      $op_comisionable->id_operacion = $operaciones->id;
-      $op_comisionable->id_op_comision = $operacionDev->id;
+      $op_comisionable->id_operacion = $input['operacion_origen'];
+      $op_comisionable->id_op_comision = $operaciones->id;
       $op_comisionable->save();
 
-
+      /*
       foreach($input['factura_2'] as $key=>$operacion ){
         if(!empty($input['factura_2'][$key])){
           $operacionSalida = new operaciones;
@@ -380,11 +398,12 @@ class operacionesController extends AppBaseController
           $op_comisionable->id_op_comision = $operacionSalida->id;
           $op_comisionable->save();
         }
-    }
 
-    Alert::success('Operación Comisionable guardada correctamente');
-    Flash::success('Operación Comisionable guardada correctamente');
+    }*/
 
-    return redirect(route('operaciones.show', [$operaciones->id]));
+    Alert::success('Operación Vinculada guardada correctamente');
+    Flash::success('Operación Vinculada guardada correctamente');
+
+    return redirect(route('operaciones.show', [$op_origen]));
   }
 }

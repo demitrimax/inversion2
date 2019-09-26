@@ -1,10 +1,11 @@
-<table class="table table-responsive" id="operaciones-table">
+<table class="table table-responsive table-primary" id="operaciones-table">
     <thead>
         <tr>
           <th>Monto</th>
           <th>Empresa</th>
           <th>Categoría</th>
           <th>Concepto</th>
+          <th>Proveedor</th>
           <th>Fecha</th>
           <th>Acciones</th>
         </tr>
@@ -19,6 +20,7 @@
             <td>{!! $operacion->empresa->nombre !!}</td>
             <td>{!! $operacion->subclasifica->nombre !!}</td>
             <td>{!! $operacion->concepto !!}</td>
+            <td>{!! $operacion->proveedor->nombre !!}</td>
             <td>{!! $operacion->fecha->format('d-m-Y') !!}</td>
             <td>
                 {!! Form::open(['route' => ['operaciones.destroy', $operacion->id], 'method' => 'delete', 'id'=>'form'.$operacion->id]) !!}

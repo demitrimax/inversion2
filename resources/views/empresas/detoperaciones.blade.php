@@ -31,6 +31,11 @@
           <th>Concepto</th>
           <th>Monto</th>
           <th>Categoría/Subcategoria</th>
+      @foreach($operaciones->where('comisionable',1) as $operacion)
+          @if($operacion->comisionable == 1)
+          <th>Comisión</th>
+          @endif
+        @endforeach
           <th>Fecha</th>
           <th>Cuenta</th>
           <th>Acciones</th>
@@ -39,9 +44,12 @@
     <tbody>
     @foreach($operaciones->sortBy('fecha') as $operacion)
         <tr>
-            <td>{!! $operacion->concepto !!}</td>
+            <td>{!! $operacion->concepto!!} </td>
             <td>{!! $operacion->comisionable == 1 ? number_format($operacion->monto_comision,2) : number_format($operacion->monto,2) !!}</td>
             <td>{!! $operacion->subclasifica->clasifica->nombre.' : '.$operacion->subclasifica->nombre !!}</td>
+            @if($operacion->comisionable == 1)
+            <td>{!! number_format($operacion->monto,2) !!}</td>
+            @endif
             <td>{!! $operacion->fecha->format('d-m-Y') !!}</td>
             <td><a href="{{route('bcuentas.show', [$operacion->cuenta->id])}}">{!! $operacion->cuenta->nomcuenta!!}</a></td>
             <td>
