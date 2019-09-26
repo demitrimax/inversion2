@@ -3,6 +3,7 @@
   <thead>
     <tr>
       <th>Núm</th>
+      <th>Tipo</th>
       <th>Categoria</th>
       <th>Concepto</th>
       <th>Monto</th>
@@ -13,6 +14,7 @@
     @foreach($operaciones->comisionadas as $key=>$comisionada)
     <tr>
       <td>{{$key+1}}</td>
+      <td>{{$comisionada->comisionada->tipo == 'Salida' ? 'Cargo' : 'Abono' }}</td>
       <td><a href="{{url('operaciones/'.$comisionada->comisionada->id)}}">{{$comisionada->comisionada->subclasifica->clasifica->nombre.'|'.$comisionada->comisionada->subclasifica->nombre}}</a></td>
       <td>{{$comisionada->comisionada->concepto}}</td>
       <td>{{ number_format($comisionada->comisionada->monto,2)}}</td>
@@ -46,9 +48,15 @@
                 </div>
 
                 <div class="form-group col-sm-6">
+                    {!! Form::label('tipo', 'Tipo:') !!}
+                    {!! Form::select('tipo', ['Salida'=>'CARGO','Entrada'=>'ABONO'], null, ['class' => 'form-control', 'required', 'placeholder'=>'Seleccione']) !!}
+                </div>
+
+                <div class="form-group col-sm-6">
                     {!! Form::label('fecha', 'Fecha: (yyyy-mm-dd)') !!}
                     {!! Form::text('fecha', null, ['placeholder'=>'yyyy-mm-dd','class' => 'form-control datepicker-input', 'required', 'data-language'=>'es', 'data-date-format'=>'yyyy-mm-dd', 'pattern'=>'(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))' ]) !!}
                 </div>
+
 
                 <div class="form-group col-sm-6">
                     {!! Form::label('proveedor_id', 'Proveedor:') !!}
@@ -60,7 +68,7 @@
                 @endphp
                 <div class="form-group col-sm-6">
                     {!! Form::label('monto', 'Monto:') !!}
-                    {!! Form::number('monto', null, ['class' => 'form-control', 'required', 'step'=>'0.01', 'max'=>$saldofinal, 'min'=>0]) !!}
+                    {!! Form::number('monto', null, ['class' => 'form-control', 'required', 'step'=>'0.01', 'min'=>0]) !!}
 
                 </div>
 

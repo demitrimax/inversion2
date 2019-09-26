@@ -157,7 +157,7 @@ class operacionesController extends AppBaseController
         Flash::success('Operación guardada correctamente.');
         Alert::success('Operación guardada correctamente.');
 
-        return redirect(route('operaciones.index'));
+        return redirect(route('operaciones.show', [$operaciones->id]));
     }
 
     /**
@@ -283,7 +283,7 @@ class operacionesController extends AppBaseController
         Flash::success('Operación actualizada correctamente.');
         Alert::success('Operación actualizada correctamente.');
 
-        return redirect(route('operaciones.index'));
+        return redirect(route('operaciones.show', [$operaciones->id]));
     }
 
     /**
@@ -346,7 +346,7 @@ class operacionesController extends AppBaseController
       $operaciones->proveedor_id = $input['proveedor_id'];
       //$operaciones->numfactura = $input['numfactura'];
       $operaciones->subclasifica_id = $input['subclasifica_id'];
-      $operaciones->tipo = 'Salida';
+      $operaciones->tipo = $input['tipo'];
       $operaciones->metpago = $input['metpago'];
       $operaciones->concepto = $input['concepto'];
       //$operaciones->comentario = $input['comentario'];
