@@ -15,7 +15,7 @@
         <tr>
 
             <td><a href="{!! route('invoperacions.show', [$invoperacion->id]) !!}"> {!! $invoperacion->folio !!}</a>
-              {!! $invoperacion->tipo_mov == 'Entrada' ? '<i class="text-primary fa fa-arrow-circle-o-down"></i>' : '<i class="text-success fa fa-arrow-circle-o-up"></i>' !!}</td>
+              {!! $invoperacion->tipo_mov == 'Entrada' ? '<i class="text-primary fas fa-arrow-circle-down"></i>' : '<i class="text-success fas fa-arrow-circle-up"></i>' !!}</td> 
             <td>{!! $invoperacion->personanombre !!}</td>
             <td>{!! $invoperacion->numfactura !!}</td>
             <td>{!! number_format($invoperacion->total,2) !!}</td>
