@@ -20,9 +20,12 @@
           </div>
             <div class="card-body">
                 <div class="row" style="padding-left: 20px">
-
+                  <div class="col-md-6">
                     @include('proveedores.show_fields')
-
+                  </div>
+                  <div class="col-md-6">
+                    @include('proveedores.detalleop')
+                  </div>
                     <a href="{!! route('proveedores.index') !!}" class="btn btn-secondary">Regresar</a>
                     @can('proveedores-edit')
                     <a href="{!! route('proveedores.edit', [$proveedores->id]) !!}" class='btn btn-primary'>Editar</a>

@@ -11,6 +11,7 @@ use Flash;
 use Alert;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use App\Models\operaciones;
 
 class proveedoresController extends AppBaseController
 {
@@ -88,7 +89,17 @@ class proveedoresController extends AppBaseController
             return redirect(route('proveedores.index'));
         }
 
-        return view('proveedores.show')->with('proveedores', $proveedores);
+        $toperacionesg = operaciones::where('proveedor_id',$id)
+                                    ->selectRaw('*, sum(monto) as montog, count(monto) as cantidad, DATE_FORMAT(fecha, "%m-%y") as fechag')
+                                    ->groupBy('fechag')
+                                    ->orderBy('fechag', 'asc')
+                                    ->get();
+        $lasoperaciones = operaciones::where('proveedor_id',$id)
+                                    ->selectRaw('*, DATE_FORMAT(fecha, "%m-%y") as fechag')
+                                    ->orderBy('fechag', 'asc')
+                                    ->get();
+
+        return view('proveedores.show')->with(compact('proveedores', 'toperacionesg', 'lasoperaciones'));
     }
 
     /**
