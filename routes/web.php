@@ -111,7 +111,15 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::get('mailable', function () {
     $tarea = App\Models\tareas::find(18);
 
-    return new App\Mail\tareaAvance($tarea);
+    return new App\Mail\TareasVencidas($tarea);
 });
+
+  Route::get('testmail', function () {
+    $tareasvencidas = App\Models\tareas::where('avance_porc','<','100')
+                    ->whereNull('terminado')
+                    ->where('vencimiento', '<', date('Y-m-d') )
+                    ->get();
+    dd($tareasvencidas);
+    });
 
 });
