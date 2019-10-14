@@ -6,6 +6,7 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\invoperacion;
 use App\Models\invdetoperacion;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class productos
