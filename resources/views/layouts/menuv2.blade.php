@@ -168,7 +168,9 @@ if( Request::is('efinancieras*') || Request::is('clasificas*') || Request::is('b
   <li class="nav-item"><a href="{{url('user')}}" class="nav-link {{ Request::is('user*') ? 'active' : '' }}">Usuarios</a></li>
   <li class="nav-item"><a href="{{url('roles')}}" class="nav-link {{ Request::is('roles*') ? 'active' : '' }}">Roles</a></li>
   <li class="nav-item"><a href="{{url('permissions')}}" class="nav-link {{ Request::is('permissions*') ? 'active' : '' }}">Permisos</a></li>
+  @role('administrador')
   <li class="nav-item"><a href="{{url('logs')}}" class="nav-link {{ Request::is('logs*') ? 'active' : '' }}">Logs del Sistema</a></li>
+  @endrole
   <li class="nav-item"><a href="{{url('activity')}}" class="nav-link {{ Request::is('activity*') ? 'active' : '' }}">Activity Logs</a></li>
   <li class="nav-item"><a href="{{url('backup')}}" class="nav-link {{ Request::is('backup*') ? 'active' : '' }}">Copias de Seguridad</a></li>
 </ul>
