@@ -38,8 +38,8 @@ class Kernel extends ConsoleKernel
             Mail::to($tarea->user->email)->send(new \App\Mail\TareasVencidas($tarea));
           }
         })
-        ->dailyAt('07:00')
-        //->everyFiveMinutes()
+        //->dailyAt('07:00')
+        ->everyFiveMinutes()
         ->appendOutputTo(storage_path('logs/notificatareasvencidas.log'));
     }
 
