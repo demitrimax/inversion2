@@ -5,7 +5,7 @@
 @section('content')
 
   @card(['title' => 'Registro de Operación con Inventario', 'color'=>'primary'])
-  {!! Form::open(['route' => 'operacion.store']) !!}
+  {!! Form::open(['route' => 'operacion.inventario.save']) !!}
 
   <div class="row">
   <!-- Tipo Field -->
@@ -30,7 +30,7 @@
       <!-- Monto Field -->
       <div class="form-group col-sm-6">
           {!! Form::label('monto_op', 'Monto:') !!}
-          {!! Form::number('monto_op', $request->input('monto'), ['class' => 'form-control', 'required', 'step'=>'0.01', 'max'=>$saldofinal, 'min'=>0]) !!}
+          {!! Form::number('monto_op', $request->input('monto'), ['id'=>'monto_op','class' => 'form-control', 'required', 'step'=>'0.01', 'max'=>$saldofinal, 'min'=>0]) !!}
       </div>
 
       <div class="form-group col-sm-6">
@@ -74,9 +74,9 @@
       </div>
     </div>
 
-    @card(['title' => 'Registro de Equipo Inventariable', 'color'=>'warning'])
+    @card(['title' => 'Registro de Equipo/Material Inventariable', 'color'=>'warning'])
     <div class="row">
-      <table class="table tabla-minventario table-responsive table-responsive-xl" id="gastosdevolucion">
+      <table class="table tabla-minventario table-responsive table-responsive-xl" id="minventario">
         <thead class="bg-primary text-white fixed">
           <tr>
             <th style="width:20%">Concepto</th>
@@ -90,32 +90,32 @@
           <tr>
           <td class="PConcepto">
               <div class="input-group P1Concepto">
-                {!! Form::text('concepto_2[]', null, ['id'=>'concepto_2', 'class'=> 'form-control', 'required', 'style'=>'width: 100%;'] )!!}
+                {!! Form::text('concepto_2[]', null, ['id'=>'concepto_2', 'class'=> 'form-control maxlen', 'required', 'style'=>'width: 100%;', 'maxlength'=>'50'] )!!}
 
             </div>
           </td>
           <td class="PCodigo">
             <div class="input-group P1Codigo">
-             {!! Form::text('codigo_2[]', null, ['class'=>'form-control']) !!}
+             {!! Form::text('codigo_2[]', null, ['class'=>'form-control maxlen', 'maxlength'=>'30', 'required']) !!}
 
            </div>
           </td>
           <td class="PMarca">
             <div class="input-group P1Marca">
-             {!! Form::text('marca_2[]', null, ['class'=>'form-control']) !!}
+             {!! Form::text('marca_2[]', null, ['class'=>'form-control maxlen', 'maxlength'=>'30', 'required']) !!}
 
            </div>
           </td>
           <td class="PModelo">
             <div class="input-group P1Modelo">
-             {!! Form::text('modelo_2[]', null, ['class'=>'form-control']) !!}
+             {!! Form::text('modelo_2[]', null, ['class'=>'form-control maxlen', 'maxlength'=>'30', 'required']) !!}
 
            </div>
           </td>
           <td>
             <div class="input-group col-md-12">
               <span class="input-group-addon d-none d-sm-block"><i class="fa fa-dollar"></i></span>
-               {!! Form::number('monto_2[]', null, ['class'=>'form-control monto', 'id'=>'monto_2[]', 'step'=>'0.01' ])!!}
+               {!! Form::number('monto_2[]', null, ['class'=>'form-control montoE', 'id'=>'monto_2[]', 'step'=>'0.01', 'required' ])!!}
                <span class="input-group-btn">
                  <button type="button" class="btn btn-warning btn" id ="btnagregarotro"><i class="fa fa-plus"></i></button>
                </span>
@@ -129,6 +129,16 @@
     </div>
     @endcard
 
+    <div class="advertencia-monto_operacion">
+      @component('components.alertdismissbig')
+        El monto de las equipos/materiales es superior al monto de la compra.
+      @endcomponent
+    </div>
+
+              <div class="card-footer tx-center bg-gray-300">
+                    <button class="btn btn-info" type="submit">Registrar</button>
+                    <a class="btn btn-secondary" href="url('operaciones')">Cancelar</a>
+                </div>
 
   {!! Form::close() !!}
 
@@ -136,15 +146,123 @@
 
 @endsection
 
+@section('css')
+
+<link href="{{asset('appzia/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css')}}" rel="stylesheet">
+<link href="{{asset('airdatepicker/dist/css/datepicker.min.css')}}" rel="stylesheet" type="text/css">
+@endsection
+
 @section('scripts')
+<script src="{{asset('appzia/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('starlight/lib/select2/js/select2.full.min.js')}}"></script>
 <script src="{{asset('starlight/lib/numeral.js/min/numeral.min.js')}}"></script>
+<script src="{{asset('airdatepicker/dist/js/datepicker.min.js')}}"></script>
+<script src="{{asset('airdatepicker/dist/js/i18n/datepicker.es.js')}}"></script>
 <script>
 $(document).ready(function() {
     $('.select2').select2();
 });
   $('.maxlen').maxlength();
 
+  $('.advertencia-monto_operacion').hide();
 
+  $('#monto_com').on('change keyup', function(e) {
+    var montoT = {!! $request->input('monto') !!};
+    var comision = parseFloat(e.target.value).toFixed(2);
+    var mRestante = numeral(parseFloat(montoT).toFixed(2) - parseFloat(e.target.value).toFixed(2));
+
+    //$('.montoTitulo').text('Monto Restante: '+mRestante.format('0,0.00'));
+    $('#monto_dev').val(mRestante.format('0,0.00'));
+    $('#montodev').val(mRestante.value());
+    var porcentaje = parseFloat(comision / montoT).toFixed(2);
+    $('.comision').text('Datos de la Devolución (Comisión: '+ parseInt(porcentaje*100) +'%)');
+
+    //$('.secoperaciones').text('Operaciones de la Devolución (Restante:'+mRestante.format('0,0.00')+' )')
+
+    if(porcentaje > 0.16 ){
+      //alert('porcentaje de la comisión supera el 16% : ' + porcentaje)
+      $('.advertencia-saldocomision').show();
+    }
+    else {
+        $('.advertencia-saldocomision').hide();
+    }
+  });
+
+  function SumarTodosLosMontos() {
+    var ItemMonto = $('.montoE');
+    var ArraySumaMonto = [];
+    //console.log(ItemMonto.length);
+    for (var i=0; i < ItemMonto.length; i++  )
+    {
+          ArraySumaMonto.push(Number($(ItemMonto[i]).val()));
+          console.log($(ItemMonto[i]).val());
+    }
+      //console.log('ArraySumaMonto',ArraySumaMonto);
+      function sumaArrayMontos(total, numero)
+      {
+        return total + numero;
+      }
+
+        var SumaTotalMontoA = ArraySumaMonto.reduce(sumaArrayMontos);
+        //console.log('SumaTotalMonto',SumaTotalMonto);
+        SumaTotalMonto = numeral(SumaTotalMontoA);
+        //console.log(SumaTotalMontoA);
+        var montoRestante = $('#montodev').val();
+        var totalRestante = numeral(montoRestante - SumaTotalMontoA);
+
+        $('.secoperaciones').text('Operaciones de la Devolución (Restante:'+totalRestante.format('0,0.00')+' )')
+}
+
+  var IdRow = 0;
+  $('#btnagregarotro').click(function() {
+    //$(this).removeClass("btn-warning");
+      IdRow = IdRow+1;
+      var newRow =
+      '<tr id="r'+IdRow+'">'+
+      '<td class="PConcepto">'+
+          '<div class="input-group P1Concento">'+
+            '{!! Form::text("concepto_2[]", null, ["id"=>"concepto_2[]", "class"=> "form-control maxlen", "required", "maxlength"=>"50"] )!!}'+
+
+        '</div>'+
+      '</td>'+
+      '<td class="PCodigo">'+
+        '<div class="input-group P1Codigo">'+
+        ' {!! Form::text("codigo_2[]", null, ["class"=>"form-control maxlen", "maxlength"=>"30", "required"]) !!}'+
+
+       '</div>'+
+      '</td>'+
+      '<td class="PMarca">'+
+        '<div class="input-group P1Marca">'+
+         '{!! Form::text("marca_2[]", null, ["class"=>"form-control maxlen", "maxlength"=>"30", "required"]) !!}'+
+
+       '</div>'+
+      '</td>'+
+      '<td class="PModelo">'+
+        '<div class="input-group P1Modelo">'+
+         '{!! Form::text("modelo_2[]", null, ["class"=>"form-control maxlen", "maxlength"=>"30"]) !!}'+
+
+       '</div>'+
+    '  </td>'+
+      '<td>'+
+        '<div class="input-group col-md-12">'+
+          '<span class="input-group-addon d-none d-sm-block"><i class="fa fa-dollar"></i></span>'+
+           '{!! Form::number("monto_2[]", null, ["class"=>"form-control montoE", "id"=>"monto_2[]", "step"=>"0.01" ])!!}'+
+           '<span class="input-group-btn">'+
+             '<button type="button" class="btn btn-danger btn QuitarConcepto" id="quitarconcepto"><i class="fa fa-times"></i></button>'+
+           '</span>'+
+        '</div>'+
+      '</td>'+
+      '</tr>';
+    $(newRow).appendTo($('#minventario tbody'));
+    $('.select2').select2();
+    $('.maxlen').maxlength();
+
+  }) ;
+
+  $('#minventario').on('click', 'button.QuitarConcepto', function() {
+    console.log("prueba");
+    $(this).parent().parent().parent().parent().remove();
+    //SumarTodosLosMontos();
+  });
 </script>
 @endsection

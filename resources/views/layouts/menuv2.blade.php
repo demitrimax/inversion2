@@ -104,7 +104,7 @@ if( Request::is('productos*') || Request::is('categorias*') || Request::is('bode
 @php
 if( Request::is('efinancieras*') || Request::is('clasificas*') || Request::is('bancos*') ||
       Request::is('bcuentas*') || Request::is('metpagos*') || Request::is('operaciones*') || Request::is('subclasificas*')
-      || Request::is('facturas*') || Request::is('coddivisas*') ) {
+      || Request::is('facturas*') || Request::is('coddivisas*') || Request::is('minventarios*') ) {
     $varActive = "active show-sub";
 } else {
   $varActive = "";
@@ -146,7 +146,9 @@ if( Request::is('efinancieras*') || Request::is('clasificas*') || Request::is('b
   @can('facturas-list')
   <li class="nav-item"><a href="{!! route('facturas.index') !!}" class="nav-link {{ Request::is('facturas*') ? 'active' : '' }}">Facturas</a></li>
   @endcan
-
+  @can('minventarios-list')
+  <li class="nav-item">  <a href="{!! route('minventarios.index') !!}" class="nav-link {{ Request::is('minventarios*') ? 'active' : '' }}"><span>Mi Inventario</span></a> </li>
+  @endcan
 </ul>
 
   @hasrole('administrador')

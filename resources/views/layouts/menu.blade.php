@@ -126,3 +126,7 @@
     <a href="{!! route('facturaras.index') !!}"><i class="fa fa-edit"></i><span>Facturaras</span></a>
 </li>
 
+<li class="{{ Request::is('minventarios*') ? 'active' : '' }}">
+    <a href="{!! route('minventarios.index') !!}"><i class="fa fa-edit"></i><span>Minventarios</span></a>
+</li>
+

@@ -61,6 +61,7 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
 
   Route::resource('operaciones', 'operacionesController');
   Route::post('operacion/comisionable/save', 'operacionesController@saveOperacionComisionable');
+  Route::post('operacion/inventario/save', 'operacionesController@saveOperacionInventario')->name('operacion.inventario.save');
 
   Route::resource('subclasificas', 'subclasificaController');
   Route::get('/profile', 'profileController@profile')->name('profile');
@@ -109,11 +110,15 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
 
   Route::post('ckeditor/image_upload', 'CKEditorController@upload')->name('upload');
 
+  Route::resource('minventarios', 'minventarioController');
+
   Route::get('mailable', function () {
     $tarea = App\Models\tareas::find(18);
 
     return new App\Mail\TareasVencidas($tarea);
+
 });
+
 
   Route::get('testmail', function () {
     $tareasvencidas = App\Models\tareas::where('avance_porc','<','100')

@@ -432,4 +432,44 @@ class operacionesController extends AppBaseController
 
     return redirect(route('operaciones.show', [$op_origen]));
   }
+
+  public function saveOperacionInventario(Request $request)
+  {
+    $input = $request->all();
+    //dd($input);
+    //REGISTRAR LA OPERACION
+    $operacion = new operaciones;
+    $operacion->monto = $input['monto_op'];
+    $operacion->empresa_id = $input['empresa_id'];
+    $operacion->cuenta_id = $input['cuenta_id'];
+    $operacion->proveedor_id = $input['proveedor_id'];
+    $operacion->numfactura = $input['numfactura'];
+    $operacion->subclasifica_id = $input['subclasifica_id'];
+    $operacion->tipo = 'Salida';
+    $operacion->metpago = $input['metpago'];
+    $operacion->concepto = $input['concepto'];
+    $operacion->comentario = $input['comentario'];
+    $operacion->fecha = $input['fecha'];
+    $operacion->save();
+    //REGISTRAR LOS PRODUCTOS DE Inventario
+    foreach($input['codigo_2'] as $key=>$inventario)
+    {
+      if(!empty($input['codigo_2'][$key])){
+        $opInventario = new minventario;
+        $opInventario->concepto = $input['concepto_2'][$key];
+        $opInventario->marca = $input['marca_2'][$key];
+        $opInventario->modelo = $input['modelo_2'][$key];
+        $opInventario->codigo = $input['codigo_2'][$key];
+        $opInventario->montocompra = $input['monto_2'][$key];
+        $opInventario->operacion_id = $operacion->id;
+        $opInventario->save();
+      }
+    }
+    $mensaje = 'Operación guardada correctamente';
+    Alert::success($mensaje);
+    Flash::success($mensaje);
+
+    Return redirect(route('operaciones.show', [$operacion->id]));
+  }
+
 }

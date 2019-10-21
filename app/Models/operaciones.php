@@ -140,6 +140,10 @@ class operaciones extends Model
     {
       return $this->hasMany('App\Models\opcomisionables', 'id_operacion');
     }
+    public function inventarios()
+    {
+      return $this->hasMany('App\Models\minventario', 'operacion_id');
+    }
 
     public function getMesanioAttribute()
     {
