@@ -19,6 +19,7 @@ use App\Models\metpago;
 use App\Models\facturas;
 use App\Models\operaciones;
 use App\Models\opcomisionables;
+use App\Models\minventario;
 
 class operacionesController extends AppBaseController
 {
@@ -123,6 +124,31 @@ class operacionesController extends AppBaseController
               */
               $operaciones->comisionable = 1;
               $operaciones->monto_comision = $input['monto'];
+        }
+
+        if(isset($input['inventariable']) && $input['inventariable'] == 1 ){
+            $empresas = empresas::pluck('nombre','id');
+            $empresaid = $input['empresa_id'];
+            $empresa = empresas::find($empresaid);
+
+            $cuentas = bcuentas::with('empresa')->whereHas('empresa', function($q) use ($empresaid) {
+              $q->where('id',$empresaid);
+            })->get();
+            //dd($cuentas);
+            $cuental = $cuentas->pluck('nomcuentasaldo', 'id');
+            $metpago = metpago::pluck('nombre','id');
+            $proveedores = proveedores::pluck('nombre','id');
+
+            $facturas = facturas::whereNull('operacion_id')->pluck('numfactura','id');
+            $categorias = clasifica::where('tip','E')->get();
+            foreach($categorias as $key=>$categoria){
+               foreach($categoria->subcategorias->sortBy('nombre') as $subcategoria){
+                $subcategoriasAgrupadas[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
+              }
+            }
+            $categorias = clasifica::where('tip','I')->get();
+
+          return view('operaciones.newoperacioninv')->with(compact('empresa','cuental','metpago','facturas','categorias','proveedores','subcategoriasAgrupadas','request'));
         }
 
 
