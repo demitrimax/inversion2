@@ -22,12 +22,12 @@
             <td>
                 {!! Form::open(['route' => ['minventarios.destroy', $minventario->id], 'method' => 'delete', 'id'=>'form'.$minventario->id]) !!}
                 <div class='btn-group'>
-                    <a href="{!! route('minventarios.show', [$minventario->id]) !!}" class='btn btn-info btn-xs'><i class="fa fa-eye"></i></a>
+                    <a href="{!! route('minventarios.show', [$minventario->id]) !!}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></a>
                     @can('minventarios-edit')
-                    <a href="{!! route('minventarios.edit', [$minventario->id]) !!}" class='btn btn-primary btn-xs'><i class="fa fa-pencil"></i></a>
+                    <a href="{!! route('minventarios.edit', [$minventario->id]) !!}" class='btn btn-primary btn-xs'><i class="far fa-edit"></i></a>
                     @endcan
                     @can('minventarios-delete')
-                    {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($minventario->id)"]) !!}
+                    {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($minventario->id)"]) !!}
                     @endcan
                 </div>
                 {!! Form::close() !!}

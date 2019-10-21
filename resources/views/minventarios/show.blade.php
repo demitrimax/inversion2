@@ -1,11 +1,7 @@
 @extends('layouts.appv2')
 @section('title',config('app.name').' | Minventarios' )
 @section('content')
-    <section class="content-header">
-        <h1>
-            Minventario
-        </h1>
-    </section>
+
     <div class="content">
         <div class="card">
         <div class="card-header card-header-default">
@@ -18,7 +14,7 @@
                     @include('minventarios.show_fields')
                     </tbody>
                   </table>
-                    <a href="{!! route('minventarios.index') !!}" class="btn btn-default">Back</a>
+                    <a href="{!! route('minventarios.index') !!}" class="btn btn-secondary">Regresar</a>
                 </div>
             </div>
         </div>
