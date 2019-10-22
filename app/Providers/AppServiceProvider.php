@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Schema;
 use Auth;
 use App\Models\tareas;
 use Carbon\Carbon;
+use Artisan;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
         //
         //\App\Blade\Components::make()->register();
         Blade::component('components.card', 'card');
-        
+
         Schema::defaultStringLength(191);
         view()->composer('*', function($view)
       {
@@ -50,5 +51,6 @@ class AppServiceProvider extends ServiceProvider
               $view->with(compact('vartareas','nuevastareas'));
           }
       });
+      //Artisan::call('App\Http\Controllers\mailtareasController@tareasVencidas');
     }
 }

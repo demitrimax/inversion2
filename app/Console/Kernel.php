@@ -29,16 +29,7 @@ class Kernel extends ConsoleKernel
     {
          //$schedule->command('inspire')
         //          ->everyMinute();
-        $schedule->call(function () {
-          $tareasvencidas = \App\Models\tareas::where('avance_porc','<','100')
-                            ->whereNull('terminado')
-                            ->where('vencimiento', '<', date('Y-m-d') )
-                            ->get();
-          foreach($tareasvencidas as $tarea){
-            Mail::to($tarea->user->email)->send(new \App\Mail\TareasVencidas($tarea));
-          }
-        })
-        //->dailyAt('07:00')
+        $schedule->call('\App\Http\Controllers\mailtareasController@tareasVencidas')
         ->everyFiveMinutes()
         ->appendOutputTo(storage_path('logs/notificatareasvencidas.log'));
     }

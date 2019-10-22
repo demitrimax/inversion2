@@ -117,15 +117,9 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
 
     return new App\Mail\TareasVencidas($tarea);
 
-});
+  });
 
-
-  Route::get('testmail', function () {
-    $tareasvencidas = App\Models\tareas::where('avance_porc','<','100')
-                    ->whereNull('terminado')
-                    ->where('vencimiento', '<', date('Y-m-d') )
-                    ->get();
-    dd($tareasvencidas);
-    });
 
 });
+//al llamar esta pagina enviará ejecutará la funcion de enviar mails diarios  
+Route::get('tareasvencidas', 'mailtareasController@tareasVencidas');

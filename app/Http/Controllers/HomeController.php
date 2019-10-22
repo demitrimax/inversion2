@@ -36,6 +36,10 @@ class HomeController extends Controller
         $oppagoshoy = operaciones::where('created_at',$hoy)->where('tipo','Salida')->get();
         $pagoshoy = $movcredpagoshoy->sum('monto') + $oppagoshoy->sum('monto');
 
+        //call('\App\Http\Controllers\mailtareasController@tareasvencidas');
+
+        app('App\Http\Controllers\mailtareasController')->tareasVencidas();
+
         $from = new Carbon('first day of this month'); //date('Y-m-'.'01');
         $to = new Carbon('last day of this month');
         $fechainicial = corridafinanciera::min('fecha');
