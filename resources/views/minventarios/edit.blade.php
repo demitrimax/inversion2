@@ -6,10 +6,10 @@
           @include('adminlte-templates::common.errors')
           <div class="card bg-0">
               <div class="card-header card-header-default">
-                  <h3 class="card-title">Editar Minventario</h3>
+                  <h3 class="card-title">Editar Mi Inventario</h3>
               </div>
               <div class="card-body">
-              {!! Form::model($minventario, ['route' => ['minventarios.update', $minventario->id], 'method' => 'patch']) !!}
+              {!! Form::model($minventario, ['route' => ['minventarios.update', $minventario->id], 'method' => 'patch', 'enctype'=>'multipart/form-data']) !!}
 
                    @include('minventarios.fields')
 

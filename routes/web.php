@@ -111,6 +111,7 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::post('ckeditor/image_upload', 'CKEditorController@upload')->name('upload');
 
   Route::resource('minventarios', 'minventarioController');
+  Route::get('minventario/resguardo/{id}', 'minventarioController@viewPDF');
 
   Route::get('mailable', function () {
     $tarea = App\Models\tareas::find(18);
@@ -121,5 +122,5 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
 
 
 });
-//al llamar esta pagina enviará ejecutará la funcion de enviar mails diarios  
+//al llamar esta pagina enviará ejecutará la funcion de enviar mails diarios
 Route::get('tareasvencidas', 'mailtareasController@tareasVencidas');

@@ -11,6 +11,7 @@ use Flash;
 use Alert;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use Illuminate\Support\Facades\Storage;
 
 class minventarioController extends AppBaseController
 {
@@ -64,8 +65,8 @@ class minventarioController extends AppBaseController
 
         $minventario = $this->minventarioRepository->create($input);
 
-        Flash::success('Minventario guardado correctamente.');
-        Alert::success('Minventario guardado correctamente.');
+        Flash::success('Mi Inventario guardado correctamente.');
+        Alert::success('Mi Inventario guardado correctamente.');
 
         return redirect(route('minventarios.index'));
     }
@@ -82,8 +83,8 @@ class minventarioController extends AppBaseController
         $minventario = $this->minventarioRepository->findWithoutFail($id);
 
         if (empty($minventario)) {
-            Flash::error('Minventario no encontrado');
-            Alert::error('Minventario no encontrado.');
+            Flash::error('Mi Inventario no encontrado');
+            Alert::error('Mi Inventario no encontrado.');
 
             return redirect(route('minventarios.index'));
         }
@@ -103,8 +104,8 @@ class minventarioController extends AppBaseController
         $minventario = $this->minventarioRepository->findWithoutFail($id);
 
         if (empty($minventario)) {
-            Flash::error('Minventario no encontrado');
-            Alert::error('Minventario no encontrado');
+            Flash::error('Mi Inventario no encontrado');
+            Alert::error('Mi Inventario no encontrado');
 
             return redirect(route('minventarios.index'));
         }
@@ -123,18 +124,27 @@ class minventarioController extends AppBaseController
     public function update($id, UpdateminventarioRequest $request)
     {
         $minventario = $this->minventarioRepository->findWithoutFail($id);
+        $input = $request->all();
 
         if (empty($minventario)) {
-            Flash::error('Minventario no encontrado');
-            Alert::error('Minventario no encontrado');
+            Flash::error('Mi Inventario no encontrado');
+            Alert::error('Mi Inventario no encontrado');
 
             return redirect(route('minventarios.index'));
         }
 
         $minventario = $this->minventarioRepository->update($request->all(), $id);
 
-        Flash::success('Minventario actualizado correctamente.');
-        Alert::success('Minventario actualizado correctamente.');
+        if( isset($input['fileresguardo']) ){
+                    //$documento->nombre_doc = $request->file('documento')->store('documentos');
+          $archivo = $request->file('fileresguardo')->store('resguardos');
+
+          $minventario->fileresguardo = $archivo;
+          $minventario->save();
+        }
+
+        Flash::success('Mi Inventario actualizado correctamente.');
+        Alert::success('Mi Inventario actualizado correctamente.');
 
         return redirect(route('minventarios.index'));
     }
@@ -151,17 +161,45 @@ class minventarioController extends AppBaseController
         $minventario = $this->minventarioRepository->findWithoutFail($id);
 
         if (empty($minventario)) {
-            Flash::error('Minventario no encontrado');
-            Alert::error('Minventario no encontrado');
+            Flash::error('Mi Inventario no encontrado');
+            Alert::error('Mi Inventario no encontrado');
 
             return redirect(route('minventarios.index'));
         }
 
         $this->minventarioRepository->delete($id);
 
-        Flash::success('Minventario borrado correctamente.');
-        Flash::success('Minventario borrado correctamente.');
+        Flash::success('Mi Inventario borrado correctamente.');
+        Flash::success('Mi Inventario borrado correctamente.');
 
         return redirect(route('minventarios.index'));
+    }
+
+    public function viewPDF($id)
+    {
+      $resguardo = $this->minventarioRepository->findWithoutFail($id);
+
+      if (empty($resguardo)) {
+
+          return "Documento no encontrado";
+      }
+
+      //return Storage::download($documentos->documento,$nomarchivo);
+
+      //return Storage::get($documentos->documento,$nomarchivo);
+      $mimetype = Storage::mimeType($resguardo->fileresguardo);
+
+      $path = storage_path('app/'.$resguardo->fileresguardo);
+      //return response()->download($path);
+      if ($mimetype == 'application/pdf' || $mimetype == 'image/*'){
+        return Response::make(file_get_contents($path), 200, [
+            'Content-Type' => $mimetype,
+            'Content-Disposition' => 'inline; filename="resguardo"'
+        ]);
+      }
+      else {
+        return Storage::download($resguardo->fileresguardo);
+      }
+
     }
 }
