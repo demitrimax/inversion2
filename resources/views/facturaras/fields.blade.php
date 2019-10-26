@@ -4,37 +4,44 @@
 
 @endsection
 <!-- Nombre Field -->
-<div class="form-group col-sm-6">
+<div class="form-group">
     {!! Form::label('nombre', 'Nombre:') !!} <span class="text-danger">*</span>
     {!! Form::text('nombre', null, ['class' => 'form-control maxlen', 'required', 'maxlength'=>'150']) !!}
 </div>
 
 <!-- Rfc Field -->
-<div class="form-group col-sm-6">
+<div class="form-group">
     {!! Form::label('rfc', 'RFC:') !!} <span class="text-danger">*</span>
     {!! Form::text('rfc', null, ['class' => 'form-control', 'required', 'maxlength'=>'13']) !!}
 </div>
 
 <!-- Direccion Field -->
-<div class="form-group col-sm-6">
+<div class="form-group">
     {!! Form::label('direccion', 'Dirección:') !!}
     {!! Form::text('direccion', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Direccion Field -->
-<div class="form-group col-sm-6">
+<div class="form-group">
     {!! Form::hidden('altaproveedor', 0) !!}
     {!! Form::checkbox('altaproveedor', null, 0) !!}
     {!! Form::label('proveedor', 'Alta como proveedor:') !!}
 </div>
 
-<!-- Direccion Field -->
+<!-- Archivo Excel Plantilla Field -->
+<div class="form-group">
+    {!! Form::label('plantilla_excel', 'Plantilla de Excel:') !!}
+    {!! Form::file('plantilla_excel', ['class' => 'form-control', 'accept'=>'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel']) !!}
+</div>
+
+<!-- Direccion Field
 <div class="form-group col-sm-12">
 
     {!! Form::label('plantilla_remision', 'Plantilla de Formato de Remisión:') !!}
     {!! Form::textarea('plantilla_remision', null, ['class'=>'form-control', 'id'=>'plantilla_remision', 'name'=>'plantilla_remision']) !!}
 
 </div>
+-->
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">

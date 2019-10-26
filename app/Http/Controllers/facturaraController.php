@@ -11,6 +11,13 @@ use Flash;
 use Alert;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use Storage;
+
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+
+use \ConvertApi\ConvertApi;
 
 class facturaraController extends AppBaseController
 {
@@ -64,8 +71,8 @@ class facturaraController extends AppBaseController
 
         $facturara = $this->facturaraRepository->create($input);
 
-        Flash::success('Facturara guardado correctamente.');
-        Alert::success('Facturara guardado correctamente.');
+        Flash::success('Empresa a Facturar guardado correctamente.');
+        Alert::success('Empresa a Facturar guardado correctamente.');
 
         return redirect(route('facturaras.index'));
     }
@@ -88,7 +95,71 @@ class facturaraController extends AppBaseController
             return redirect(route('facturaras.index'));
         }
 
-        return view('facturaras.show')->with('facturara', $facturara);
+        $nombrefile = $facturara->plantilla_excel;
+        $laimagen = null;
+
+        if($nombrefile) {
+          if(!strpos($nombrefile, '.xlsx') == false){
+              $eljpg = str_replace('.xlsx', '.jpg', $nombrefile);
+              $miext = 'xlsx';
+          }elseif(!strpos($nombrefile, '.xls') == false){
+            $eljpg = str_replace('.xls', '.jpg', $nombrefile);
+            $miext = 'xls';
+          }
+
+          $existsXLS = Storage::disk('public')->exists($facturara->plantilla_excel);
+          $existsJPG = Storage::disk('public')->exists($eljpg);
+          if($existsJPG == false ) {
+
+              $visibility = Storage::disk('public')->path($nombrefile);
+              $laruta = Storage::disk('public')->path('plantilla_empresas');
+              //dd($laruta);
+
+            ConvertApi::setApiSecret('ZcV8UF0LolTg1nda');
+              $result = ConvertApi::convert('jpg', [
+                'File' => $visibility,
+              ], $miext
+                );
+                $result->saveFiles($laruta);
+
+              }elseif($existsJPG){
+                $laimagen = Storage::disk('public')->url($eljpg);
+                //dd($laimagen);
+              }
+        }
+
+
+
+
+
+          /*
+          $reader = IOFactory::createReader('Xlsx');
+
+          $visibility = Storage::disk('public')->path($nombrefile);
+          //dd($visibility);
+
+          $spreadsheet = $reader->load($visibility);
+          $spreadsheet->getProperties()->setCreator('pi.corporation-tym.mx')
+              ->setLastModifiedBy('pi.corporation-tym.mx')
+              ->setTitle('Plantilla REMISION')
+              ->setSubject('Plantilla REMISION')
+              ->setDescription('Formato de REMISION')
+              ->setKeywords('proyectos de Inversion')
+              ->setCategory('REMISION');
+          $spreadsheet->getActiveSheet()->setTitle('FORMATO');
+          $className = \PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf::class;
+
+          $helper = new Sample();
+          $helper->log("Write to PDF format using {$className}");
+          IOFactory::registerWriter('Pdf', $className);
+
+          // Save
+          $helper->write($spreadsheet, $visibility, ['Pdf']);
+
+        }
+        */
+
+        return view('facturaras.show')->with(compact('facturara','laimagen'));
     }
 
     /**
@@ -108,8 +179,15 @@ class facturaraController extends AppBaseController
 
             return redirect(route('facturaras.index'));
         }
+        $nombrefile = $facturara->plantilla_excel;
+        $eljpg = $this->existeElJpg($nombrefile);
+        $laimagen = null;
+        if ($eljpg) {
+          $laimagen = Storage::disk('public')->url($eljpg);
+        }
 
-        return view('facturaras.edit')->with('facturara', $facturara);
+
+        return view('facturaras.edit')->with(compact('facturara','laimagen'));
     }
 
     /**
@@ -123,6 +201,7 @@ class facturaraController extends AppBaseController
     public function update($id, UpdatefacturaraRequest $request)
     {
         $facturara = $this->facturaraRepository->findWithoutFail($id);
+        $input = $request->all();
 
         if (empty($facturara)) {
             Flash::error('Facturara no encontrado');
@@ -132,6 +211,19 @@ class facturaraController extends AppBaseController
         }
 
         $facturara = $this->facturaraRepository->update($request->all(), $id);
+
+        if( isset($input['plantilla_excel']) ){
+                    //$documento->nombre_doc = $request->file('documento')->store('documentos');
+          $archivo = $request->file('plantilla_excel')->store('plantilla_empresas', 'public');
+          //$archivo = Storage::putFile(public_path().'plantilla_empresas/', $input['plantilla_excel']);
+
+          $facturara->plantilla_excel = $archivo;
+          $facturara->save();
+
+          //convertir el archivo de excel en PDF
+
+        }
+
 
         Flash::success('Facturara actualizado correctamente.');
         Alert::success('Facturara actualizado correctamente.');
@@ -163,5 +255,24 @@ class facturaraController extends AppBaseController
         Flash::success('Facturara borrado correctamente.');
 
         return redirect(route('facturaras.index'));
+    }
+
+    public function existeElJpg($nombrefile)
+    {
+      if($nombrefile) {
+        if(!strpos($nombrefile, '.xlsx') == false){
+            $eljpg = str_replace('.xlsx', '.jpg', $nombrefile);
+            $miext = 'xlsx';
+        }elseif(!strpos($nombrefile, '.xls') == false){
+          $eljpg = str_replace('.xls', '.jpg', $nombrefile);
+          $miext = 'xls';
+        }
+
+        if (Storage::disk('public')->exists($eljpg)){
+          return $eljpg;
+        }
+
+      }
+      return false;
     }
 }

@@ -1,3 +1,4 @@
+<div class="col-md-6">
 <table class="table table-striped table-bordered detail-view" id="facturaras-table">
   <tbody>
     <!-- Id Field -->
@@ -29,8 +30,9 @@
 
   </tbody>
 </table>
-
-<div class="col-md-12">
-  Plantilla de Formato
-  {!! $facturara->plantilla_remision !!}
 </div>
+@if($laimagen)
+<div class="col-md-6">
+    <img src="{!! asset($laimagen)!!}" width="400">
+</div>
+@endif

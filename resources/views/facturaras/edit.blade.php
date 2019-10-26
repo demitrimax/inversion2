@@ -9,9 +9,18 @@
                   <h3 class="card-title">Editar Empresa</h3>
               </div>
               <div class="card-body">
-              {!! Form::model($facturara, ['route' => ['facturaras.update', $facturara->id], 'method' => 'patch']) !!}
-
-                   @include('facturaras.fields')
+              {!! Form::model($facturara, ['route' => ['facturaras.update', $facturara->id], 'method' => 'patch', 'enctype'=>'multipart/form-data']) !!}
+                  <div class="row">
+                    <div class="col-md-6">
+                      @include('facturaras.fields')
+                    </div>
+                   <div class="col-md-6">
+                     @if($laimagen)
+                     <img src="{!! $laimagen !!}" width="300">
+                     @endif
+                     @include('facturaras.fields_parametros')
+                 </div>
+               </div>
 
               {!! Form::close() !!}
               </div>

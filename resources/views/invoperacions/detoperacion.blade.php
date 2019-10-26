@@ -25,7 +25,7 @@
         @endif
 
         @if($detoperacion->estatus == 'T')
-        <span class="badge badge-success"> <i class="fa fa-check-square-o"></i> Surtido en su Totalidad</span>
+        <span class="badge badge-success"> <i class="fas fa-luggage-cart"></i> Surtido en su Totalidad</span>
         @endif
 
         @if($detoperacion->estatus == 'P')
