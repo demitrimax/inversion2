@@ -49,7 +49,7 @@ class facturara extends Model
         'nombre'                => 'string',
         'rfc'                   => 'string',
         'direccion'             => 'string',
-        'plantilla_remision'    => 'string',
+        'plantilla_remision'    => 'array',
     ];
 
     /**

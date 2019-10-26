@@ -28,6 +28,19 @@
       <td>{!! $facturara->direccion !!}</td>
     </tr>
 
+    @isset($facturara->plantilla_excel)
+    <!-- mostrar los archivos -->
+    <tr>
+      <th>{!! Form::label('plantilla_excel', 'Archivo de Excel:') !!}</th>
+      <td><a href="{{ url($facturara->plantilla_excel) }}">Descargar Archivo de Plantilla</a></td>
+    </tr>
+    @endisset
+
+    <tr>
+      <th>{!! Form::label('plantilla_remision', 'Parametros:') !!}</th>
+      <td><pre>{!! print_r($facturara->plantilla_remision) !!}</pre></td>
+    </tr>
+
   </tbody>
 </table>
 </div>

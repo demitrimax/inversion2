@@ -202,6 +202,7 @@ class facturaraController extends AppBaseController
     {
         $facturara = $this->facturaraRepository->findWithoutFail($id);
         $input = $request->all();
+        //dd($input);
 
         if (empty($facturara)) {
             Flash::error('Facturara no encontrado');
@@ -212,6 +213,7 @@ class facturaraController extends AppBaseController
 
         $facturara = $this->facturaraRepository->update($request->all(), $id);
 
+
         if( isset($input['plantilla_excel']) ){
                     //$documento->nombre_doc = $request->file('documento')->store('documentos');
           $archivo = $request->file('plantilla_excel')->store('plantilla_empresas', 'public');
@@ -219,10 +221,11 @@ class facturaraController extends AppBaseController
 
           $facturara->plantilla_excel = $archivo;
           $facturara->save();
-
           //convertir el archivo de excel en PDF
-
         }
+
+        $facturara->plantilla_remision = $input['plantilla'];
+        $facturara->save();
 
 
         Flash::success('Facturara actualizado correctamente.');

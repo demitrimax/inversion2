@@ -34,14 +34,14 @@
     {!! Form::file('plantilla_excel', ['class' => 'form-control', 'accept'=>'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel']) !!}
 </div>
 
-<!-- Direccion Field
-<div class="form-group col-sm-12">
-
-    {!! Form::label('plantilla_remision', 'Plantilla de Formato de Remisión:') !!}
-    {!! Form::textarea('plantilla_remision', null, ['class'=>'form-control', 'id'=>'plantilla_remision', 'name'=>'plantilla_remision']) !!}
-
+@isset($facturara->plantilla_excel)
+<!-- mostrar los archivos -->
+<div class="form-group">
+  {!! Form::label('plantilla_excel', 'Archivo de Excel:') !!}
+  <a href="{{ url($facturara->plantilla_excel) }}">Descargar Archivo de Plantilla</a>
 </div>
--->
+@endisset
+
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
