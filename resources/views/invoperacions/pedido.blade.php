@@ -20,7 +20,9 @@
 
                     <a href="{!! route('invoperacions.index') !!}" class="btn btn-secondary">Regresar</a>
                     @if($invoperacion->tipo_mov == 'Salida')
-                    <a href="{!! route('invoperacions.miformato', [$invoperacion->id])!!}"  class="btn btn-secondary">Formato Remisión</a>
+                      @if($invoperacion->facturara_id)
+                        <a href="{!! route('invoperacions.miformato', [$invoperacion->id])!!}"  class="btn btn-secondary">Formato Remisión</a>
+                      @endif
                     @endif
                 </div>
             </div>

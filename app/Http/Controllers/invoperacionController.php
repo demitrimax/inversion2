@@ -20,7 +20,14 @@ use App\Models\bodegas;
 use App\Models\facturara;
 use Auth;
 use View;
+use Storage;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
+use App\Helpers\SomeClass;
+
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper;
 
 class invoperacionController extends AppBaseController
 {
@@ -401,17 +408,81 @@ class invoperacionController extends AppBaseController
         $operacion = invoperacion::find($id);
 
         if($operacion->facturara_id){
-          $formato = $operacion->facturara->plantilla_remision;
+          $parametros = $operacion->facturara->plantilla_remision;
+          $archivo = $operacion->facturara->plantilla_excel;
         }
         else{
           Alert::error('Sin datos de la plantilla');
           Flash::error('No se tienen los datos de la plantilla');
           return back();
         }
+        foreach($parametros as $key=>$parametro){
+          if($parametro == null ){
+            $mensaje = 'La Empresa '.$operacion->facturara->nombre.' le faltan datos de parametros: '.$key;
+            Alert::error($mensaje);
+            Flash::error($mensaje);
+            return back();
+          }
+        }
         //$formatovista = view::make($formato, ['data'=>$formato]);
         //return $formatovista->render();
-          $formato = \Blade::compileString($formato);
+        $reader = IOFactory::createReader('Xlsx');
+        $spreadsheet = $reader->load(Storage::disk('public')->path($archivo));
+        $spreadsheet->getProperties()->setCreator('Idiftec1.com')
+            ->setLastModifiedBy('pi.corporation-tym.mx')
+            ->setTitle('Formato Remision')
+            ->setSubject('Formato de REMISION')
+            ->setDescription('Formato de REMISION')
+            ->setKeywords('REMISION')
+            ->setCategory('REMISION');
+        $wizard = new HtmlHelper();
+        $SheetTitle = 'REMISION';
+        $spreadsheet->getActiveSheet()->setTitle($SheetTitle);
 
-          return $formato;
+        $valores['cliente'] = $operacion->cliente->nombre;
+        $valores['rfc'] = $operacion->cliente->rfc;
+        $valores['domicilio'] = $operacion->cliente->direccion;
+        $valores['fecha'] = $operacion->fecha->format('d/m/Y');
+        $valores['fpago'] =  'credito';
+        $valores['celdasubtotal'] = $operacion->subtotal;
+        $valores['celdaiva'] = $operacion->iva;
+        $valores['celdatotal'] = $operacion->total;
+        $valores['celdamontoletra'] = '('.mb_strtoupper(SomeClass::valorEnLetras($operacion->total)).')';
+
+        foreach($valores as $key => $valor)
+        {
+          $spreadsheet->getActiveSheet()->setCellValue($parametros[$key], $valores[$key]);
+        }
+
+
+        //repeticion de los productos
+        $row = $parametros['filainicio'];
+        foreach($operacion->invdetoperacions as $key=>$opinv){
+          $row = $row + $key;
+          $spreadsheet->getActiveSheet()->setCellValue($parametros['colclave'].$row, $opinv->producto->barcode);
+          $spreadsheet->getActiveSheet()->setCellValue($parametros['coldescripcion'].$row, $opinv->producto->nombre);
+          $spreadsheet->getActiveSheet()->setCellValue($parametros['colcantidad'].$row, $opinv->cantidad);
+          $spreadsheet->getActiveSheet()->setCellValue($parametros['colunidad'].$row, $opinv->producto->umedida);
+          $spreadsheet->getActiveSheet()->setCellValue($parametros['colpunitario'].$row, $opinv->punitario);
+          $spreadsheet->getActiveSheet()->setCellValue($parametros['colimporte'].$row, $opinv->importe);
+        }
+
+
+        // Redirect output to a client’s web browser (Xlsx)
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="REMISION_'.$SheetTitle.'.xlsx"');
+        header('Cache-Control: max-age=0');
+        // If you're serving to IE 9, then the following may be needed
+        header('Cache-Control: max-age=1');
+
+        // If you're serving to IE over SSL, then the following may be needed
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+        header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+        header('Pragma: public'); // HTTP/1.0
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
+        exit;
     }
 }

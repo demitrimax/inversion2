@@ -3,6 +3,8 @@
   <thead class="bg-info">
     <tr>
       <th>Cantidad  </th>
+      <th>Clave</th>
+      <th>U. Medida</th>
       <th>Producto</th>
       <th>P. Unitario</th>
       <th>Importe</th>
@@ -13,7 +15,9 @@
     @foreach($invoperacion->invdetoperacions as $key=>$detoperacion)
     <tr>
       <td>{{ number_format($detoperacion->cantidad) }} </td>
-      <td>{{$detoperacion->producto->nombre }}</td>
+      <td>{{ $detoperacion->producto->barcode }}</td>
+      <td>{{ $detoperacion->producto->umedida }}</td>
+      <td>{{ $detoperacion->producto->nombre }}</td>
       <td>{{ number_format($detoperacion->punitario,2)}}</td>
       <td>{{number_format($detoperacion->importe,2)}}</td>
       <td>
