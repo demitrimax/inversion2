@@ -133,6 +133,7 @@ class invoperacion extends Model
       $this->estatus == 'P'  ? $estatus = 'Surtida Parcialmente' : '';
       $this->estatus == 'G'  ? $estatus = 'Pagada' : '';
       $this->estatus == 'F'  ? $estatus = 'Facturada' : '';
+      $this->estatus == 'R'  ? $estatus = 'Remision' : '';
       return $estatus;
     }
     public function getEstatushAttribute()
@@ -189,9 +190,15 @@ class invoperacion extends Model
 
       }
       elseif($this->tipo_mov == 'Salida'){
-        $estado = 'Facturada';
-        $est = 'F';
-        $label = 'primary';
+        if($this->estatus == 'F'){
+          $estado = 'Facturada';
+          $est = 'F';
+          $label = 'primary';
+        }
+        elseif($this->estatus == 'R')
+        $estado = 'Remision';
+        $est = 'R';
+        $label = 'warning';
       }
       //return $estatusoperaciones;
       $salida = ['estado' => $estado, 'letra' => $est, 'label'=>$label ];

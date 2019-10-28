@@ -303,7 +303,7 @@ class invoperacionController extends AppBaseController
       $invoperacion->total = $monto;
       $invoperacion->fecha = $input['fecha'];
       $invoperacion->numfactura = $input['numfactura'];
-      $invoperacion->estatus = 'F';
+      $invoperacion->estatus = 'R';
       $invoperacion->save();
 
       foreach($input['cantidad'] as $key=>$cantidad ){
@@ -484,5 +484,22 @@ class invoperacionController extends AppBaseController
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save('php://output');
         exit;
+    }
+
+    public function OperacionFacturada($id)
+    {
+      $operacion = invoperacion::find($id);
+      if($operacion->estatus == 'R'){
+        $operacion->estatus = 'F';
+        $operacion->save();
+        $mensaje = 'Operación actualizada correctamente';
+        Alert::success($mensaje);
+        Flash::success($mensaje);
+        return back();
+      }
+      $mensaje = 'La operación no cumple con los requisitos';
+      Alert::error ($mensaje);
+      Flash::error ($mensaje);
+      return back();
     }
 }
