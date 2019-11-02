@@ -196,9 +196,11 @@ class invoperacion extends Model
           $label = 'primary';
         }
         elseif($this->estatus == 'R')
+        {
         $estado = 'Remision';
         $est = 'R';
         $label = 'warning';
+        }
       }
       //return $estatusoperaciones;
       $salida = ['estado' => $estado, 'letra' => $est, 'label'=>$label ];
