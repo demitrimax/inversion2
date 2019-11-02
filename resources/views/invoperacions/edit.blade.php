@@ -9,9 +9,9 @@
                   <h3 class="card-title">Editar Operación</h3>
               </div>
               <div class="card-body">
-              {!! Form::model($invoperacion, ['route' => ['invoperacions.update', $invoperacion->id], 'method' => 'patch']) !!}
+              {!! Form::model($invoperacion, ['route' => ['invoperacions.updateRemision', $invoperacion->id], 'method' => 'post']) !!}
 
-                   @include('invoperacions.fields')
+                   @include('invoperacions.editfields')
 
               {!! Form::close() !!}
               </div>

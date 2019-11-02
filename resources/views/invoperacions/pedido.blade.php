@@ -25,7 +25,7 @@
                       @endif
                     @endif
                     @if($invoperacion->estatus == 'R')
-                    <a href="{!! route('invoperacions.miformato', [$invoperacion->id])!!}"  class="btn btn-warning">Editar</a>
+                    <a href="{!! route('invoperacions.edit', [$invoperacion->id])!!}"  class="btn btn-warning">Editar</a>
                     <a href="{!! route('invoperacions.esta.facturada', [$invoperacion->id])!!}"  class="btn btn-success">Marcar como Facturada</a>
                     @endif
                 </div>

@@ -46,7 +46,7 @@
     @endforeach
   </tbody>
 </table>
-{!! Form::open(['route' => ['inventario.producto.surtido.parcial', $invoperacion->id], 'id'=>'formparcial'.$detoperacion->id]) !!}
+{!! Form::open(['route' => ['inventario.producto.surtido.parcial', $invoperacion->id], 'id'=>'formparcial'.$invoperacion->id]) !!}
   {!! Form::hidden('parcial', null, ['id'=>'parcial'])!!}
   {!! Form::hidden('detoperacionid', null, ['id'=>'detoperacionid'])!!}
 {!! form::close()!!}

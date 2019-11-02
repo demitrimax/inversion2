@@ -131,8 +131,16 @@ class invoperacionController extends AppBaseController
         }
         $proveedores = invproveedores::pluck('nombre','id');
         $clientes = clientes::pluck('nombre','id');
+        $bodegas = bodegas::pluck('nombre','id');
 
-        return view('invoperacions.edit')->with(compact('invoperacion','proveedores','clientes'));
+        $productosOn = productos::orderBy('nombre','asc')->pluck('nombre','id');
+
+        $productos = productos::orderBy('nombre','asc')->get();
+        $productos = $productos->where('stock', '>', 0 )->pluck('nomproductostock','id');
+
+        $operaciontipo = 'salida';
+
+        return view('invoperacions.edit')->with(compact('invoperacion','proveedores','clientes', 'productos', 'productosOn', 'operaciontipo', 'bodegas'));
     }
 
     /**
@@ -501,5 +509,45 @@ class invoperacionController extends AppBaseController
       Alert::error ($mensaje);
       Flash::error ($mensaje);
       return back();
+    }
+
+    public function updateRemision($id, UpdateinvoperacionRequest $request)
+    {
+        $invoperacion = $this->invoperacionRepository->findWithoutFail($id);
+        $input = $request->all();
+        if (empty($invoperacion)) {
+            Flash::error('Operación de Inventario no encontrado');
+            Alert::error('Operación de Inventario no encontrado');
+
+            return redirect(route('invoperacions.index'));
+        }
+        //dd($input);
+          //borrar todos los detalles
+          $detalles = $invoperacion->invdetoperacions;
+          foreach($detalles as $detalle){
+            $detail = invdetoperacion::find($detalle->id);
+            $detail->delete();
+          }
+        foreach($input['cantidad'] as $key=>$cantidad){
+
+          if(!empty($input['producto'][$key])){
+            $invdetoperacion = new invdetoperacion;
+            $invdetoperacion->operacion_id = $invoperacion->id;
+            $invdetoperacion->producto_id = $input['producto'][$key];
+            $invdetoperacion->cantidad = $input['cantidad'][$key];
+            $invdetoperacion->punitario = $input['importecon'][$key];
+            $invdetoperacion->importe = $input['montoconcepto'][$key];
+            $invdetoperacion->tipo_operacion = 'Salida';
+            $invdetoperacion->fecha = date('Y-m-d');
+            $invdetoperacion->bodega_id = $input['bodega_id'];
+            $invdetoperacion->save();
+          }
+        }
+        //$invoperacion = $this->invoperacionRepository->update($request->all(), $id);
+
+        Flash::success('Operación de Inventario actualizado correctamente.');
+        Alert::success('Operación de Inventario actualizado correctamente.');
+
+        return redirect(route('invoperacions.show', [$invoperacion->id]));
     }
 }

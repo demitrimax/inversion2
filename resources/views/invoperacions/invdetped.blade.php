@@ -4,7 +4,9 @@
 
           <div class="form-layout">
             <div class="row mg-b-25">
-              
+
+              {!! Form::hidden('usuario_id', Auth::user()->id)!!}
+              {!! Form::hidden('tipo_mov', 'Salida')!!}
 
             @if($invoperacion->proveedor_id)
               <div class="col-md-4">
@@ -34,6 +36,12 @@
                   {!! Form::label('numfactura', 'Número de Factura:') !!}
                   {!! Form::text('numfactura', $invoperacion->numfactura, ['class'=>'form-control', 'readonly']) !!}
               </div><!-- col-4 -->
+              @isset($bodegas)
+              <div class="col-md-4">
+                  {!! Form::label('bodega_id', 'Seleccione la Bodega:') !!}
+                  {!! Form::select('bodega_id', $bodegas, null, ['class'=>'form-control', 'placeholder'=>'Selecciona una bodega', 'required']) !!}
+              </div><!-- col-4 -->
+              @endisset
 
             </div><!-- row -->
 
