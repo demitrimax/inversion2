@@ -23,7 +23,7 @@
       <td>
         {!! Form::open(['route' => ['inventario.producto.surtido.total', $detoperacion->id], 'id'=>'form'.$detoperacion->id]) !!}
         @if($detoperacion->estatus == 'S')
-        {!! Form::button('<i class="fa fa-exchange"></i> Surtido Total', ['class'=>'btn btn-xs btn-info', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>'Surtido Total', 'onclick' => 'SurtidoTotal('.$detoperacion->id.')' ]) !!}
+        {!! Form::button('<i class="fas fa-exchange-alt"></i> Surtido Total', ['class'=>'btn btn-xs btn-info', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>'Surtido Total', 'onclick' => 'SurtidoTotal('.$detoperacion->id.')' ]) !!}
 
         {!! Form::button('<i class="fa fa-cubes"></i> Surtido Parcial', ['class'=>'btn btn-xs btn-warning', 'data-toggle'=>'tooltip', 'data-placement'=>'top', 'title'=>'Surtido Parcial', 'onclick' => "SurtidoParcial($detoperacion->id, $detoperacion->cantidad)"]) !!}
         @endif
