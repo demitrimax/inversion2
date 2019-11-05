@@ -9,11 +9,18 @@
                   <h3 class="card-title">Editar Empresas</h3>
               </div>
               <div class="card-body">
+                <div class="row">
+                <div class="col-md-6">
               {!! Form::model($empresas, ['route' => ['empresas.update', $empresas->id], 'method' => 'patch']) !!}
 
                    @include('empresas.fields')
 
               {!! Form::close() !!}
+                </div>
+                <div class="col-md-6">
+                  @include('empresas.categoriasOrden')
+                </div>
+              </div><!-- Row -->
               </div>
           </div>
       </div>

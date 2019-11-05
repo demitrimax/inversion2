@@ -25,6 +25,7 @@ use App\Models\coddivisas;
 use App\Models\clasifica;
 use App\Models\subclasifica;
 use App\Models\facturas;
+use App\Models\empresas;
 use Auth;
 
 class empresasController extends AppBaseController
@@ -240,11 +241,39 @@ class empresasController extends AppBaseController
     }
     public function regoper(Request $request)
     {
+
       $input = $request->all();
       //verificar que la operación incluya información de Inventario+
 
-      if($input['inventariable'] == "1"){
-        return redirect(route('operacion.empresa.inventario',[$input['empresa_id']]))->with('input',$input);
+
+        if(isset($input['inventariable']) && $input['inventariable'] == 1 ){
+            $input['monto'] = $input['monto_op'];
+            //$input = array_merge($request->all(), ['index' => 'value']);
+            //agregar una variable al request bag
+            $request->request->add(['monto' => $input['monto_op']]);
+            $empresas = empresas::pluck('nombre','id');
+            $empresaid = $input['empresa_id'];
+            $empresa = empresas::find($empresaid);
+
+            $cuentas = bcuentas::with('empresa')->whereHas('empresa', function($q) use ($empresaid) {
+              $q->where('id',$empresaid);
+            })->get();
+            //dd($cuentas);
+            $cuental = $cuentas->pluck('nomcuentasaldo', 'id');
+            $metpago = metpago::pluck('nombre','id');
+            $proveedores = proveedores::pluck('nombre','id');
+
+            $facturas = facturas::whereNull('operacion_id')->pluck('numfactura','id');
+            $categorias = clasifica::where('tip','E')->get();
+            foreach($categorias as $key=>$categoria){
+               foreach($categoria->subcategorias->sortBy('nombre') as $subcategoria){
+                $subcategoriasAgrupadas[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
+              }
+            }
+            $categorias = clasifica::where('tip','I')->get();
+
+          return view('operaciones.newoperacioninv')->with(compact('empresa','cuental','metpago','facturas','categorias','proveedores','subcategoriasAgrupadas','request'));
+
       }
       //dd($input['inventariable']);
       $operacion = new operaciones;

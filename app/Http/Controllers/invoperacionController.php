@@ -424,6 +424,12 @@ class invoperacionController extends AppBaseController
           Flash::error('No se tienen los datos de la plantilla');
           return back();
         }
+
+        if( empty($parametros) ){
+          Alert::error('Sin parametros de plantilla');
+          Flash::error('No se tienen los parametros de la plantilla');
+          return back();
+        }
         foreach($parametros as $key=>$parametro){
           if($parametro == null ){
             $mensaje = 'La Empresa '.$operacion->facturara->nombre.' le faltan datos de parametros: '.$key;

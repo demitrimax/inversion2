@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class minventario
@@ -11,13 +12,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @version October 21, 2019, 10:06 am CDT
  *
  * @property \App\Models\Operacione operacion
- * @property \Illuminate\Database\Eloquent\Collection 
- * @property \Illuminate\Database\Eloquent\Collection 
- * @property \Illuminate\Database\Eloquent\Collection 
- * @property \Illuminate\Database\Eloquent\Collection 
- * @property \Illuminate\Database\Eloquent\Collection 
- * @property \Illuminate\Database\Eloquent\Collection 
- * @property \Illuminate\Database\Eloquent\Collection 
+ * @property \Illuminate\Database\Eloquent\Collection
+ * @property \Illuminate\Database\Eloquent\Collection
+ * @property \Illuminate\Database\Eloquent\Collection
+ * @property \Illuminate\Database\Eloquent\Collection
+ * @property \Illuminate\Database\Eloquent\Collection
+ * @property \Illuminate\Database\Eloquent\Collection
+ * @property \Illuminate\Database\Eloquent\Collection
  * @property string concepto
  * @property string descripcion
  * @property string marca
@@ -30,14 +31,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class minventario extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     public $table = 'minventario';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
 
     protected $dates = ['deleted_at'];
+    protected static $logAttributes = ['*'];
 
 
     public $fillable = [
