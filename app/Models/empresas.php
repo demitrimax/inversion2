@@ -81,7 +81,7 @@ class empresas extends Model
 
     public function categorias()
     {
-      return $this->belongsToMany('App\Models\clasifica', 'orden_categorias', 'empresa_id', 'categoria_id' )->withPivot('orden');
+      return $this->belongsToMany('App\Models\clasifica', 'orden_categorias', 'empresa_id', 'categoria_id' )->withPivot('orden', 'alias');
     }
 
 

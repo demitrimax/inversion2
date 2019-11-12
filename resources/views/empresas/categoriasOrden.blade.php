@@ -25,13 +25,19 @@ var containers = null;
     new Sortable(containers[i], sortableOptions2);
   }
 
+var subcontainers = null;
+  subcontainers = document.querySelectorAll(".containerSubcategoria");
+  for(var i = 0; i < containers.lenght; i++) {
+    new Sortable(subcontainers[i], sortableOptions2);
+  }
+
   // generate list JSON
   $('#guardarOrden').click(function() {
     console.log('Guardando Orden....');
     let data = {};
 
-    var titles = $('.containerCategoria').map(function(idx, elem) {
-      return {'id' : $(elem).attr('data-id'), 'orden': idx, 'empresa_id': '{{$empresas->id}}' };
+    var titles = $('.categoriaOrden').map(function(idx, elem) {
+      return {'id' : $(elem).attr('orden'), 'orden': idx, 'empresa_id': '{{$empresas->id}}', 'alias' : $(elem).text().trim() };
     }).get();
 
     data['categorias'] = titles;
@@ -41,15 +47,40 @@ var containers = null;
     var products_json = JSON.stringify(data,null,'\t');
     //$('#printCode').html(products_json);
     //console.log(products_json);
+    console.log(titles);
+
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+@php
+      function is_local() {
+        if($_SERVER['HTTP_HOST'] == 'localhost' ||
+             substr($_SERVER['HTTP_HOST'],0,3) == '10.' ||
+             substr($_SERVER['HTTP_HOST'],0,7) == '192.168') {
+             return true;
+            }
+            return false;
+           }
+
+     if (is_local()) {
+      $elurl =  asset('index.php/empresa/'.$empresas->id.'/ordencategorias');
+     }
+     else {
+         $elurl =  asset('/empresa/'.$empresas->id.'/ordencategorias');
+     }
+@endphp
 
           $.ajax({
                   type: "POST",
                   dataType: "json",
-                  url: "{{asset('empresa/'.$empresas->id.'/ordencategorias')}}",
-                  data: titles,
+                  url: "{{$elurl}}",
+                  data: products_json,
                   contentType: "application/json; charset=utf-8",
                   success: function(data){
-                      alert('Items added');
+                      swal.fire('Mensaje', data.texto, data.type);
+                      //console.log(data);
                   },
                   error: function(e){
                       console.log(e.message);
@@ -72,15 +103,27 @@ var containers = null;
                       <div id="nestable01" class="dd" data-toggle="nestable" data-group="1" data-max-depth="5">
                         <!-- .dd-list -->
                         <ol class="dd-list">
-                          @foreach($empresas->categorias as $clasifica)
-                          <li class="dd-item containerCategoria" data-id="{{$clasifica->id}}">
-                            <div class="dd-handle">
-                              <span class="drag-indicator"></span>
-                              <div> {{$clasifica->nombre}} </div>
-                            </div>
-                          </li>
-                          @endforeach
+                          @if($empresas->categorias->count() > 0)
+                            @foreach($empresas->categorias->sortBy('pivot.orden') as $clasifica)
+                            <li class="dd-item containerCategoria" data-id="{{$clasifica->id}}">
+                              <div class="dd-handle">
+                                <span class="drag-indicator"></span>
+                                <div orden="{{$clasifica->id}}" class="categoriaOrden"> {{ $clasifica->alias ? $clasifica->pivot->alias : $clasifica->nombre}} </div>
+                              </div>
+                            </li>
+                            @endforeach
+                          @else
+                          <!-- Se agregan las categorias faltantes -->
+                          @foreach($categorias->whereNotIn('id', $empresas->categorias->pluck('id')) as $miclasifica)
 
+                            <li class="dd-item containerCategoria" data-id="{{$miclasifica->id}}">
+                              <div class="dd-handle">
+                                <span class="drag-indicator"></span>
+                                <div orden="{{$miclasifica->id}}" class="categoriaOrden"> {{$miclasifica->nombre}} </div>
+                              </div>
+                            </li>
+                          @endforeach
+                        @endif
 
                         </ol><!-- /.dd-list -->
                       </div><!-- /.nestable -->
@@ -101,7 +144,7 @@ var containers = null;
                       <div id="nestable02" class="dd" data-toggle="nestable" data-group="1" data-max-depth="5">
                         <!-- .dd-list -->
                         <ol class="dd-list">
-                          @foreach($categorias as $clasifica)
+                          @foreach($empresas->categorias->sortBy('pivot.orden') as $clasifica)
                           <li class="dd-item" data-id="{!!$clasifica->id!!}">
                             <div class="dd-handle">
                               <span class="drag-indicator"></span>
@@ -109,7 +152,7 @@ var containers = null;
                             </div>
                             <ol>
                               @foreach($subcategorias->where('clasifica_id',$clasifica->id) as $subclasifica)
-                              <li class="dd-item container" data-id="{!!$subclasifica->id!!}">
+                              <li class="dd-item containerSubcategoria" data-id="{!!$subclasifica->id!!}">
                                 <div class="dd-handle">
                                   <span class="drag-indicator"></span>
                                   <div> {{$subclasifica->nombre}} </div>

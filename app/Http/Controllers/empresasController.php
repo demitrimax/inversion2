@@ -449,9 +449,43 @@ class empresasController extends AppBaseController
     public function OrdenCategoriasJson(Request $request, $id)
     {
       $input = $request->all();
+      $empresa = empresas::find($id);
 
-      $valores = json_decode($input);
+      if(empty($empresa)){
+        $mensaje = ['texto'=>'No se encuentra la empresa', 'type'=>'error'];
+        return $mensaje;
+      }
+      $valores = $input;
 
-      return $valores;
+      $lascategorias = collect($valores['categorias'])->map(function ($categorias) {
+            return (object) $categorias;
+        });
+        $lasidcategorias = $empresa->categorias->pluck('id');
+        //attach agregar categorias nuevas a la empresa con el orden
+        foreach($lascategorias->whereNotIn('id', $lasidcategorias ) as $nuevacategoria){
+          $micategoria = clasifica::find($nuevacategoria->id);
+          $empresa->categorias()->attach($micategoria, ['orden'=>$nuevacategoria->orden, 'alias'=>$nuevacategoria->alias]);
+          //return $micategoria;
+        }
+        //actualizar el orden de todas las categorias que tiene asociada la empresa
+        foreach($empresa->categorias->whereIn( 'pivot.categoria_id',$lascategorias->pluck('id') ) as $existecategoria){
+          //$micategoria = clasifica::find($existecategoria);
+          //$empresa->categorias()->attach($micategoria, ['orden'=>$orden]);
+          foreach($lascategorias as $ordencat){
+            if($existecategoria->id == $ordencat->id){
+              $existecategoria->pivot->orden = $ordencat->orden;
+              if($existecategoria->nombre <> $ordencat->alias){
+                    $existecategoria->pivot->alias = $ordencat->alias;
+              }
+              $existecategoria->pivot->save();
+            }
+
+          }
+
+        }
+
+      $mensaje = ['texto' => 'Éxito en la asociación de orden.', 'type'=>'success'];
+
+      return $mensaje;
     }
 }
