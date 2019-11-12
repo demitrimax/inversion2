@@ -102,5 +102,6 @@
 
  @include('sweetalert::alert')`
  @yield('scripts')
+ @stack('scripts')
   </body>
 </html>

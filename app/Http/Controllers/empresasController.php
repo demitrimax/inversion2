@@ -163,7 +163,10 @@ class empresasController extends AppBaseController
     public function edit($id)
     {
         $empresas = $this->empresasRepository->findWithoutFail($id);
-
+        $categorias = clasifica::all();
+        $subcategorias = subclasifica::all();
+        $categoriasorden = $empresas->categorias->sortBy('pivot_orden');
+        //dd($categoriasorden);
         if (empty($empresas)) {
             Flash::error('Empresa no encontrada');
             Alert::error('Empresa no encontrada');
@@ -171,7 +174,7 @@ class empresasController extends AppBaseController
             return redirect(route('empresas.index'));
         }
 
-        return view('empresas.edit')->with('empresas', $empresas);
+        return view('empresas.edit')->with(compact('empresas', 'subcategorias', 'categorias'));
     }
 
     /**
@@ -441,5 +444,14 @@ class empresasController extends AppBaseController
       }
 
         return view('empresas.detoperaciones')->with(compact('empresas', 'operaciones', 'mesanio', 'subclasifica'));
+    }
+
+    public function OrdenCategoriasJson(Request $request, $id)
+    {
+      $input = $request->all();
+
+      $valores = json_decode($input);
+
+      return $valores;
     }
 }

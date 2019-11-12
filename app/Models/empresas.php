@@ -79,6 +79,11 @@ class empresas extends Model
       return $this->hasMany('App\Models\creditos', 'empresa_id');
     }
 
+    public function categorias()
+    {
+      return $this->belongsToMany('App\Models\clasifica', 'orden_categorias', 'empresa_id', 'categoria_id' )->withPivot('orden');
+    }
+
 
     public function getSaldoaldiaAttribute()
     {
