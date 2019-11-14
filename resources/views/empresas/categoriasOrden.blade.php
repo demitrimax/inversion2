@@ -16,20 +16,16 @@
   },
   animation: 250,
   forceFallback: true
-
 };
 
+
 var containers = null;
-  containers = document.querySelectorAll(".containerCategoria");
+  containers = document.querySelectorAll(".container");
   for (var i = 0; i < containers.length; i++) {
     new Sortable(containers[i], sortableOptions2);
   }
 
-var subcontainers = null;
-  subcontainers = document.querySelectorAll(".containerSubcategoria");
-  for(var i = 0; i < containers.lenght; i++) {
-    new Sortable(subcontainers[i], sortableOptions2);
-  }
+
 
   // generate list JSON
   $('#guardarOrden').click(function() {
@@ -88,6 +84,74 @@ var subcontainers = null;
           });
 
   });
+
+
+    $('.btnEditable').on('click', function(e){
+
+      var clasificaId = $(e.target).attr('clasificaid');
+      var objeto = $('#txClasifica'+clasificaId);
+        var esEditable = objeto.attr('contenteditable');
+      console.log( objeto.text() );
+
+      if(esEditable){
+        objeto.attr('contenteditable', false);
+        //$('#btnEditable').html('Hacerlo Editable');
+      }else{
+        objeto.attr('contenteditable', true);
+        objeto.focus();
+        //$('#btnEditable').html('dejar der editar');
+      }
+    });
+
+//crear elementos ordenables
+      @php
+        if (is_local()) {
+         $elurljson =  asset('index.php/empresa/'.$empresas->id.'/ordensubcategoriasjson');
+        }
+        else {
+            $elurljson =  asset('/empresa/'.$empresas->id.'/ordensubcategoriasjson');
+        }
+        @endphp
+        function getData() {
+            return $.getJSON('{{$elurljson}}');
+          }
+
+        function buildItem(item) {
+          var _this2 = this;
+
+          var html = "<li class=\"dd-item\" data-id=\"".concat(item.id, "\">\n      <div class=\"dd-handle\">\n        <span class=\"drag-indicator\"></span>\n        <div>").concat(item.text, "</div>\n        <div class=\"dd-nodrag btn-group ml-auto\">\n          <button class=\"btn btn-sm btn-secondary\">Edit</button>\n          <button class=\"btn btn-sm btn-secondary\"><i class=\"far fa-trash-alt\"></i></button>\n        </div>\n      </div>");
+
+          if (item.children) {
+            html += '<ol class="dd-list">';
+            $.each(item.children, function (index, sub) {
+              html += _this2.buildItem(sub);
+            });
+            html += '</ol>';
+          }
+
+          html += '</li>';
+          return html;
+        }
+
+        function Iniciar() {
+          var _this = this;
+          this.getData().done(function (data) {
+            var items = '';
+            console.log('orden cargado..');
+            console.log(data);
+            $.each(data, function (index, item) {
+              items += _this.buildItem(item);
+            });
+            $('#nestable03').children().html(items);
+          });
+        }
+
+        $('#cargarOrden').click(function() {
+          console.log('Cargando el Orden....');
+          Iniciar();
+        });
+
+
 </script>
 
 @endpush
@@ -105,10 +169,13 @@ var subcontainers = null;
                         <ol class="dd-list">
                           @if($empresas->categorias->count() > 0)
                             @foreach($empresas->categorias->sortBy('pivot.orden') as $clasifica)
-                            <li class="dd-item containerCategoria" data-id="{{$clasifica->id}}">
+                            <li class="dd-item container" data-id="{{$clasifica->id}}">
                               <div class="dd-handle">
                                 <span class="drag-indicator"></span>
-                                <div orden="{{$clasifica->id}}" class="categoriaOrden"> {{ $clasifica->alias ? $clasifica->pivot->alias : $clasifica->nombre}} </div>
+                                <div orden="{{$clasifica->id}}" class="categoriaOrden" id="txClasifica{{$clasifica->id}}"> {{ $clasifica->pivot->alias ? $clasifica->pivot->alias : $clasifica->nombre}} </div>
+                                  <div class="btn-group ml-auto">
+                                      <button class="btn btn-sm btn-secondary btnEditable" clasificaid = "{{$clasifica->id}}">Editar</button> <button class="btn btn-sm btn-secondary"><i class="far fa-trash-alt"></i></button>
+                                    </div>
                               </div>
                             </li>
                             @endforeach
@@ -116,10 +183,13 @@ var subcontainers = null;
                           <!-- Se agregan las categorias faltantes -->
                           @foreach($categorias->whereNotIn('id', $empresas->categorias->pluck('id')) as $miclasifica)
 
-                            <li class="dd-item containerCategoria" data-id="{{$miclasifica->id}}">
+                            <li class="dd-item container" data-id="{{$miclasifica->id}}">
                               <div class="dd-handle">
                                 <span class="drag-indicator"></span>
-                                <div orden="{{$miclasifica->id}}" class="categoriaOrden"> {{$miclasifica->nombre}} </div>
+                                <div orden="{{$miclasifica->id}}" class="categoriaOrden" id="txClasifica{{$clasifica->id}}"> {{$miclasifica->nombre}} </div>
+                                <div class="btn-group ml-auto">
+                                    <button class="btn btn-sm btn-secondary btnEditable" clasificaid = "{{$clasifica->id}}">Editar</button> <button class="btn btn-sm btn-secondary"><i class="far fa-trash-alt"></i></button>
+                                  </div>
                               </div>
                             </li>
                           @endforeach
@@ -140,34 +210,16 @@ var subcontainers = null;
                   <div class="col-lg-6">
                     <!-- .card -->
                     <div class="card card-fluid">
-                      <div class="card-header border-bottom-0"> Orden Subcategorias </div><!-- .nestable -->
-                      <div id="nestable02" class="dd" data-toggle="nestable" data-group="1" data-max-depth="5">
-                        <!-- .dd-list -->
-                        <ol class="dd-list">
-                          @foreach($empresas->categorias->sortBy('pivot.orden') as $clasifica)
-                          <li class="dd-item" data-id="{!!$clasifica->id!!}">
-                            <div class="dd-handle">
-                              <span class="drag-indicator"></span>
-                              <div> {{$clasifica->nombre}} </div>
-                            </div>
-                            <ol>
-                              @foreach($subcategorias->where('clasifica_id',$clasifica->id) as $subclasifica)
-                              <li class="dd-item containerSubcategoria" data-id="{!!$subclasifica->id!!}">
-                                <div class="dd-handle">
-                                  <span class="drag-indicator"></span>
-                                  <div> {{$subclasifica->nombre}} </div>
-                                </div>
-                              </li>
-                              @endforeach
-                            </ol>
-                          </li>
-                          @endforeach
-
-                        </ol><!-- /.dd-list -->
-                      </div><!-- /.nestable -->
-                      <!-- .card-footer -->
-
+                    <div class="card-header border-bottom-0"> JSON Generation </div><!-- .nestable -->
+                    <div id="nestable03" class="dd">
+                    <ol class="dd-list"></ol>
+                    </div><!-- /.nestable -->
+                    <!-- .card-footer -->
+                    <div class="card-footer">
+                    <a id="cargarOrden" href="#" class="card-footer-item justify-content-start"><span><i class="fa fa-plus-circle mr-1"></i> Cargar el Orden de Categorias</span></a>
+                    </div><!-- /.card-footer -->
                     </div><!-- /.card -->
+
                   </div><!-- /grid column -->
                 </div>
 

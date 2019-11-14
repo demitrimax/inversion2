@@ -46,6 +46,7 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::post('empresa/proyecto/inversion', 'empresasController@inverproy')->name('inversion.proyecto');
   Route::get('empresa/{id}/mes/{mesanio}/subcategoria/{subcategoriaid}', 'empresasController@detalleoperaciones')->name('detalle.categoria');
   route::post('empresa/{id}/ordencategorias', 'empresasController@OrdenCategoriasJson');
+  route::get('empresa/{empresaid}/ordensubcategoriasjson', 'empresasController@OrdenSubcategoriasJson');
 
   Route::post('operaciones/guardar', 'empresasController@regoper')->name('operacion.store');
   Route::post('operaciones/{id}/eliminar','empresasController@elimoper')->name('operacion.destroy');

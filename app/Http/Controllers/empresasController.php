@@ -474,9 +474,9 @@ class empresasController extends AppBaseController
           foreach($lascategorias as $ordencat){
             if($existecategoria->id == $ordencat->id){
               $existecategoria->pivot->orden = $ordencat->orden;
-              if($existecategoria->nombre <> $ordencat->alias){
+              //if($existecategoria->nombre <> $ordencat->alias){
                     $existecategoria->pivot->alias = $ordencat->alias;
-              }
+              //}
               $existecategoria->pivot->save();
             }
 
@@ -487,5 +487,33 @@ class empresasController extends AppBaseController
       $mensaje = ['texto' => 'Éxito en la asociación de orden.', 'type'=>'success'];
 
       return $mensaje;
+    }
+
+    public function OrdenSubcategoriasJson($empresaid){
+      $empresa = empresas::find($empresaid);
+      $subcategorias = subclasifica::all();
+      if (empty($empresa)){
+        return ['mensaje' => 'No se encuentra la empresa', 'type'=>'error'];
+      }
+      $categorias = $empresa->categorias;
+      if(empty($categorias)){
+        return ['mensaje' => 'Empresa sin categorias asociasas', 'type'=>'error'];
+      }
+      $response = [];
+
+
+      foreach($categorias->sortBy('pivot.orden') as $categoria){
+        $childrens = [];
+        /*
+        if($subcategorias->where('clasifica_id', $categoria->id)->count() > 0) {
+          foreach($subcategorias->where()) {
+            $children[] = ['id'=>]
+          }
+        }*/
+        
+        $response[] = ['id'=>$categoria->id, 'text'=> $categoria->pivot->alias ? $categoria->pivot->alias : $categoria->nombre,
+              ];
+      }
+      return $response;
     }
 }
