@@ -20,12 +20,12 @@
         {!! Form::open(['route' => ['minventarios.destroy', $inventario->id], 'method' => 'delete', 'id'=>'form'.$inventario->id]) !!}
         <div class='btn-group'>
             <a href="{!! route('minventarios.show', [$inventario->id]) !!}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></a>
-            
+
             @can('minventarios-delete')
             {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($inventario->id)"]) !!}
             @endcan
           </div>
-
+          {!! Form::close() !!}
       </td>
     </tr>
     @endforeach
