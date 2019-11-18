@@ -116,6 +116,7 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
 
   Route::resource('minventarios', 'minventarioController');
   Route::get('minventario/resguardo/{id}', 'minventarioController@viewPDF');
+  Route::post('minventario/{id}/agregar', 'minventarioController@agregarproducto');
 
   Route::get('mailable', function () {
     $tarea = App\Models\tareas::find(18);

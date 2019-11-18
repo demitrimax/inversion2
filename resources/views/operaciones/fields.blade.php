@@ -130,7 +130,7 @@ if(isset($operaciones->comisionable))
     <!-- Concepto Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('monto_comision', 'Monto de la Comisión:') !!}
-        {!! Form::number('monto_comision', null, ['class' => 'form-control maxlen', 'maxlength'=>'50', 'id'=>'monto_comision']) !!}
+        {!! Form::number('monto_comision', null, ['class' => 'form-control maxlen', 'maxlength'=>'50', 'id'=>'monto_comision', 'step'=>'0.01']) !!}
     </div>
         <div class="alert alert-danger" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">

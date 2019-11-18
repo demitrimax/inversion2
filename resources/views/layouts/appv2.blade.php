@@ -19,7 +19,8 @@
 <link href="{{asset('starlight/lib/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
 <link href="{{asset('starlight/lib/Ionicons/css/ionicons.min.css')}}" rel="stylesheet">
 <link href="{{asset('starlight/lib/perfect-scrollbar/css/perfect-scrollbar.css')}}" rel="stylesheet">
-<link href="{{asset('starlight/lib/rickshaw/rickshaw.min.css')}}" rel="stylesheet">
+<!--
+<link href="{{asset('starlight/lib/rickshaw/rickshaw.min.css')}}" rel="stylesheet"> -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css" rel="stylesheet">
 
 <!-- Starlight CSS -->
@@ -88,17 +89,16 @@
  <script src="{{asset('starlight/lib/bootstrap/bootstrap.js')}}"></script>
  <script src="{{asset('starlight/lib/jquery-ui/jquery-ui.js')}}"></script>
  <script src="{{asset('starlight/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js')}}"></script>
- <script src="{{asset('starlight/lib/jquery.sparkline.bower/jquery.sparkline.min.js')}}"></script>
- <script src="{{asset('starlight/lib/d3/d3.js')}}"></script>
- <script src="{{asset('starlight/lib/rickshaw/rickshaw.min.js')}}"></script>
- <script src="{{asset('starlight/lib/chart.js/Chart.js')}}"></script>
- <script src="{{asset('starlight/lib/Flot/jquery.flot.js')}}"></script>
- <script src="{{asset('starlight/lib/Flot/jquery.flot.pie.js')}}"></script>
- <script src="{{asset('starlight/lib/Flot/jquery.flot.resize.js')}}"></script>
- <script src="{{asset('starlight/lib/flot-spline/jquery.flot.spline.js')}}"></script>
+
+
 
  <script src="{{asset('starlight/js/starlight.js')}}"></script>
  <script src="{{asset('starlight/js/ResizeSensor.js')}}"></script>
+
+
+<script src="{{asset('starlight/lib/highlightjs/highlight.pack.js')}}"></script>
+
+
 
  @include('sweetalert::alert')`
  @yield('scripts')

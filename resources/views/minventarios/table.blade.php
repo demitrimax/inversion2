@@ -1,5 +1,5 @@
-<table class="table table-responsive" id="minventarios-table">
-    <thead>
+<table class="table table-responsive table-striped" id="minventarios-table">
+    <thead class="bg-primary">
         <tr>
           <th>Concepto</th>
           <th>Descripcion</th>
@@ -17,7 +17,7 @@
             <td>{!! $minventario->descripcion !!}</td>
             <td>{!! $minventario->marca !!}</td>
             <td>{!! $minventario->codigo !!}</td>
-            <td>{!! $minventario->montocompra !!}</td>
+            <td>{!! number_format($minventario->montocompra,2) !!}</td>
             <td>{!! $minventario->resguardoa !!}</td>
             <td>
                 {!! Form::open(['route' => ['minventarios.destroy', $minventario->id], 'method' => 'delete', 'id'=>'form'.$minventario->id]) !!}

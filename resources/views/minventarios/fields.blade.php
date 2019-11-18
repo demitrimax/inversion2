@@ -57,10 +57,12 @@
     {!! Form::label('fileresguardo', 'Comprobante Resguardo:') !!}
     {!! Form::file('fileresguardo', ['class' => 'form-control', 'accept'=>'application/pdf']) !!}
 </div>
-@if($minventario->fileresguardo)
-<div class="col-sm-12">
-  <embed src="{{url('minventario/resguardo/'.$minventario->id)}}" width="600" height="500" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
-</div>
+@isset($minventario)
+  @if($minventario->fileresguardo)
+  <div class="col-sm-12">
+    <embed src="{{url('minventario/resguardo/'.$minventario->id)}}" width="600" height="500" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+  </div>
+  @endisset
 @endif
 
 </div>

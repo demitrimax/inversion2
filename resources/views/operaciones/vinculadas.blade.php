@@ -12,6 +12,7 @@
   </thead>
   <tbody>
     @foreach($operaciones->comisionadas as $key=>$comisionada)
+    @if($comisionada->comisionada)
     <tr>
       <td>{{$key+1}}</td>
       <td>{{$comisionada->comisionada->tipo == 'Salida' ? 'Cargo' : 'Abono' }}</td>
@@ -20,6 +21,7 @@
       <td>{{ number_format($comisionada->comisionada->monto,2)}}</td>
       <td>{{ $comisionada->comisionada->fecha->format('d-m-Y') }}</td>
     </tr>
+    @endif
     @endforeach
   </tbody>
 </table>

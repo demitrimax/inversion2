@@ -12,6 +12,8 @@ use Alert;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use Illuminate\Support\Facades\Storage;
+use App\Models\operaciones;
+use App\Models\minventario;
 
 class minventarioController extends AppBaseController
 {
@@ -65,8 +67,8 @@ class minventarioController extends AppBaseController
 
         $minventario = $this->minventarioRepository->create($input);
 
-        Flash::success('Mi Inventario guardado correctamente.');
-        Alert::success('Mi Inventario guardado correctamente.');
+        Flash::success('Articulo/Producto guardado correctamente.');
+        Alert::success('Articulo/Producto guardado correctamente.');
 
         return redirect(route('minventarios.index'));
     }
@@ -83,8 +85,8 @@ class minventarioController extends AppBaseController
         $minventario = $this->minventarioRepository->findWithoutFail($id);
 
         if (empty($minventario)) {
-            Flash::error('Mi Inventario no encontrado');
-            Alert::error('Mi Inventario no encontrado.');
+            Flash::error('Articulo/Producto no encontrado');
+            Alert::error('Articulo/Producto no encontrado.');
 
             return redirect(route('minventarios.index'));
         }
@@ -104,8 +106,8 @@ class minventarioController extends AppBaseController
         $minventario = $this->minventarioRepository->findWithoutFail($id);
 
         if (empty($minventario)) {
-            Flash::error('Mi Inventario no encontrado');
-            Alert::error('Mi Inventario no encontrado');
+            Flash::error('Articulo/Producto no encontrado');
+            Alert::error('Articulo/Producto no encontrado');
 
             return redirect(route('minventarios.index'));
         }
@@ -127,8 +129,8 @@ class minventarioController extends AppBaseController
         $input = $request->all();
 
         if (empty($minventario)) {
-            Flash::error('Mi Inventario no encontrado');
-            Alert::error('Mi Inventario no encontrado');
+            Flash::error('Articulo/Producto no encontrado');
+            Alert::error('Articulo/Producto no encontrado');
 
             return redirect(route('minventarios.index'));
         }
@@ -143,8 +145,8 @@ class minventarioController extends AppBaseController
           $minventario->save();
         }
 
-        Flash::success('Mi Inventario actualizado correctamente.');
-        Alert::success('Mi Inventario actualizado correctamente.');
+        Flash::success('Articulo/Producto actualizado correctamente.');
+        Alert::success('Articulo/Producto actualizado correctamente.');
 
         return redirect(route('minventarios.index'));
     }
@@ -169,8 +171,8 @@ class minventarioController extends AppBaseController
 
         $this->minventarioRepository->delete($id);
 
-        Flash::success('Mi Inventario borrado correctamente.');
-        Flash::success('Mi Inventario borrado correctamente.');
+        Flash::success('Articulo/Producto borrado correctamente.');
+        Alert::success('Articulo/Producto borrado correctamente.');
 
         return redirect(route('minventarios.index'));
     }
@@ -201,5 +203,34 @@ class minventarioController extends AppBaseController
         return Storage::download($resguardo->fileresguardo);
       }
 
+    }
+
+    public function agregarproducto($id, Request $request)
+    {
+      $operacion = operaciones::find($id);
+      if(empty($operacion)) {
+        $mensaje = 'No se encontró la operación.';
+        Alert::error($mensaje);
+        Flash::error($mensaje);
+        return back();
+      }
+
+      $input = $request->all();
+
+      $opInventario = new minventario;
+      $opInventario->concepto = $input['concepto_2'];
+      $opInventario->marca = $input['marca_2'];
+      $opInventario->modelo = $input['modelo_2'];
+      $opInventario->codigo = $input['codigo_2'];
+      $opInventario->montocompra = $input['monto_2'];
+      $opInventario->operacion_id = $operacion->id;
+      $opInventario->save();
+
+      $mensaje = 'Articulo/Producto agregado correctamente';
+      Alert::success($mensaje);
+      Flash::success($mensaje);
+
+
+      return back();
     }
 }

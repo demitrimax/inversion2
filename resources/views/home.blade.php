@@ -203,6 +203,15 @@
 
 @section('scripts')
 
+<script src="{{asset('starlight/lib/d3/d3.js')}}"></script>
+<script src="{{asset('starlight/lib/rickshaw/rickshaw.min.js')}}"></script>
+<script src="{{asset('starlight/lib/chart.js/Chart.js')}}"></script>
+<script src="{{asset('starlight/lib/Flot/jquery.flot.js')}}"></script>
+<script src="{{asset('starlight/lib/Flot/jquery.flot.pie.js')}}"></script>
+<script src="{{asset('starlight/lib/Flot/jquery.flot.resize.js')}}"></script>
+<script src="{{asset('starlight/lib/flot-spline/jquery.flot.spline.js')}}"></script>
+ <script src="{{asset('starlight/lib/jquery.sparkline.bower/jquery.sparkline.min.js')}}"></script>
+
 <script src="{{asset('starlight/js/dashboard.js')}}"></script>
 
 <script>

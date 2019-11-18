@@ -1,6 +1,7 @@
-<table class="table table-responsive table-primary" id="operaciones-table">
+<table class="table table-responsive table-primary table-striped" id="operaciones-table">
     <thead>
         <tr>
+          <th>Icono</th>
           <th>Monto</th>
           <th>Empresa</th>
           <th>Categoría</th>
@@ -13,9 +14,11 @@
     <tbody>
     @foreach($operaciones as $operacion)
         <tr>
-            <td> {!! $operacion->tipo == 'Entrada' ? '<span class="badge badge-success"><i class="fa fa-arrow-circle-down"></i></span>' : '<span class="badge badge-warning"><i class="fa fa-arrow-circle-up"></i></span>'  !!}
+          <td>{!! $operacion->tipo == 'Entrada' ? '<span class="badge badge-success"  title="Abono"><i class="fa fa-arrow-circle-down"></i></span>' : '<span class="badge badge-warning"  title="Cargo"><i class="fa fa-arrow-circle-up"></i></span>'  !!}
+            {!! $operacion->inventarios->count() > 0 ?  '<span class="badge badge-primary" title="Operación Inventario"><i class="fa fa-crosshairs"></i></span>' : ''  !!}
+          </td>
+            <td>
               {!! $operacion->comisionable == 1 ? number_format($operacion->monto_comision,2) : number_format($operacion->monto,2) !!}
-              {!! $operacion->comisionable == 1 ? '<span class="badge badge-info"><i class="far fa-plus-square"></i></span>' : '' !!}
             </td>
             <td>{!! $operacion->empresa->nombre !!}</td>
             <td>{!! $operacion->subclasifica->nombre !!}</td>
@@ -59,5 +62,6 @@ function ConfirmDelete(id) {
   }
 })
 }
+
 </script>
 @endsection
