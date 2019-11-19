@@ -51,7 +51,7 @@
 
                 <div class="form-group col-sm-6">
                     {!! Form::label('tipo', 'Tipo:') !!}
-                    {!! Form::select('tipo', ['Salida'=>'CARGO','Entrada'=>'ABONO'], null, ['class' => 'form-control', 'required', 'placeholder'=>'Seleccione']) !!}
+                    {!! Form::select('tipo', ['Salida'=>'CARGO','Entrada'=>'ABONO', 'Efectivo'=>'Disp. Efectivo'], null, ['class' => 'form-control', 'required', 'placeholder'=>'Seleccione', 'id'=>'tipocontrol']) !!}
                 </div>
 
                 <div class="form-group col-sm-6">
@@ -60,9 +60,9 @@
                 </div>
 
 
-                <div class="form-group col-sm-6">
+                <div class="form-group col-sm-6" id="proveedor">
                     {!! Form::label('proveedor_id', 'Proveedor:') !!}
-                    {!! Form::select('proveedor_id', $proveedores, null, ['class' => 'form-control', 'required']) !!}
+                    {!! Form::select('proveedor_id', $proveedores, null, ['class' => 'form-control', 'required', 'id'=>'proveedor_id']) !!}
                 </div>
 
                 @php
@@ -76,17 +76,17 @@
 
                 <div class="form-group col-sm-6">
                     {!! Form::label('metpago', 'Método de Pago:') !!}
-                    {!! Form::select('metpago', $metpago, null, ['class' => 'form-control', 'required']) !!}
+                    {!! Form::select('metpago', $metpago, null, ['class' => 'form-control', 'required', 'id'=>'metpago']) !!}
                 </div>
 
-                <div class="form-group col-sm-6">
+                <div class="form-group col-sm-6" id="subclasifica">
                     {!! Form::label('subclasifica_id', 'Categoría:') !!}
                     {!! Form::select('subclasifica_id', $subcategoriasAgrupadas, null, ['class' => 'form-control select2', 'required', 'placeholder'=>'Seleccione', 'style'=>'width: 100%;']) !!}
 
                 </div>
                 <div class="form-group col-sm-12">
                     {!! Form::label('concepto', 'Concepto:') !!}
-                    {!! Form::text('concepto', null, ['class' => 'form-control maxlen', 'required', 'maxlength'=>'50']) !!}
+                    {!! Form::text('concepto', null, ['class' => 'form-control maxlen', 'required', 'maxlength'=>'50', 'id'=>'subclasifica_id']) !!}
                 </div>
               </div>
 
@@ -116,6 +116,31 @@
 
           // When just use method .selectDate(), to select desirable date.
           dp.selectDate(new Date()) // Will select current date;
+
+          $('#tipocontrol').change(function() {
+              console.log($(this).val());
+              if ($(this).val() == 'Efectivo') {
+                  //aqui deberia la opción de ocultar los elementos que no se usan
+                $('#proveedor').hide('slow');
+                $('#proveedor_id').removeProp('required');
+                $('#proveedor_id').removeAttr('required');
+
+                $('#subclasifica').hide('slow');
+                $('#subclasifica_id').removeProp('required');
+                $('#subclasifica_id').removeAttr('required');
+
+                $("#metpago option").filter(function() {
+    				              return $(this).text() =='EFECTIVO';
+						            }).prop("selected", true);
+              }
+              else {
+                $('#proveedor').show('slow');
+                $('#proveedor_id').prop('required', true);
+
+                $('#subclasifica').show('slow');
+                $('#subclasifica_id').prop('required', true);
+              }
+          });
           </script>
           @endsection
 
