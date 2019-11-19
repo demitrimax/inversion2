@@ -186,9 +186,9 @@ var containers = null;
                             <li class="dd-item container" data-id="{{$miclasifica->id}}">
                               <div class="dd-handle">
                                 <span class="drag-indicator"></span>
-                                <div orden="{{$miclasifica->id}}" class="categoriaOrden" id="txClasifica{{$clasifica->id}}"> {{$miclasifica->nombre}} </div>
+                                <div orden="{{$miclasifica->id}}" class="categoriaOrden" id="txClasifica{{$miclasifica->id}}"> {{$miclasifica->nombre}} </div>
                                 <div class="btn-group ml-auto">
-                                    <button class="btn btn-sm btn-secondary btnEditable" clasificaid = "{{$clasifica->id}}">Editar</button> <button class="btn btn-sm btn-secondary"><i class="far fa-trash-alt"></i></button>
+                                    <button class="btn btn-sm btn-secondary btnEditable" clasificaid = "{{$miclasifica->id}}">Editar</button> <button class="btn btn-sm btn-secondary"><i class="far fa-trash-alt"></i></button>
                                   </div>
                               </div>
                             </li>
