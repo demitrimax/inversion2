@@ -503,16 +503,16 @@ class empresasController extends AppBaseController
 
 
       foreach($categorias->sortBy('pivot.orden') as $categoria){
-        $childrens = [];
-        /*
+        $children = [];
+
         if($subcategorias->where('clasifica_id', $categoria->id)->count() > 0) {
-          foreach($subcategorias->where()) {
-            $children[] = ['id'=>]
+          foreach( $subcategorias->where('clasifica_id', $categoria->id) as $misub ) {
+            $children[] = ['id'=>$misub->id, 'text'=>$misub->nombre ];
           }
-        }*/
-        
+        }
+
         $response[] = ['id'=>$categoria->id, 'text'=> $categoria->pivot->alias ? $categoria->pivot->alias : $categoria->nombre,
-              ];
+              'children'=>$children];
       }
       return $response;
     }

@@ -119,7 +119,7 @@ var containers = null;
         function buildItem(item) {
           var _this2 = this;
 
-          var html = "<li class=\"dd-item\" data-id=\"".concat(item.id, "\">\n      <div class=\"dd-handle\">\n        <span class=\"drag-indicator\"></span>\n        <div>").concat(item.text, "</div>\n        <div class=\"dd-nodrag btn-group ml-auto\">\n          <button class=\"btn btn-sm btn-secondary\">Edit</button>\n          <button class=\"btn btn-sm btn-secondary\"><i class=\"far fa-trash-alt\"></i></button>\n        </div>\n      </div>");
+          var html = "<li class=\"dd-item container\" data-id=\"".concat(item.id, "\">\n      <div class=\"dd-handle\">\n        <span class=\"drag-indicator\"></span>\n        <div>").concat(item.text, "</div>\n        <div class=\"dd-nodrag btn-group ml-auto\">\n          <button class=\"btn btn-sm btn-secondary\">Editar</button>\n         <!-- <button class=\"btn btn-sm btn-secondary\"><i class=\"far fa-trash-alt\"></i></button> -->\n        </div>\n      </div>");
 
           if (item.children) {
             html += '<ol class="dd-list">';
@@ -149,6 +149,13 @@ var containers = null;
         $('#cargarOrden').click(function() {
           console.log('Cargando el Orden....');
           Iniciar();
+
+          var containers = null;
+            containers = document.querySelectorAll(".container");
+            for (var i = 0; i < containers.length; i++) {
+              new Sortable(containers[i], sortableOptions2);
+            }
+
         });
 
 

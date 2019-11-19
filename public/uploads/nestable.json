@@ -25,3 +25,40 @@
         }
       ]
     }]
+
+
+
+    [
+      {
+        "id":7,
+        "text":"EFECTIVO",
+        "childen":
+          [
+            {"id":61,
+              "text":"CASA PUERTA REAL"
+              },
+              {"id":62,"text":"CUOTA DE VIGILANCIA PUERTA REAL"},
+              {"id":63,"text":"OFICINA NI\u00d1O ARTILLERO"},
+              {"id":64,"text":"SERVICIO DE LIMPIEZA"},
+              {"id":65,"text":"VEHICULO ING GUILLERMO"},
+              {"id":66,"text":"VEHICULO LIC. TOSCA"},
+              {"id":67,"text":"AXTEL CD. MEXICO"},
+              {"id":68,"text":"BX+ INPRO CAMBIO OBLIGADO SOLIDARIO"},
+              {"id":69,"text":"COMISION NOE OSORIO"},
+              {"id":70,"text":"RENTA DE VEHICULOS \/ MIGUEL PULIDO"},
+              {"id":71,"text":"COMISION 6% (TOTAL EFECTIVO)"}
+              ]},
+          {
+            "id":3,
+            "text":"OPERACION",
+            "childen":
+              [
+                {"id":14,"text":"GASTOS DE OPERACION"},
+                {"id":15,"text":"SEGURIDAD FISICA"},
+                {"id":16,"text":"SERVICIO DE INTERNET RM"}
+              ]
+            },
+            {
+              "id":4,
+              "text":"OFICINA CENTRAL",
+              "childen":[{"id":2,"text":"ASESORIA JUR\u00cdDICA LABORAL"},{"id":3,"text":"SALARIO FISCAL ADMINISTRACION"},{"id":4,"text":"SALARIO EFECTIVO ADMINISTRACION"},{"id":5,"text":"CAPACITACION"},{"id":17,"text":"LIC. PALAVICINE"},{"id":18,"text":"DESPACHO CABAL"},{"id":19,"text":"CONVENIO DEMANDAS INPRO"},{"id":20,"text":"PSICOTERAPIA"},{"id":21,"text":"Ing. Eliseo Gonz\u00e1lez"},{"id":22,"text":"ING. ELISEO GONZ\u00c1LEZ"},{"id":23,"text":"SEGURO RC\/P\u00d3LIZA 0104707000777000002"},{"id":24,"text":"CERTIFICACI\u00d3N"},{"id":25,"text":"COMBUSTIBLE"},{"id":26,"text":"MANTTO. VEHICULAR"},{"id":27,"text":"SEGUROS VEHICULARES"},{"id":28,"text":"ACOND. OFICINA"},{"id":29,"text":"PAPELER\u00cdA Y CONSUMIBLES"},{"id":30,"text":"PAGINA WEB"},{"id":31,"text":"TELEFON\u00cdA E INTERNET (TELMEX)"},{"id":32,"text":"LUZ (CFE)"},{"id":35,"text":"COMISIONES BANCARIAS"},{"id":36,"text":"ARTICULOS DE LIMPIEZA"},{"id":37,"text":"OFICINA MEXICO VALIKER"},{"id":38,"text":"DEVOLUCI\u00d3N DE PRESTAMOS"},{"id":39,"text":"VIATICOS"}]},{"id":6,"text":"IMPUESTOS","childen":[{"id":51,"text":"IMSS"},{"id":52,"text":"RCV"},{"id":53,"text":"INFONAVIT VIVIENDA"},{"id":54,"text":"ISN (2.5% ESTATAL)"},{"id":55,"text":"DEC. COMPLEMENTARIA ANUAL"},{"id":56,"text":"RETENCIONES ISR \/ SALARIOS"},{"id":57,"text":"RETENCIONES ISR \/ ASIMILADOS"},{"id":58,"text":"RETENCIONES IVA \/ PROVEEDORES"},{"id":59,"text":"ISR PERSONAS MORALES"},{"id":60,"text":"IVA"}]},{"id":10,"text":"SALDO INICIAL 2","childen":[{"id":84,"text":"FISCAL"},{"id":85,"text":"X FUERA"}]},{"id":9,"text":"INGRESO MENSUAL","childen":[{"id":10,"text":"INGRESO MENSUAL FACTURADO"},{"id":11,"text":"OTROS INGRESOS"}]},{"id":1,"text":"PERSONAL Y GASTOS","childen":[]},{"id":5,"text":"CREDITOS","childen":[{"id":40,"text":"TSC 5474 8470 0028 5734"},{"id":41,"text":"BX+ FACTORAJE"},{"id":42,"text":"TC AMERICAN EXPRESS"},{"id":43,"text":"TC SCOTIABANK ATW"},{"id":44,"text":"BX+ PULGAR CO"},{"id":45,"text":"MAGDU SANTANDER"},{"id":46,"text":"MAGDU BANORTE"},{"id":47,"text":"REALE KIMIA"},{"id":48,"text":"REALE ADVISORY"},{"id":49,"text":"RAUL PALOMERA (INTERESES)"},{"id":50,"text":"RAUL PALOMERA (CAPITAL)"}]},{"id":2,"text":"SUPERVISION de carros","childen":[{"id":1,"text":"SALARIO FISCAL"},{"id":6,"text":"SALARIO EFECTIVO"},{"id":7,"text":"COMISION 6% SALARIO EFECTIVO"},{"id":8,"text":"AGUINALDOS"},{"id":9,"text":"FINIQUITOS"},{"id":12,"text":"SERVICIO DE LIMPIEZA Y RETIRO DE BASURA"},{"id":13,"text":"ARRENDAMIENTO"}]},{"id":8,"text":"OTROS GASTOS\/EFECTIVO","childen":[{"id":72,"text":"SALARIOS BOMBAS DE LODO"},{"id":73,"text":"TERRENO BOMBAS DE LODO"},{"id":74,"text":"COMISION 6% (Otros Gtos Efectivo)"},{"id":75,"text":"UNION TORI PRODUCE"},{"id":76,"text":"VICTOR CASTRO"},{"id":77,"text":"ATC"},{"id":78,"text":"ATW"},{"id":79,"text":"ENRIQUE"},{"id":80,"text":"SUPER"},{"id":81,"text":"MIGUEL"},{"id":82,"text":"COMISIONES MOVIMIENTOS"},{"id":83,"text":"TRABAJOS SUBCONTRATADOS"}]}]
