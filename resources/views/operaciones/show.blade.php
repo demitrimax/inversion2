@@ -21,6 +21,12 @@
                     @if($operaciones->comisionable == 1)
                       <div class="col-md-6">
                         @include('operaciones.vinculadas')
+
+                        @if($operaciones->traspasos->count() > 0)
+
+                          @include('operaciones.traspasos')
+                        
+                        @endif
                       </div>
                     @endif
                     @if($operaciones->inventarios->count() > 0)
@@ -29,11 +35,7 @@
                         </div>
                     @endif
 
-                    @if($operaciones->traspasos->count() > 0)
-                    <div class="col-md-6">
-                      @include('operaciones.traspasos')
-                    </div>
-                    @endif
+
 
                     <div class="col-md-12">
                       @can('operaciones-edit')
