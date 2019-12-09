@@ -113,6 +113,14 @@ class bcuentas extends Model
     {
       return $this->hasMany('App\Models\creditos', 'cuenta_id');
     }
+    public function traspasosabonos()
+    {
+      return $this->hasMany('App\Models\optraspasos', 'destino_cta');
+    }
+    public function traspasoscargos()
+    {
+      return $this->hasMany('App\Models\optraspasos', 'origen_cta');
+    }
     public function getSaldocuentaAttribute()
     {
       //saldo de creditos
@@ -125,6 +133,11 @@ class bcuentas extends Model
 
       $opcargos = $this->operaciones->where('tipo', 'Salida')->sum('monto');
       $opabonos = $this->operaciones->where('tipo', 'Entrada')->sum('monto');
+
+      //traspasos
+      $opabonos += $this->traspasosabonos->sum('monto');
+      $opcargos += $this->traspasoscargos->sum('monto');
+
       $saloperaciones = $opabonos - $opcargos;
 
       return $creditos - $inversion - (($cargos-$abonos) - $saloperaciones);

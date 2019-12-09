@@ -20,7 +20,7 @@
         @isset($closebutton)
         <button type="submit" class="btn btn-info pd-x-20">{{$closebutton}}</button>
         @endisset
-        <button type="button" class="btn btn-secondary pd-x-20" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary pd-x-20" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div><!-- modal-dialog -->

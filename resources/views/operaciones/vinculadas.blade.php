@@ -28,6 +28,7 @@
 @can('operaciones-create')
 <button class="btn btn-teal mg-b-10" data-toggle="modal" data-target="#operacionVinculada">Nueva Operación Vinculada</button>
 
+@push('modals')
           <div id="operacionVinculada" class="modal fade" style="display: none;" aria-hidden="true">
           <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content tx-size-sm">
@@ -40,13 +41,19 @@
             {!! Form::open(['url' => 'operacion/comisionable/save']) !!}
             <div class="modal-body pd-20">
               <div class="row">
-
+                {!! Form::hidden('empresa_id', $operaciones->empresa_id) !!}
+                {!! Form::hidden('tipo', 'Salida')!!}
+                {!! Form::hidden('operacion_origen', $operaciones->id)!!}
                 <div class="form-group col-sm-6">
                     {!! Form::label('cuenta_id', 'Cuenta:') !!}
                     {!! Form::select('cuenta_id', $cuental, $operaciones->cuenta_id, ['class' => 'form-control', 'required', 'placeholder'=>'Seleccione']) !!}
-                    {!! Form::hidden('empresa_id', $operaciones->empresa_id) !!}
-                    {!! Form::hidden('tipo', 'Salida')!!}
-                    {!! Form::hidden('operacion_origen', $operaciones->id)!!}
+
+                </div>
+
+                <div class="form-group col-sm-6" id="ctadestino">
+                    {!! Form::label('ctadestino_id', 'Cuenta Destino:') !!}
+                    {!! Form::select('ctadestino_id', $ctadestino, null, ['class' => 'form-control', 'placeholder'=>'Seleccione']) !!}
+
                 </div>
 
                 <div class="form-group col-sm-6">
@@ -100,7 +107,7 @@
           </div>
           </div><!-- modal-dialog -->
           </div>
-
+@endpush
           @section('scripts')
           <script src="{{asset('starlight/lib/select2/js/select2.full.min.js')}}"></script>
           <script src="{{asset('starlight/lib/numeral.js/min/numeral.min.js')}}"></script>
@@ -110,6 +117,7 @@
           <script>
           $(document).ready(function() {
               $('.select2').select2();
+              $('#ctadestino').hide();
           });
           // Initialize datepicker and save its instance in `dp`
           var dp = $('.datepicker-input').datepicker().data('datepicker');
@@ -124,6 +132,8 @@
                 $('#proveedor').hide('slow');
                 $('#proveedor_id').removeProp('required');
                 $('#proveedor_id').removeAttr('required');
+                $('#ctadestino').show('slow');
+                $('#ctadestino_id').prop('required', true);
 
                 $('#subclasifica').hide('slow');
                 $('#subclasifica_id').removeProp('required');
@@ -132,6 +142,8 @@
                 $("#metpago option").filter(function() {
     				              return $(this).text() =='EFECTIVO';
 						            }).prop("selected", true);
+
+                $("#metpago").prop('disabled', true);
               }
               else {
                 $('#proveedor').show('slow');
@@ -139,6 +151,11 @@
 
                 $('#subclasifica').show('slow');
                 $('#subclasifica_id').prop('required', true);
+                $("#metpago").removeProp('disabled');
+                $('#metpago').removeAttr('disabled');
+
+                $("#ctadestino_id").removeProp('required');
+                $('#ctadestino_id').removeAttr('required');
               }
           });
           </script>

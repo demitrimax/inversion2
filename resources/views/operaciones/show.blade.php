@@ -28,6 +28,13 @@
                           @include('operaciones.inventario')
                         </div>
                     @endif
+
+                    @if($operaciones->traspasos->count() > 0)
+                    <div class="col-md-6">
+                      @include('operaciones.traspasos')
+                    </div>
+                    @endif
+
                     <div class="col-md-12">
                       @can('operaciones-edit')
                       <a href="{!! route('operaciones.edit', [$operaciones->id]) !!}" class='btn btn-primary'>Editar</a>
@@ -39,4 +46,6 @@
             </div>
         </div>
     </div>
+
+    @stack('modals')
 @endsection

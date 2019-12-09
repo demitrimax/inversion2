@@ -151,7 +151,6 @@ class operacionesController extends AppBaseController
           return view('operaciones.newoperacioninv')->with(compact('empresa','cuental','metpago','facturas','categorias','proveedores','subcategoriasAgrupadas','request'));
         }
 
-
         $operaciones->monto = $input['monto_comision'];
         $operaciones->empresa_id = $input['empresa_id'];
         $operaciones->cuenta_id = $input['cuenta_id'];
@@ -211,6 +210,11 @@ class operacionesController extends AppBaseController
           $q->where('id',$empresaid);
         })->get();
         $cuental = $cuentas->pluck('nomcuentasaldo', 'id');
+        $ctadestino = $cuentas->filter(function($cuenta) {
+                                  return $cuenta->porfuera == 1 || $cuenta->efectivo == 1;
+                                })
+                              ->pluck('nomcuentasaldo', 'id');
+
         $metpago = metpago::pluck('nombre','id');
         $proveedores = proveedores::pluck('nombre','id');
         $categorias = clasifica::where('tip','E')->get();
@@ -220,7 +224,13 @@ class operacionesController extends AppBaseController
           }
         }
 
-        return view('operaciones.show')->with(compact('operaciones', 'cuental', 'metpago', 'proveedores', 'subcategoriasAgrupadas'));
+
+        return view('operaciones.show')->with(compact('operaciones',
+                                                      'cuental',
+                                                      'metpago',
+                                                      'proveedores',
+                                                      'subcategoriasAgrupadas',
+                                                      'ctadestino'));
     }
 
     /**
@@ -364,6 +374,28 @@ class operacionesController extends AppBaseController
     public function saveOperacionComisionable(Request $request)
     {
       $input = $request->all();
+
+      if(isset($input['tipo']) && $input['tipo'] == 'Efectivo' ){
+        if($input['cuenta_id'] == $input['ctadestino_id'] ){
+          $mensaje = 'No se puede hacer un traspaso de la misma cuenta!';
+          Alert::error($mensaje);
+          Flash::error($mensaje);
+          return back()->withInput($request->input());
+        }
+        $traspaso  = new \App\Models\optraspasos;
+        $traspaso->origen_cta = $input['cuenta_id'];
+        $traspaso->destino_cta = $input['ctadestino_id'];
+        $traspaso->operacion_id = $input['operacion_origen'];
+        $traspaso->monto = $input['monto'];
+        $traspaso->concepto = $input['concepto'];
+        $traspaso->fecha = $input['fecha'];
+        $traspaso->save();
+
+        $mensaje = 'Se ha registrado correctamente.';
+        Alert::success($mensaje);
+        Flash::success($mensaje);
+        return back();
+      }
 
       $operaciones = new operaciones;
       $operaciones->monto = $input['monto'];

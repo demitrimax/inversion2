@@ -137,8 +137,27 @@ class bcuentasController extends AppBaseController
             'monto' => $operacion->monto,
             'concepto'  => $operacion->concepto,
           ]);
-
         }
+
+          foreach ($bcuentas->traspasosabonos as $trasabono){
+            $movimientos->push([
+              'fecha' => $trasabono->fecha,
+              'tipo'  => 'Abono',
+              'clase' => 'traspaso',
+              'monto' => $trasabono->monto,
+              'concepto'  => $trasabono->concepto,
+            ]);
+        }
+
+        foreach ($bcuentas->traspasoscargos as $trascargo){
+          $movimientos->push([
+            'fecha' => $trascargo->fecha,
+            'tipo'  => 'Cargo',
+            'clase' => 'traspaso',
+            'monto' => $trascargo->monto,
+            'concepto'  => $trascargo->concepto,
+          ]);
+      }
         $movimientos = $movimientos->sortBy('fecha');
         //dd($movimientos);
 
