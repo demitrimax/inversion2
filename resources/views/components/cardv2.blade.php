@@ -1,4 +1,4 @@
-    <div class="card bd-0">
+    <div class="card rounded-0">
       @isset($title)
         <div class="card-header card-header-default {!! isset($color) ? 'bg-'.$color : '' !!} {!! isset($classid) ? $classid : ''!!}">{{$title}}</div>
       @endisset

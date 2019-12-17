@@ -150,7 +150,22 @@ class empresasController extends AppBaseController
         //dd($toperacionesg);
         $facturas = facturas::whereNull('operacion_id')->pluck('numfactura','id');
 
-        return view('empresas.show')->with(compact('empresas','bancos','creditos','metpago','cuental', 'proveedores', 'proyectos','divisas', 'inversiones', 'categorias', 'subcategoriasAgrupadas', 'operaciones', 'toperacionesg', 'fechasopg', 'facturas', 'toperacionesporcuenta'));
+        return view('empresas.show')->with(compact('empresas',
+                                                    'bancos',
+                                                    'creditos',
+                                                    'metpago',
+                                                    'cuental',
+                                                    'proveedores',
+                                                    'proyectos',
+                                                    'divisas',
+                                                    'inversiones',
+                                                    'categorias',
+                                                    'subcategoriasAgrupadas',
+                                                    'operaciones',
+                                                    'toperacionesg',
+                                                    'fechasopg',
+                                                    'facturas',
+                                                    'toperacionesporcuenta'));
     }
 
     /**
@@ -515,5 +530,60 @@ class empresasController extends AppBaseController
               'children'=>$children];
       }
       return $response;
+    }
+
+    public function reporte($id)
+    {
+      $empresa = empresas::find($id);
+      $fechasopg = operaciones::where('empresa_id', $id)
+                              ->selectRaw('*, DATE_FORMAT(fecha, "%m-%y") as fechag')
+                              ->groupBy('fechag')
+                              ->get();
+      $cuentas = bcuentas::with('empresa')->whereHas('empresa', function($q) use ($id) {
+        $q->where('id',$id);
+      })->get();
+      //dd($cuentas);
+      $cuental = $cuentas->pluck('nomcuentasaldo', 'id');
+      //dd($cuentas);
+      $bancos = bancos::pluck('nombrecorto','id');
+      $creditos = creditos::pluck('nombre', 'id');
+      $metpago = metpago::pluck('nombre','id');
+      $proveedores = proveedores::pluck('nombre','id');
+      $proyectos = cproyectos::pluck('nombre','id');
+      $divisas = coddivisas::pluck('nombre','codigo');
+
+      $categorias = clasifica::all();
+      $operaciones = operaciones::where('empresa_id',$id)->orderBy('fecha', 'desc')->paginate(10);
+
+      $inversiones = collect([]);
+      foreach($cuentas as $cuenta){
+        foreach($cuenta->inversiones as $inversion)
+          $inversiones->push($inversion);
+      }
+
+      foreach($categorias as $key=>$categoria){
+         foreach($categoria->subcategorias->sortBy('nombre') as $subcategoria){
+          $subcategoriasAgrupadas[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
+        }
+      }
+      $toperacionesg = operaciones::where('empresa_id',$id)
+                                  ->selectRaw('*, sum(monto) as montog, count(monto) as cantidad, DATE_FORMAT(fecha, "%m-%y") as fechag')
+                                  ->groupBy('subclasifica_id')
+                                  ->groupBy('fechag')
+                                  ->orderBy('subclasifica_id', 'asc')
+                                  ->get();
+      $toperacionesporcuenta = operaciones::where('empresa_id',$id)
+                              ->selectRaw('*, sum(monto) as montog, count(monto) as cantidad, DATE_FORMAT(fecha, "%m-%y") as fechag')
+                              ->groupBy('cuenta_id')
+                              ->groupBy('fechag')
+                              ->orderBy('cuenta_id', 'asc')
+                              ->get();
+
+      return view('empresas.reporte')->with(compact('empresa',
+                                                    'toperacionesg',
+                                                    'toperacionesporcuenta',
+                                                    'subcategoriasAgrupadas',
+                                                    'operaciones',
+                                                    'fechasopg'));
     }
 }

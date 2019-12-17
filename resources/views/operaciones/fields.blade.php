@@ -111,11 +111,13 @@ if(isset($operaciones->fecha)){
     </label>
 </div>
 @php
+$micomision = null;
 $comisionable = "";
 if(isset($operaciones->comisionable))
 {
   if($operaciones->comisionable == 1){
     $comisionable = "checked";
+    $micomision = $operaciones->monto;
   }
 }
 @endphp
@@ -130,7 +132,7 @@ if(isset($operaciones->comisionable))
     <!-- Concepto Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('monto_comision', 'Monto de la Comisión:') !!}
-        {!! Form::number('monto_comision', null, ['class' => 'form-control maxlen', 'maxlength'=>'50', 'id'=>'monto_comision', 'step'=>'0.01']) !!}
+        {!! Form::number('monto_comision', $micomision, ['class' => 'form-control maxlen', 'maxlength'=>'50', 'id'=>'monto_comision', 'step'=>'0.01']) !!}
     </div>
         <div class="alert alert-danger" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -173,6 +175,9 @@ if(isset($operaciones->comisionable))
         })
         $(document).ready(function() {
             $('.select2').select2();
+            @if($operaciones->comisionable == 1)
+            $('#comision').show();
+            @endif
         });
         $('#comisionable').on('click', function(e) {
 

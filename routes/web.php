@@ -54,6 +54,8 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   //ruta para guardar la operacion y el inventario
   Route::post('operaciones/empresa/{id}/inventario', 'operacionesController@operacionInventario')->name('operacion.empresa.inventario');
 
+  Route::get('operaciones/empresa/{id}/reporte', 'empresasController@reporte');
+
   Route::resource('bcuentas', 'bcuentasController');
   Route::resource('metpagos', 'metpagoController');
   Route::resource('proveedores', 'proveedoresController');

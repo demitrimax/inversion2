@@ -1,8 +1,5 @@
-<div class="card card-rounded-0">
-    <div class="card-header card-header-default">
-        <h3 class="card-title">Detalle de la Empresa</h3>
-    </div>
-    <div class="card-body">
+@component('components.card', ['title'=>'Detalles de la Empresa'])
+
       <table class="table table-striped table-bordered detail-view" id="empresas-table">
         <tbody>
 
@@ -56,5 +53,5 @@
 
           </tbody>
         </table>
-</div>
-</div>
+        <button class="btn btn-primary" onclick="javascript:window.location.href = '{{url('operaciones/empresa/'.$empresas->id.'/reporte')}}';">Reporte de Operaciones</button>
+@endcomponent

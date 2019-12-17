@@ -157,7 +157,15 @@ class operaciones extends Model
 
       return $meses[$mesnum - 1].'-'.$this->fecha->format('y');
     }
-    
+
+    public function getMesaniogAttribute()
+    {
+      $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
+      $mesnum = $this->fecha->format('m');
+
+      return $meses[$mesnum - 1].'-'.$this->fecha->format('Y');
+    }
+
     public function getOperacionombreAttribute()
     {
       return $this->concepto.'('.number_format($this->monto).') '.$this->fecha->format('d-m-y');
