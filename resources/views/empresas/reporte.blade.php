@@ -9,6 +9,7 @@
 <nav class="breadcrumb sl-breadcrumb">
   <a class="breadcrumb-item" href="{{url('/')}}">Principal</a>
   <a class="breadcrumb-item" href="{{url('/empresas')}}">Reporte de Operaciones</a>
+  <a class="breadcrumb-item">{{date('Y')}}</a>
   <span class="breadcrumb-item active">{{$empresa->nombre}}</span>
 </nav>
 @endsection
@@ -16,7 +17,7 @@
 @section('content')
 
 @component('components.card', ['title'=>'Reportes Mensuales'])
-    <p class="mg-b-20 mg-sm-b-30">Seleccione el año del reporte. {!! Form::select('Año Fiscal', ['2018', '2019'],'null', ['class'=>'form-control col-md-4'])!!}</p>
+    <p class="mg-b-20 mg-sm-b-30">Seleccione el año del reporte. {!! Form::select('Año Fiscal', $anios->pluck('anio', 'anio'), $anio, ['class'=>'form-control col-md-4', 'id'=>'aniorep'])!!}{!! Form::button('Seleccionar', ['class'=>'btn btn-primary', 'onclick'=>'gotorepyear()'])!!}</p>
   <div class="row">
     @foreach($fechasopg as $key=>$fechas)
       <div class="col-md-4 mg-t-20">
@@ -120,4 +121,13 @@
   </div>
 @endcomponent
 
+@endsection
+
+@section('scripts')
+<script>
+  function gotorepyear(anio){
+    var mianio = $('#aniorep').val();
+    window.location.href = "{{url('operaciones/empresa/'.$empresa->id.'/')}}/"+mianio+"/reporte";
+  }
+</script>
 @endsection

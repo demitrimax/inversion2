@@ -95,6 +95,7 @@ class empresasController extends AppBaseController
      */
     public function show($id)
     {
+        $anioactual = date('Y');
         $empresas = $this->empresasRepository->findWithoutFail($id);
 
         if (empty($empresas)) {
@@ -117,7 +118,9 @@ class empresasController extends AppBaseController
         $proyectos = cproyectos::pluck('nombre','id');
         $divisas = coddivisas::pluck('nombre','codigo');
         $categorias = clasifica::all();
-        $operaciones = operaciones::where('empresa_id',$empresaid)->orderBy('fecha', 'desc')->paginate(10);
+        $operaciones = operaciones::where('empresa_id',$empresaid)
+                                  ->orderBy('fecha', 'desc')
+                                  ->paginate(10);
 
         $inversiones = collect([]);
         foreach($cuentas as $cuenta){
@@ -132,12 +135,14 @@ class empresasController extends AppBaseController
         }
         $toperacionesg = operaciones::where('empresa_id',$empresaid)
                                     ->selectRaw('*, sum(monto) as montog, count(monto) as cantidad, DATE_FORMAT(fecha, "%m-%y") as fechag')
+                                    ->whereRaw('year(fecha) = ?', [date('Y')])
                                     ->groupBy('subclasifica_id')
                                     ->groupBy('fechag')
                                     ->orderBy('subclasifica_id', 'asc')
                                     ->get();
         $toperacionesporcuenta = operaciones::where('empresa_id',$empresaid)
                                 ->selectRaw('*, sum(monto) as montog, count(monto) as cantidad, DATE_FORMAT(fecha, "%m-%y") as fechag')
+                                ->whereRaw('year(fecha) = ?', [date('Y')])
                                 ->groupBy('cuenta_id')
                                 ->groupBy('fechag')
                                 ->orderBy('cuenta_id', 'asc')
@@ -145,6 +150,7 @@ class empresasController extends AppBaseController
                                 //dd($toperacionesporcuenta);
         $fechasopg = operaciones::where('empresa_id', $empresaid)
                                 ->selectRaw('*, DATE_FORMAT(fecha, "%m-%y") as fechag')
+                                ->whereRaw('year(fecha) = ?', [date('Y')])
                                 ->groupBy('fechag')
                                 ->get();
         //dd($toperacionesg);
@@ -532,13 +538,19 @@ class empresasController extends AppBaseController
       return $response;
     }
 
-    public function reporte($id)
+    public function reporte($id, $anio)
     {
       $empresa = empresas::find($id);
-      $fechasopg = operaciones::where('empresa_id', $id)
-                              ->selectRaw('*, DATE_FORMAT(fecha, "%m-%y") as fechag')
-                              ->groupBy('fechag')
-                              ->get();
+      $aniorep = $anio;
+      //validar anio
+      //$aniorep = $anio;
+      $anios = operaciones::selectRaw('year(fecha) as anio, empresa_id')
+                          ->distinct('anio')
+                          ->where('empresa_id',$id)
+                          ->orderBy('anio')
+                          ->get();
+      //dd($anios);
+
       $cuentas = bcuentas::with('empresa')->whereHas('empresa', function($q) use ($id) {
         $q->where('id',$id);
       })->get();
@@ -566,17 +578,26 @@ class empresasController extends AppBaseController
           $subcategoriasAgrupadas[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
         }
       }
+
       $toperacionesg = operaciones::where('empresa_id',$id)
                                   ->selectRaw('*, sum(monto) as montog, count(monto) as cantidad, DATE_FORMAT(fecha, "%m-%y") as fechag')
+                                  ->whereRaw('year(fecha) = ?', [$aniorep])
                                   ->groupBy('subclasifica_id')
                                   ->groupBy('fechag')
                                   ->orderBy('subclasifica_id', 'asc')
                                   ->get();
       $toperacionesporcuenta = operaciones::where('empresa_id',$id)
                               ->selectRaw('*, sum(monto) as montog, count(monto) as cantidad, DATE_FORMAT(fecha, "%m-%y") as fechag')
+                              ->whereRaw('year(fecha) = ?', [$aniorep])
                               ->groupBy('cuenta_id')
                               ->groupBy('fechag')
                               ->orderBy('cuenta_id', 'asc')
+                              ->get();
+
+      $fechasopg = operaciones::where('empresa_id', $id)
+                              ->selectRaw('*, DATE_FORMAT(fecha, "%m-%y") as fechag')
+                              ->whereRaw('year(fecha) = ?', [$aniorep])
+                              ->groupBy('fechag')
                               ->get();
 
       return view('empresas.reporte')->with(compact('empresa',
@@ -584,6 +605,8 @@ class empresasController extends AppBaseController
                                                     'toperacionesporcuenta',
                                                     'subcategoriasAgrupadas',
                                                     'operaciones',
-                                                    'fechasopg'));
+                                                    'fechasopg',
+                                                    'anios',
+                                                    'anio'));
     }
 }

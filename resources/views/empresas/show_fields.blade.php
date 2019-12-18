@@ -53,5 +53,5 @@
 
           </tbody>
         </table>
-        <button class="btn btn-primary" onclick="javascript:window.location.href = '{{url('operaciones/empresa/'.$empresas->id.'/reporte')}}';">Reporte de Operaciones</button>
+        <button class="btn btn-primary" onclick="javascript:window.location.href = '{{url('operaciones/empresa/'.$empresas->id.'/'.date('Y').'/reporte')}}';">Reporte de Operaciones</button>
 @endcomponent
