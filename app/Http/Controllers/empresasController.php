@@ -28,6 +28,12 @@ use App\Models\facturas;
 use App\Models\empresas;
 use Auth;
 
+use Storage;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper;
+
 class empresasController extends AppBaseController
 {
     /** @var  empresasRepository */
@@ -608,5 +614,198 @@ class empresasController extends AppBaseController
                                                     'fechasopg',
                                                     'anios',
                                                     'anio'));
+    }
+
+    public function reporteExcel($id, $anio)
+    {
+
+      $empresa = empresas::find($id);
+      $aniorep = $anio;
+      //validar anio
+      //$aniorep = $anio;
+      $anios = operaciones::selectRaw('year(fecha) as anio, empresa_id')
+                          ->distinct('anio')
+                          ->where('empresa_id',$id)
+                          ->orderBy('anio')
+                          ->get();
+      //dd($anios);
+      /*
+      $cuentas = bcuentas::with('empresa')->whereHas('empresa', function($q) use ($id) {
+        $q->where('id',$id);
+      })->get();
+      //dd($cuentas);
+      $cuental = $cuentas->pluck('nomcuentasaldo', 'id');
+      //dd($cuentas);
+
+      $bancos = bancos::pluck('nombrecorto','id');
+      $creditos = creditos::pluck('nombre', 'id');
+      $metpago = metpago::pluck('nombre','id');
+      $proveedores = proveedores::pluck('nombre','id');
+      $proyectos = cproyectos::pluck('nombre','id');
+      $divisas = coddivisas::pluck('nombre','codigo');
+      */
+      $categorias = clasifica::all();
+      $operaciones = operaciones::where('empresa_id',$id)->orderBy('fecha', 'desc')->paginate(10);
+
+      foreach($categorias as $key=>$categoria){
+         foreach($categoria->subcategorias->sortBy('nombre') as $subcategoria){
+          $subcategoriasAgrupadas[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
+        }
+      }
+
+      $toperacionesg = operaciones::where('empresa_id',$id)
+                                  ->selectRaw('*, sum(monto) as montog, count(monto) as cantidad, DATE_FORMAT(fecha, "%m-%y") as fechag')
+                                  ->whereRaw('year(fecha) = ?', [$aniorep])
+                                  ->groupBy('subclasifica_id')
+                                  ->groupBy('fechag')
+                                  ->orderBy('subclasifica_id', 'asc')
+                                  ->get();
+      $toperacionesporcuenta = operaciones::where('empresa_id',$id)
+                              ->selectRaw('*, sum(monto) as montog, count(monto) as cantidad, DATE_FORMAT(fecha, "%m-%y") as fechag')
+                              ->whereRaw('year(fecha) = ?', [$aniorep])
+                              ->groupBy('cuenta_id')
+                              ->groupBy('fechag')
+                              ->orderBy('cuenta_id', 'asc')
+                              ->get();
+
+      $fechasopg = operaciones::where('empresa_id', $id)
+                              ->selectRaw('*, DATE_FORMAT(fecha, "%m-%y") as fechag')
+                              ->whereRaw('year(fecha) = ?', [$aniorep])
+                              ->groupBy('fechag')
+                              ->get();
+
+      $archivo = '/plantillaExcel/plantilla_resumenop2.xlsx';
+      $reader = IOFactory::createReader('Xlsx');
+      $spreadsheet = $reader->load(public_path($archivo));
+      $spreadsheet->getProperties()->setCreator('pi.corporation-tym.mx')
+          ->setLastModifiedBy('pi.corporation-tym.mx')
+          ->setTitle('Formato Reporte de Presupuesto Anual')
+          ->setSubject('Formato de Reporte de Presupuesto Anual')
+          ->setDescription('Reporte de Presupuesto')
+          ->setKeywords('REPORTE DE PRESUPUESTO')
+          ->setCategory('PRESUPUESTO');
+      $wizard = new HtmlHelper();
+      $SheetTitle = 'PRESUPUESTO '.$anio;
+      $spreadsheet->getActiveSheet()->setTitle($SheetTitle);
+      $wizard = new HtmlHelper();
+
+      $Columnas = ['C','D','E','F','G','H','I','J','K','L','M','N','O'];
+      $categoriasSub = [];
+      $enlace_actual = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+      $leyenda = 'Reporte de Presupuesto obtenido de '.$enlace_actual.', el día '.date('d-m-Y H:i:s');
+      $spreadsheet->getActiveSheet()->setCellValue('A1', $leyenda);
+
+      $Row = 8;
+      //todas las categorias que se van a imprimir
+      $catunicas = '';
+      $subcategoriaCount = 0;
+      foreach($toperacionesg->sortBy('subclasifica.clasifica.orden')->unique('subclasifica') as $operacion){
+        if($catunicas <> $operacion->subclasifica->clasifica->nombre ){
+
+            $categoria = $operacion->subclasifica->clasifica->nombre;
+
+          if($Row > 8){
+            $SubcategoriaText = 'Subtotal '.$categoria;
+            $spreadsheet->getActiveSheet()->setCellValue('A'.$Row, $SubcategoriaText);
+
+            $categoriasg[$categoria] = ['categoria' => $categoria, 'row'=>$Row, 'rowI'=>$Row-$subcategoriaCount ];
+            $subcategoriaCount = 0;
+          }
+          $Row = $Row + 2;
+
+          //$spreadsheet->getActiveSheet()->insertNewRowBefore($Row, 1);
+
+          $categoria = '<font size="10" face="arial"><b>'.$categoria.'</b> </font>';
+          $nombrecategoria = $wizard->toRichTextObject($categoria);
+
+          $spreadsheet->getActiveSheet()->setCellValue('A'.$Row, $nombrecategoria);
+          $Row++;
+          $catunicas = $operacion->subclasifica->clasifica->nombre;
+
+        }
+        $subcategoriaCount ++;
+        $subcategoria = $operacion->subclasifica->nombre;
+        $spreadsheet->getActiveSheet()->setCellValue('A'.$Row, strtoupper($subcategoria));
+
+        $categoriasSub[$subcategoria] = ['categoria' => $categoria, 'subcategoria'=>$subcategoria, 'row'=>$Row ];
+
+        $Row++;
+      }
+
+
+      foreach ($fechasopg as $keyMonths => $fechas) {
+        //titulo de las columnas
+        //$spreadsheet->getActiveSheet()->insertNewColumnBefore($Columnas[$keyMonths], 1);
+        $spreadsheet->getActiveSheet()->setCellValue($Columnas[$keyMonths].'4', strtoupper($fechas->mes));
+
+
+        if(isset($saldofiscal)){
+
+            $saldoinicial = $saldofiscal + $saldoporfuera;
+            $spreadsheet->getActiveSheet()->setCellValue($Columnas[$key].'5', $saldoinicial);
+
+              if(isset($saldofiscal)){
+                $spreadsheet->getActiveSheet()->setCellValue($Columnas[$key].'5', $saldofiscal);
+              }
+
+              if(isset($saldoporfuera)){
+                $spreadsheet->getActiveSheet()->setCellValue($Columnas[$key].'6', $saldoporfuera);
+              }
+
+          }//fin if saldofiscal
+          //obtener la lista de todas las categorias que va haber
+
+
+          //bucle de las operaciones
+          foreach($toperacionesg->where('fechag',$fechas->fechag)->sortBy('subclasifica.clasifica.orden') as $key=>$operacion) {
+            //obtener la fila donde va
+
+            foreach($categoriasSub as $subcategoria){
+              //dd($subcategoria);
+              if ($subcategoria['subcategoria'] == $operacion->subclasifica->nombre){
+
+                $miRow = $subcategoria['row'];
+                $elmonto = $operacion->montog;
+                $spreadsheet->getActiveSheet()->setCellValue($Columnas[$keyMonths].$miRow, $elmonto);
+              }
+            }
+          }
+
+          foreach ($categoriasg as $categoriag) {
+
+              $RowSubtotal = $categoriag['row'];
+              $RowFin = $categoriag['row'] - 1;
+              $RowIni = $categoriag['rowI'];
+              $spreadsheet->getActiveSheet()->getCell($Columnas[$keyMonths].$RowSubtotal)->getCalculatedValue();
+
+              $formula = '=SUM('.$Columnas[$keyMonths].$RowIni.':'.$Columnas[$keyMonths].$RowFin.')';
+              $spreadsheet->getActiveSheet()->setCellValue($Columnas[$keyMonths].$RowSubtotal, $formula);
+              $spreadsheet->getActiveSheet()->getStyle( $Columnas[$keyMonths].$RowSubtotal )->getFont()->setBold( true );
+
+          }
+
+
+
+      } //fin de las columnas
+
+
+
+
+      // Redirect output to a client’s web browser (Xlsx)
+      header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      header('Content-Disposition: attachment;filename="REPORTE_'.$SheetTitle.'.xlsx"');
+      header('Cache-Control: max-age=0');
+      // If you're serving to IE 9, then the following may be needed
+      header('Cache-Control: max-age=1');
+
+      // If you're serving to IE over SSL, then the following may be needed
+      header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+      header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+      header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+      header('Pragma: public'); // HTTP/1.0
+
+      $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+      $writer->save('php://output');
+      exit;
     }
 }

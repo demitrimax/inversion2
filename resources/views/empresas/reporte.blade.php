@@ -17,13 +17,16 @@
 @section('content')
 
 @component('components.card', ['title'=>'Reportes Mensuales'])
-    <p class="mg-b-20 mg-sm-b-30">Seleccione el año del reporte. {!! Form::select('Año Fiscal', $anios->pluck('anio', 'anio'), $anio, ['class'=>'form-control col-md-4', 'id'=>'aniorep'])!!}{!! Form::button('Seleccionar', ['class'=>'btn btn-primary', 'onclick'=>'gotorepyear()'])!!}</p>
+    <p class="mg-b-20 mg-sm-b-30">Seleccione el año del reporte. {!! Form::select('Año Fiscal', $anios->pluck('anio', 'anio'), $anio, ['class'=>'form-control col-md-4', 'id'=>'aniorep'])!!}
+      {!! Form::button('Seleccionar', ['class'=>'btn btn-primary', 'onclick'=>'gotorepyear()'])!!}
+      {!! Form::button('Exportar a Excel', ['class'=>'btn btn-primary', 'onclick'=>'reporteExcel()' ]) !!}
+    </p>
   <div class="row">
     @foreach($fechasopg as $key=>$fechas)
       <div class="col-md-4 mg-t-20">
         @component('components.cardv2', ['title'=> strtoupper($fechas->mesaniog), 'color'=>$colors[$key]] )
 
-        <table id='subclasifica' class="table">
+        <table id='subclasifica' class="table table-responsive">
           <thead>
               <tr>
                 <th>Categoria</th>
@@ -128,6 +131,10 @@
   function gotorepyear(anio){
     var mianio = $('#aniorep').val();
     window.location.href = "{{url('operaciones/empresa/'.$empresa->id.'/')}}/"+mianio+"/reporte";
+  }
+  function reporteExcel(anio){
+    var mianio = $('#aniorep').val();
+    window.location.href = "{{url('operaciones/empresa/'.$empresa->id.'/')}}/"+mianio+"/reporteExcel";
   }
 </script>
 @endsection
