@@ -56,6 +56,7 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
 
   Route::get('operaciones/empresa/{id}/{anio}/reporte', 'empresasController@reporte');
   Route::get('operaciones/empresa/{id}/{anio}/reporteExcel', 'empresasController@reporteExcel');
+  Route::post('operaciones/proveedor', 'proveedoresController@repExcel');
 
   Route::resource('bcuentas', 'bcuentasController');
   Route::resource('metpagos', 'metpagoController');

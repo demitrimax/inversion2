@@ -1,3 +1,8 @@
+@section('css')
+
+        <link href="{{asset('airdatepicker/dist/css/datepicker.min.css')}}" rel="stylesheet" type="text/css">
+
+@endsection
 Operaciones por mes
 
   <div id="accordion" class="accordion" role="tablist" aria-multiselectable="true">
@@ -41,3 +46,23 @@ Operaciones por mes
 
 
           </div>
+
+
+        <div class="d-flex align-items-center justify-content-center bg-gray-100 ht-md-80 bd pd-x-20">
+          {!! Form::open(['url'=>'operaciones/proveedor']) !!}
+            <div class="d-md-flex pd-y-20 pd-md-y-0">
+
+              {!! Form::text('daterange', null, ['class'=>'form-control datepicker-here', 'id'=>'rangoFechas','required', 'data-language'=>'es', 'data-range'=>'true', 'data-multiple-dates-separator'=>' : ', 'data-date-format'=>'yyyy-mm-dd', 'pattern'=>'.{23}', 'title'=>'Rango de Fechas', 'placeholder'=>'ejemplo: 2019-09-10 : 2019-09-30' ])!!}
+
+              {!! Form::hidden('proveedor_id', $proveedores->id)!!}
+              {!! Form::button('Reporte en Excel', ['class'=>'btn btn-primary', 'type'=>'submit']) !!}
+
+            </div>
+            {!! Form::close() !!}
+          </div>
+
+          @section('scripts')
+          <script src="{{asset('airdatepicker/dist/js/datepicker.min.js')}}"></script>
+          <script src="{{asset('airdatepicker/dist/js/i18n/datepicker.es.js')}}"></script>
+
+          @endsection

@@ -12,6 +12,13 @@ use Alert;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Models\operaciones;
+use App\Models\proveedores;
+
+use Storage;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Helper\Html as HtmlHelper;
 
 class proveedoresController extends AppBaseController
 {
@@ -182,5 +189,86 @@ class proveedoresController extends AppBaseController
         Flash::success('Proveedores borrado correctamente.');
 
         return redirect(route('proveedores.index'));
+    }
+    public function repExcel(Request $request )
+    {
+      $input = $request->all();
+
+      $findstring = ":";
+      $pos = strpos($input['daterange'],$findstring);
+      $finicio = substr($input['daterange'], 0, 10);
+      $ftermino = substr($input['daterange'], $pos+2, 10);
+      $input['finicio'] = date('Y-m-d', strtotime($finicio));
+      $input['ftermino'] = date('Y-m-d', strtotime($ftermino));
+      $proveedorid = $input['proveedor_id'];
+
+      $proveedor = proveedores::find($proveedorid);
+      $opProveedor = operaciones::where('proveedor_id', $proveedorid)
+                                         ->whereBetween('fecha', [$input['finicio'], $input['ftermino']])
+                                         ->get();
+
+      $archivo = '/plantillaExcel/proveedorx.xlsx';
+      $reader = IOFactory::createReader('Xlsx');
+      $spreadsheet = $reader->load(public_path($archivo));
+      $spreadsheet->getProperties()->setCreator('pi.corporation-tym.mx')
+          ->setLastModifiedBy('pi.corporation-tym.mx')
+          ->setTitle('Formato Reporte de Operaciones del Proveedor')
+          ->setSubject('Formato de Reporte de Operaciones con el Proveedor')
+          ->setDescription('Reporte de Operaciones')
+          ->setKeywords('REPORTE DE OPERACIONES')
+          ->setCategory('REP OPERACIONES');
+      $wizard = new HtmlHelper();
+      $SheetTitle = 'REPORTE ';
+      $spreadsheet->getActiveSheet()->setTitle($SheetTitle);
+      $wizard = new HtmlHelper();
+      //operaciones
+      $enlace_actual = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+      $leyenda = 'Reporte de Proveedor obtenido de '.$enlace_actual.', el día '.date('d-m-Y H:i:s');
+      $spreadsheet->getActiveSheet()->setCellValue('A1', $leyenda);
+      $nombreProveedor = $proveedor->nombre;
+      $spreadsheet->getActiveSheet()->setCellValue('D3', $nombreProveedor);
+
+      $Row = 6;
+      foreach($opProveedor as $operacion){
+        //2019-01-01 : 2019-12-31
+        $vinculo = 'http://'.$_SERVER['HTTP_HOST'].'/operaciones/'.$operacion->id;
+        $spreadsheet->getActiveSheet()->setCellValue('A'.$Row, $operacion->id);
+        $spreadsheet->getActiveSheet()->setCellValue('B'.$Row, $operacion->tipo);
+        $spreadsheet->getActiveSheet()->setCellValue('C'.$Row, $operacion->subclasifica->clasifica->nombre.'/'.$operacion->subclasifica->nombre);
+        $spreadsheet->getActiveSheet()->setCellValue('D'.$Row, $operacion->concepto);
+        $spreadsheet->getActiveSheet()->setCellValue('E'.$Row, $operacion->monto);
+        $spreadsheet->getActiveSheet()->setCellValue('F'.$Row, $operacion->fecha->format('d-m-Y'));
+
+        $spreadsheet->getActiveSheet()->setCellValue('G'.$Row, $vinculo);
+        $spreadsheet->getActiveSheet()->getCell('G'.$Row)->getHyperlink()->setUrl($vinculo);
+
+        $Row++;
+        $spreadsheet->getActiveSheet()->insertNewRowBefore($Row, 1);
+      }
+      $RowIni = 6;
+      $RowFin = $Row - 1;
+      $formula = '=SUM(E'.$RowIni.':E'.$RowFin.')';
+      //dd($formula);
+      $spreadsheet->getActiveSheet()->setCellValue('E'.$Row, $formula);
+      $spreadsheet->getActiveSheet()->getStyle( 'E'.$Row )->getFont()->setBold( true );
+
+
+      // Redirect output to a client’s web browser (Xlsx)
+      header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      header('Content-Disposition: attachment;filename="REPORTE_'.$nombreProveedor.'.xlsx"');
+      header('Cache-Control: max-age=0');
+      // If you're serving to IE 9, then the following may be needed
+      header('Cache-Control: max-age=1');
+
+      // If you're serving to IE over SSL, then the following may be needed
+      header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+      header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+      header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+      header('Pragma: public'); // HTTP/1.0
+
+      $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+      $writer->save('php://output');
+      exit;
+
     }
 }
