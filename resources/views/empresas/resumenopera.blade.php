@@ -8,7 +8,7 @@
 
 <div class="col-xl-12 mg-t-25 mg-xl-t-0">
   <div class="card pd-20 pd-sm-40 form-layout form-layout-5">
-    <h6 class="tx-gray-800 tx-uppercase tx-bold tx-14 mg-b-10">OPERACIONES AGRUPADAS</h6>
+    <h6 class="tx-gray-800 tx-uppercase tx-bold tx-14 mg-b-10">OPERACIONES AGRUPADAS {{date('Y')}}</h6>
     <p class="mg-b-30 tx-gray-600">Resumen de las operaciones agrupadas por categorias.</p>
 
     <div id="accordion" class="accordion" role="tablist" aria-multiselectable="true">

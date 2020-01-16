@@ -27,6 +27,7 @@ use App\Models\subclasifica;
 use App\Models\facturas;
 use App\Models\empresas;
 use Auth;
+use \Illuminate\Database\Eloquent\Collection;
 
 use Storage;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -606,6 +607,23 @@ class empresasController extends AppBaseController
                               ->groupBy('fechag')
                               ->get();
 
+      $catunicas = '';
+      $latabla = new Collection();
+      $latabla->push([ 'meses' => collect(['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']) ]);
+
+      foreach($toperacionesg->sortBy('subclasifica.clasifica.orden')->unique('subclasifica') as $operacion){
+
+          if($catunicas <> $operacion->subclasifica->clasifica->nombre ){
+            $categoria = $operacion->subclasifica->clasifica->nombre;
+            $latabla->push( ['categorias' => collect([$categoria])] );
+            $catunicas = $categoria;
+          }
+          $subcategoria = $operacion->subclasifica->nombre;
+          //$latabla['categorias'] [$categoria][] = $subcategoria;
+      }
+
+        $mitabla = collect($latabla);
+
       return view('empresas.reporte')->with(compact('empresa',
                                                     'toperacionesg',
                                                     'toperacionesporcuenta',
@@ -613,7 +631,9 @@ class empresasController extends AppBaseController
                                                     'operaciones',
                                                     'fechasopg',
                                                     'anios',
-                                                    'anio'));
+                                                    'anio',
+                                                    'latabla',
+                                                    'mitabla'));
     }
 
     public function reporteExcel($id, $anio)
@@ -699,19 +719,25 @@ class empresasController extends AppBaseController
       //todas las categorias que se van a imprimir
       $catunicas = '';
       $subcategoriaCount = 0;
+      $categoriasg = [];
       foreach($toperacionesg->sortBy('subclasifica.clasifica.orden')->unique('subclasifica') as $operacion){
+        //si es el inicio de la categoria entonces
+
         if($catunicas <> $operacion->subclasifica->clasifica->nombre ){
 
             $categoria = $operacion->subclasifica->clasifica->nombre;
 
           if($Row > 8){
-            $SubcategoriaText = 'Subtotal '.$categoria;
-            $spreadsheet->getActiveSheet()->setCellValue('A'.$Row, $SubcategoriaText);
-
-            $categoriasg[$categoria] = ['categoria' => $categoria, 'row'=>$Row, 'rowI'=>$Row-$subcategoriaCount ];
+            $txsubtotalCategoria = '<b>Subtotal '.$CategoriaAnterior.'</b>';
+            $nombreCat = $wizard->toRichTextObject($txsubtotalCategoria);
+            $spreadsheet->getActiveSheet()->setCellValue('A'.$Row, $nombreCat);
+            $tipo = $operacion->subclasifica->clasifica->tip;
+            $categoriasg[$categoria] = ['categoria' => $categoria, 'row'=>$Row, 'rowI'=>$Row-$subcategoriaCount, 'tipo'=>$tipo ];
             $subcategoriaCount = 0;
           }
+
           $Row = $Row + 2;
+
 
           //$spreadsheet->getActiveSheet()->insertNewRowBefore($Row, 1);
 
@@ -723,6 +749,7 @@ class empresasController extends AppBaseController
           $catunicas = $operacion->subclasifica->clasifica->nombre;
 
         }
+
         $subcategoriaCount ++;
         $subcategoria = $operacion->subclasifica->nombre;
         $spreadsheet->getActiveSheet()->setCellValue('A'.$Row, strtoupper($subcategoria));
@@ -730,8 +757,19 @@ class empresasController extends AppBaseController
         $categoriasSub[$subcategoria] = ['categoria' => $categoria, 'subcategoria'=>$subcategoria, 'row'=>$Row ];
 
         $Row++;
+        $CategoriaAnterior = $operacion->subclasifica->clasifica->nombre;
+        $tipoAnterior = $operacion->subclasifica->clasifica->tip;
       }
 
+
+      //ultimo subtotal de categoria
+      $txsubtotalCategoria = '<b>Subtotal '.$CategoriaAnterior.'</b>';
+      $nombreCat = $wizard->toRichTextObject($txsubtotalCategoria);
+      $spreadsheet->getActiveSheet()->setCellValue('A'.$Row, $nombreCat);
+      $tipo = $operacion->subclasifica->clasifica->tip;
+      $categoriasg[$CategoriaAnterior.'_'] = ['categoria' => $CategoriaAnterior.'_', 'row'=>$Row, 'rowI'=>$Row-$subcategoriaCount, 'tipo'=>$tipo ];
+
+      //dd($categoriasg);
 
       foreach ($fechasopg as $keyMonths => $fechas) {
         //titulo de las columnas
@@ -776,19 +814,23 @@ class empresasController extends AppBaseController
               $RowSubtotal = $categoriag['row'];
               $RowFin = $categoriag['row'] - 1;
               $RowIni = $categoriag['rowI'];
+              $tipo = $categoriag['tipo'];
+
               $spreadsheet->getActiveSheet()->getCell($Columnas[$keyMonths].$RowSubtotal)->getCalculatedValue();
 
               $formula = '=SUM('.$Columnas[$keyMonths].$RowIni.':'.$Columnas[$keyMonths].$RowFin.')';
               $spreadsheet->getActiveSheet()->setCellValue($Columnas[$keyMonths].$RowSubtotal, $formula);
               $spreadsheet->getActiveSheet()->getStyle( $Columnas[$keyMonths].$RowSubtotal )->getFont()->setBold( true );
-
+              if ($tipo == 'E') {
+                    $spreadsheet->getActiveSheet()->getStyle( $Columnas[$keyMonths].$RowSubtotal )->getFont()->setColor(new \PhpOffice\PhpSpreadsheet\Style\Color( \PhpOffice\PhpSpreadsheet\Style\Color::COLOR_RED ));
+              }
+              if ($tipo == 'I') {
+                    $spreadsheet->getActiveSheet()->getStyle( $Columnas[$keyMonths].$RowSubtotal )->getFont()->setColor(new \PhpOffice\PhpSpreadsheet\Style\Color( \PhpOffice\PhpSpreadsheet\Style\Color::COLOR_DARKBLUE ));
+              }
           }
 
 
-
       } //fin de las columnas
-
-
 
 
       // Redirect output to a client’s web browser (Xlsx)

@@ -175,7 +175,7 @@ if(isset($operaciones->comisionable))
         })
         $(document).ready(function() {
             $('.select2').select2();
-            @if($operaciones->comisionable == 1)
+            @if(isset($operaciones->comisionable) && $operaciones->comisionable == 1)
             $('#comision').show();
             @endif
         });
