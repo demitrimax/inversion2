@@ -137,7 +137,7 @@
 
               <div class="card-footer tx-center bg-gray-300">
                     <button class="btn btn-info" type="submit">Registrar</button>
-                    <a class="btn btn-secondary" href="url('operaciones')">Cancelar</a>
+                    <a class="btn btn-secondary" href="{{url('operaciones')}}">Cancelar</a>
                 </div>
 
   {!! Form::close() !!}

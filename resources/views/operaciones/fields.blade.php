@@ -189,6 +189,7 @@ if(isset($operaciones->comisionable))
                 $('#comision').hide('slow');
                 $('#monto_comision').removeProp('required');
                 $('#monto_comision').removeAttr('required');
+                $('#monto_comision').val('');
             }
         });
 

@@ -1,11 +1,14 @@
 @section('css')
 <!-- DataTables -->
+<!--
 <link href="{{asset('appzia/plugins/datatables/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('appzia/plugins/datatables/buttons.bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('appzia/plugins/datatables/fixedHeader.bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('appzia/plugins/datatables/responsive.bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('appzia/plugins/datatables/dataTables.bootstrap.min.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{asset('appzia/plugins/datatables/scroller.bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+-->
+<link href="{{asset('starlight/lib/datatables/jquery.dataTables.css')}}" rel="stylesheet">
 
 @endsection
 
@@ -22,44 +25,13 @@
           <th>Acciones</th>
         </tr>
     </thead>
-    <tbody>
-    @foreach($operaciones as $operacion)
-        <tr>
-          <td>{!! $operacion->tipo == 'Entrada' ? '<span class="badge badge-success"  title="Abono"><i class="fa fa-arrow-circle-down"></i></span>' : '<span class="badge badge-warning"  title="Cargo"><i class="fa fa-arrow-circle-up"></i></span>'  !!}
-            {!! $operacion->inventarios->count() > 0 ?  '<span class="badge badge-primary" title="Operación Inventario"><i class="fa fa-crosshairs"></i></span>' : ''  !!}
-            {!! $operacion->comisionable == 1 ?  '<span class="badge badge-danger" title="Operación Comisionable"><i class="fa fa-asterisk"></i></span>' : ''  !!}
-          </td>
-            <td>
-              {!! $operacion->comisionable == 1 ? number_format($operacion->monto_comision,2) : number_format($operacion->monto,2) !!}
-            </td>
-            <td>{!! $operacion->empresa->nombre !!}</td>
-            <td>{!! $operacion->subclasifica->nombre !!}</td>
-            <td>{!! $operacion->concepto !!}</td>
-            <td>{!! $operacion->proveedor->nombre !!}</td>
-            <td>{!! $operacion->fecha->format('d-m-Y') !!}</td>
-            <td>
-                {!! Form::open(['route' => ['operaciones.destroy', $operacion->id], 'method' => 'delete', 'id'=>'form'.$operacion->id]) !!}
-                <div class='btn-group'>
-                    <a href="{!! route('operaciones.show', [$operacion->id]) !!}" class='btn btn-info btn-xs'><i class="far fa-eye"></i></a>
-                    @can('operaciones-edit')
-                    <a href="{!! route('operaciones.edit', [$operacion->id]) !!}" class='btn btn-primary btn-xs'><i class="far fa-edit"></i></a>
-                    @endcan
-                    @can('operaciones-delete')
-                    {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'button', 'class' => 'btn btn-danger btn-xs', 'onclick' => "ConfirmDelete($operacion->id)"]) !!}
-                    @endcan
-                </div>
-                {!! Form::close() !!}
-            </td>
-        </tr>
-    @endforeach
-    </tbody>
+
 </table>
 
 
-{{$operaciones->links()}}
-
 @section('scripts')
 <!-- Datatables-->
+<!--
 <script src="{{asset('appzia/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('appzia/plugins/datatables/dataTables.bootstrap.js')}}"></script>
 <script src="{{asset('appzia/plugins/datatables/dataTables.buttons.min.js')}}"></script>
@@ -74,28 +46,38 @@
 <script src="{{asset('appzia/plugins/datatables/dataTables.responsive.min.js')}}"></script>
 <script src="{{asset('appzia/plugins/datatables/responsive.bootstrap.min.js')}}"></script>
 <script src="{{asset('appzia/plugins/datatables/dataTables.scroller.min.js')}}"></script>
+-->
+
+<script src="{{asset('starlight/lib/datatables/jquery.dataTables.js')}}"></script>
+<script src="{{asset('starlight/lib/datatables-responsive/dataTables.responsive.js')}}"></script>
 
 <script>
+
 $(document).ready(function() {
 
-var table = $('#productos-table').DataTable({
+var table = $('#operaciones-table').DataTable({
     serverSide: true,
     processing: true,
-    ajax: "{!! url('inventario/lista/productos') !!}",
+    ajax: "{!! url('operaciones/lista') !!}",
     stateSave: false,
-    columns: [
-        { data:'codigo_1', name: 'codigo_1' },
-        { data: 'nombre', name: 'nombre',
-        'render': function(val, _, obj) {
-              return '<a href="{{url('productos')}}/' + obj.id + '" target="_self">' + val + '</a>'; }
+    language: {
+                "url": "{{asset('starlight/lib/datatables/spanish.json')}}"
             },
-        { data:'categoria.nombre', name: 'categoria.nombre' },
-        { data:'umedida', name: 'medida' },
-        { data:'stock', name: 'stock' },
+    columns: [
+        { data:'id', name: 'id' },
+        { data: 'monto', name: 'monto',
+        'render': function(val, _, obj)  {
+              return '<a href="{{url('operaciones')}}/' + obj.id + '" target="_self">' + val + '</a>'; }
+            },
+        { data:'empresanombre', name: 'empresanombre' },
+        { data:'categoria', name: 'categoria' },
+        { data:'concepto', name: 'concepto' },
+        { data:'proveedor', name: 'proveedor' },
+        { data:'fecha', name: 'fecha' },
         { data:'acciones', name: 'acciones', orderable: false, searchable: false,
         'render': function(val, _, obj) {
 
-              return @can('productos-edit') '<a href="productos/' + obj.id + '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Detalles</a> ' + @else  '' +   @endcan @can('productos-delete') '<a href="productos/' + obj.id + '/delete" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> Eliminar</a> '  @else '' @endcan ;
+              return @can('operaciones-edit') '<a href="operaciones/' + obj.id + '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Detalles</a> ' + @else  '' +   @endcan @can('operaciones-delete') '<a href="operaciones/' + obj.id + '/delete" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> Eliminar</a> '  @else '' @endcan ;
             }
           },
 
@@ -103,8 +85,11 @@ var table = $('#productos-table').DataTable({
 
 });
 
+
+
 } );
 </script>
+
 <script>
 function ConfirmDelete(id) {
   swal.fire({

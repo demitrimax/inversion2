@@ -20,6 +20,7 @@ use App\Models\facturas;
 use App\Models\operaciones;
 use App\Models\opcomisionables;
 use App\Models\minventario;
+use Yajra\Datatables\Datatables;
 
 class operacionesController extends AppBaseController
 {
@@ -45,6 +46,16 @@ class operacionesController extends AppBaseController
     {
         $this->operacionesRepository->pushCriteria(new RequestCriteria($request));
         $operaciones = $this->operacionesRepository->orderBy('fecha', 'desc')->paginate(10);
+
+        if(!empty($request->search)){
+            $searchFields = ['numfactura','concepto','comentario'];
+            $operaciones = \App\Models\operaciones::where(function($query) use($request, $searchFields){
+              $searchWildcard = '%' . $request->search . '%';
+              foreach($searchFields as $field){
+                $query->orWhere($field, 'LIKE', $searchWildcard);
+              }
+            })->orderBy('fecha', 'desc')->paginate(10);
+          }
 
         return view('operaciones.index')
             ->with('operaciones', $operaciones);
@@ -89,9 +100,9 @@ class operacionesController extends AppBaseController
 
         //$operaciones = $this->operacionesRepository->create($input);
         //operacion comisionable --- guardar los atributos de la comisión.
-
+        //dd($input);
         $operaciones = new operaciones;
-        if(isset($input['comisionable'])){
+        if(isset($input['comisionable']) && $input['comisionable'] == 1){
           /*
             if($input['comisionable'] == 1 && $input['tipo'] == 'Salida'){
               $empresaid = $input['empresa_id'];
@@ -151,7 +162,13 @@ class operacionesController extends AppBaseController
           return view('operaciones.newoperacioninv')->with(compact('empresa','cuental','metpago','facturas','categorias','proveedores','subcategoriasAgrupadas','request'));
         }
 
-        $operaciones->monto = $input['monto_comision'];
+        if( isset($input['monto_comision']) && $input['monto_comision'] > 0){
+          $operaciones->monto = $input['monto_comision'];
+          $operaciones->monto_comision = $input['monto'];
+        } else {
+          $operaciones->monto = $input['monto'];
+        }
+
         $operaciones->empresa_id = $input['empresa_id'];
         $operaciones->cuenta_id = $input['cuenta_id'];
         $operaciones->proveedor_id = $input['proveedor_id'];
@@ -469,6 +486,33 @@ class operacionesController extends AppBaseController
     Flash::success($mensaje);
 
     Return redirect(route('operaciones.show', [$operacion->id]));
+  }
+
+  public function ListaOperaciones(Request $request)
+  {
+        $operaciones = \App\Models\operaciones::all();
+
+        return Datatables::of($operaciones)
+                          ->addColumn('acciones', '{{$id}}')
+                          ->addColumn('empresanombre', function($operaciones) {
+                            return $operaciones->empresa->nombre;
+                          })
+                          ->addColumn('categoria', function($operaciones) {
+                            return $operaciones->subclasifica->nombre;
+                          })
+                          ->addColumn('proveedor', function($operaciones) {
+                            return $operaciones->proveedor->nombre;
+                          })
+                          ->editColumn('fecha', function ($operaciones) {
+                            return $operaciones->fecha->format('d-m-Y');
+                          })
+                          ->editColumn('monto', function ($operaciones) {
+                            return number_format($operaciones->monto,2);
+                          })
+                          /*->editColumn('matricula', function ($alumno) {
+                            return '<a href="'. route('alumnos.edit',[$alumno->id]) .'">'.$alumno->matricula.'</a>';
+                          })*/
+                          ->make(true);
   }
 
 }

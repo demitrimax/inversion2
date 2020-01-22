@@ -23,9 +23,11 @@
                         <div class="clearfix"></div>
                         <div class="box box-primary">
                             <div class="box-body">
-                                    @include('operaciones.table')
-                            </div>
-                        </div>
+
+                                    @include('operaciones.tableajax')
+
+                        </div> <!-- Boxbody-->
+
                         <div class="text-center">
 
                         </div>

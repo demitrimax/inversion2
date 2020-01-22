@@ -25,7 +25,7 @@ class operacionesRepository extends BaseRepository
         'cuenta_id',
         'proveedor_id',
         'numfactura',
-        'clasifica_id',
+        'subclasifica_id',
         'tipo',
         'metpago',
         'concepto',

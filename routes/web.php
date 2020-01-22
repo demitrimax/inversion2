@@ -51,6 +51,8 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::post('operaciones/guardar', 'empresasController@regoper')->name('operacion.store');
   Route::post('operaciones/{id}/eliminar','empresasController@elimoper')->name('operacion.destroy');
   Route::post('inversion/{id}/eliminar','empresasController@eliminver')->name('movcredito.destroy');
+  Route::get('operaciones/lista', 'operacionesController@ListaOperaciones');
+  
   //ruta para guardar la operacion y el inventario
   Route::post('operaciones/empresa/{id}/inventario', 'operacionesController@operacionInventario')->name('operacion.empresa.inventario');
 
