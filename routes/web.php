@@ -52,7 +52,7 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::post('operaciones/{id}/eliminar','empresasController@elimoper')->name('operacion.destroy');
   Route::post('inversion/{id}/eliminar','empresasController@eliminver')->name('movcredito.destroy');
   Route::get('operaciones/lista', 'operacionesController@ListaOperaciones');
-  
+
   //ruta para guardar la operacion y el inventario
   Route::post('operaciones/empresa/{id}/inventario', 'operacionesController@operacionInventario')->name('operacion.empresa.inventario');
 
@@ -70,6 +70,7 @@ Route::group(['middleware'=>['auth', 'activity']], function() {
   Route::resource('operaciones', 'operacionesController');
   Route::post('operacion/comisionable/save', 'operacionesController@saveOperacionComisionable');
   Route::post('operacion/inventario/save', 'operacionesController@saveOperacionInventario')->name('operacion.inventario.save');
+  Route::get('operaciones/{id}/delete', 'operacionesController@opDelete');
 
   Route::resource('subclasificas', 'subclasificaController');
   Route::get('/profile', 'profileController@profile')->name('profile');

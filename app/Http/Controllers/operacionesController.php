@@ -364,6 +364,26 @@ class operacionesController extends AppBaseController
 
         return redirect(route('operaciones.index'));
     }
+
+    public function opDelete($id)
+    {
+      $operaciones = $this->operacionesRepository->findWithoutFail($id);
+
+      if (empty($operaciones)) {
+          Flash::error('Operación no encontrada');
+          Alert::error('Operación no encontrada');
+
+          return redirect(route('operaciones.index'));
+      }
+
+      $this->operacionesRepository->delete($id);
+
+      Flash::success('Operación borrada correctamente.');
+      Alert::success('Operación borrada correctamente.');
+
+      return redirect(route('operaciones.index'));
+    }
+
     public function operacionInventario($id, Request $request)
     {
 
@@ -490,10 +510,23 @@ class operacionesController extends AppBaseController
 
   public function ListaOperaciones(Request $request)
   {
-        $operaciones = \App\Models\operaciones::all();
+        $operaciones = \App\Models\operaciones::orderBy('fecha', 'desc')->get();
 
         return Datatables::of($operaciones)
                           ->addColumn('acciones', '{{$id}}')
+                          ->addColumn('iconos', function($operaciones) {
+                            $iconos = $operaciones->tipo == 'Entrada' ? '<span class="badge badge-success"  title="Abono"><i class="fa fa-arrow-circle-down"></i></span>' : '<span class="badge badge-warning"  title="Cargo"><i class="fa fa-arrow-circle-up"></i></span>' ;
+                            $iconos .= $operaciones->inventarios->count() > 0 ?  '<span class="badge badge-primary" title="Operación Inventario"><i class="fa fa-crosshairs"></i></span>' : '';
+                            $iconos .= $operaciones->comisionable == 1 ?  '<span class="badge badge-danger" title="Operación Comisionable"><i class="fa fa-asterisk"></i></span>' : '' ;
+                            return $iconos;
+                          })
+                          ->addColumn('iconoss', function($operaciones) {
+                            $iconos['entrada'] = $operaciones->tipo == 'Entrada' ?  true :  false;
+                            $iconos['inventario'] = $operaciones->inventarios->count() > 0 ?   true : false ;
+                            $iconos['comisionable'] = $operaciones->comisionable == 1 ? true : false;
+                            return $iconos;
+                          })
+
                           ->addColumn('empresanombre', function($operaciones) {
                             return $operaciones->empresa->nombre;
                           })
@@ -504,7 +537,7 @@ class operacionesController extends AppBaseController
                             return $operaciones->proveedor->nombre;
                           })
                           ->editColumn('fecha', function ($operaciones) {
-                            return $operaciones->fecha->format('d-m-Y');
+                            return $operaciones->fecha->format('Y-m-d');
                           })
                           ->editColumn('monto', function ($operaciones) {
                             return number_format($operaciones->monto,2);

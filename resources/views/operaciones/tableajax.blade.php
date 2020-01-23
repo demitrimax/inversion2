@@ -64,7 +64,14 @@ var table = $('#operaciones-table').DataTable({
                 "url": "{{asset('starlight/lib/datatables/spanish.json')}}"
             },
     columns: [
-        { data:'id', name: 'id' },
+        { data:'id', name: 'id' /*,
+          'render': function(val, _, obj) {
+            var resultado = '';
+            resultado = val['entrada'] ?  '<span class="badge badge-success"  title="Abono"><i class="fa fa-arrow-circle-down"></i></span>' : '<span class="badge badge-warning"  title="Cargo"><i class="fa fa-arrow-circle-up"></i></span>';
+
+            return val['entrada'];
+          }*/
+        },
         { data: 'monto', name: 'monto',
         'render': function(val, _, obj)  {
               return '<a href="{{url('operaciones')}}/' + obj.id + '" target="_self">' + val + '</a>'; }
@@ -77,7 +84,7 @@ var table = $('#operaciones-table').DataTable({
         { data:'acciones', name: 'acciones', orderable: false, searchable: false,
         'render': function(val, _, obj) {
 
-              return @can('operaciones-edit') '<a href="operaciones/' + obj.id + '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Detalles</a> ' + @else  '' +   @endcan @can('operaciones-delete') '<a href="operaciones/' + obj.id + '/delete" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> Eliminar</a> '  @else '' @endcan ;
+              return @can('operaciones-edit') '<a href="operaciones/' + obj.id + '" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Detalles</a> ' + @else  '' +   @endcan @can('operaciones-delete') '<button onclick="ConfirmDelete('+ obj.id + ')" class="btn btn-xs btn-danger"><i class="far fa-trash-alt"></i> Eliminar</a> '  @else '' @endcan ;
             }
           },
 
@@ -102,7 +109,8 @@ function ConfirmDelete(id) {
         confirmButtonText: 'Continuar',
         }).then((result) => {
   if (result.value) {
-    document.forms['form'+id].submit();
+    window.location.href = "operaciones/"+id+"/delete";
+    //document.forms['form'+id].submit();
   }
 })
 }
