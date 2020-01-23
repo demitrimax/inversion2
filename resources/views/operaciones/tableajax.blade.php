@@ -64,13 +64,15 @@ var table = $('#operaciones-table').DataTable({
                 "url": "{{asset('starlight/lib/datatables/spanish.json')}}"
             },
     columns: [
-        { data:'id', name: 'id' /*,
+        { data:'id', name: 'id' ,
           'render': function(val, _, obj) {
             var resultado = '';
-            resultado = val['entrada'] ?  '<span class="badge badge-success"  title="Abono"><i class="fa fa-arrow-circle-down"></i></span>' : '<span class="badge badge-warning"  title="Cargo"><i class="fa fa-arrow-circle-up"></i></span>';
+            resultado = obj.entrada == 1?  '<span class="badge badge-success"  title="Abono"><i class="fa fa-arrow-circle-down"></i></span>' : '<span class="badge badge-warning"  title="Cargo"><i class="fa fa-arrow-circle-up"></i></span>';
+            resultado += obj.inventario == 1 ? '<span class="badge badge-primary" title="Operación Inventario"><i class="fa fa-crosshairs"></i></span>' : '';
+            resultado += obj.comisionable == 1? '<span class="badge badge-danger" title="Operación Comisionable"><i class="fa fa-asterisk"></i></span>' : '' ;
 
-            return val['entrada'];
-          }*/
+            return resultado;
+          }
         },
         { data: 'monto', name: 'monto',
         'render': function(val, _, obj)  {

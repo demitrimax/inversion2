@@ -526,6 +526,18 @@ class operacionesController extends AppBaseController
                             $iconos['comisionable'] = $operaciones->comisionable == 1 ? true : false;
                             return $iconos;
                           })
+                          ->addColumn('comisionable', function($operaciones) {
+                            $resultado = $operaciones->comisionable == 1  ?  true :  false;
+                            return $resultado;
+                          })
+                          ->addColumn('entrada', function($operaciones) {
+                            $resultado = $operaciones->tipo == 'Entrada' ?  true :  false;
+                            return $resultado;
+                          })
+                          ->addColumn('inventario', function($operaciones) {
+                            $resultado = $operaciones->inventarios->count() > 0 ?  true :  false;
+                            return $resultado;
+                          })
 
                           ->addColumn('empresanombre', function($operaciones) {
                             return $operaciones->empresa->nombre;
