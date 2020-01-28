@@ -23,7 +23,7 @@
                         <div class="clearfix"></div>
                         <div class="box box-primary">
                             <div class="box-body">
-                                    @include('empresas.table')
+                                    @include('empresas.misempresas')
                             </div>
                         </div>
                         <div class="text-center">
