@@ -39,7 +39,7 @@
 <!-- Proveedor Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('proveedor_id', 'Proveedor:') !!}
-    {!! Form::select('proveedor_id', $proveedores, null, ['class' => 'form-control']) !!}
+    {!! Form::select('proveedor_id', $proveedores, null, ['class' => 'form-control select2', 'style'=>'width: 100%;']) !!}
 </div>
 
 @php
