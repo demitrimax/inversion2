@@ -73,7 +73,7 @@ class operacionesController extends AppBaseController
       //dd($cuentas);
       $cuentas = bcuentas::all();
       $cuental = $cuentas->pluck('nomcuentasaldo', 'id');
-      $proveedores = proveedores::pluck('nombre','id');
+      $proveedores = proveedores::orderBy('nombre', 'asc')->pluck('nombre','id');
       $categorias = clasifica::all();
       $metpago = metpago::pluck('nombre','id');
       $facturas = facturas::whereNull('operacion_id')->pluck('numfactura','id');
