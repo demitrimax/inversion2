@@ -3,7 +3,8 @@
         <tr>
             <th>Nombre</th>
         <th>Descripcion</th>
-            <th colspan="3">Acciones</th>
+        <th>Orden</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody class="sortable">
@@ -11,6 +12,7 @@
         <tr>
             <td><a href="{!! route('clasificas.show', [$clasifica->id]) !!}">{!! $clasifica->nombre !!}</a></td>
             <td>{!! $clasifica->descripcion !!}</td>
+            <td>{!! $clasifica->orden !!}</td>
             <td>
                 {!! Form::open(['route' => ['clasificas.destroy', $clasifica->id], 'method' => 'delete', 'id'=>'form'.$clasifica->id]) !!}
                 <div class='btn-group'>

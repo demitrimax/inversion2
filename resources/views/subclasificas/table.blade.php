@@ -5,7 +5,16 @@
 <link href="{{asset('starlight/lib/highlightjs/github.css')}}" rel="stylesheet">
 
 @endsection
-
+<?php
+function limit_text($text, $limit) {
+      if (str_word_count($text, 0) > $limit) {
+          $words = str_word_count($text, 2);
+          $pos = array_keys($words);
+          $text = substr($text, 0, $pos[$limit]) . '...';
+      }
+      return $text;
+    }
+?>
 <table class="table table-responsive" id="subclasificas-table">
     <thead>
         <tr>
@@ -20,7 +29,7 @@
     @foreach($subclasificas as $subclasifica)
         <tr>
             <td><a href="{!! route('subclasificas.show', [$subclasifica->id]) !!}">{!! $subclasifica->nombre !!}</a></td>
-            <td>{!! $subclasifica->descripcion !!}</td>
+            <td>{!! limit_text($subclasifica->descripcion, 10) !!}</td>
             <td>{!! $subclasifica->clasifica->nombre !!}</td>
             <td>{!! $subclasifica->operaciones->count() !!}</td>
             <td>
