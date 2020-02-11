@@ -29,6 +29,12 @@
     {!! Form::text('fcreacion', null, ['class' => 'form-control datepicker-here','id'=>'fcreacion', 'data-language'=>'es', 'data-date-format'=>'yyyy-mm-dd', 'required', 'pattern'=>'(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))']) !!}
     </div>
 
+    <!-- Imagen Logo Field -->
+    <div class="form-group">
+        {!! Form::label('logoempresa', 'Logo de la Empresa:') !!}
+        {!! Form::file('logoempresa', null, ['class' => 'form-control']) !!}
+    </div>
+
 
 <!-- Observaciones Field -->
 <div class="form-group">

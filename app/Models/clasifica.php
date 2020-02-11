@@ -69,5 +69,11 @@ class clasifica extends Model
       return $this->hasMany('App\Models\cproyectos', 'clasificacion');
     }
 
+    public function getOrdenclasifica($id, $empresaID)
+    {
+      $clasificaOrden = \App\Models\ordenCategorias::where('empresa_id', $empresaID)->where('categoria_id', $id)->first();
+      return $clasificaOrden;
+    }
+
 
 }

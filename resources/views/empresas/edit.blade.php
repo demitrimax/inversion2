@@ -11,7 +11,7 @@
               <div class="card-body">
                 <div class="row">
                 <div class="col-md-6">
-              {!! Form::model($empresas, ['route' => ['empresas.update', $empresas->id], 'method' => 'patch']) !!}
+              {!! Form::model($empresas, ['route' => ['empresas.update', $empresas->id], 'method' => 'patch', 'enctype'=>'multipar/form-data']) !!}
 
                    @include('empresas.fields')
 

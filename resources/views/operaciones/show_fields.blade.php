@@ -16,7 +16,7 @@
               <ul class="list-group">
                 @foreach($operaciones->facturas as $factura)
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                  {{$factura->numfactura}}
+                  <a href="{{url('facturas/'.$factura->id)}}" target="_blank">{{$factura->numfactura}}</a>
 
                   <span class="badge badge-primary badge-pill">{!! number_format($factura->monto,2) !!}</span>
                 </li>

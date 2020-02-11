@@ -143,8 +143,10 @@ class empresasController extends AppBaseController
         $toperacionesg = operaciones::where('empresa_id',$empresaid)
                                     ->selectRaw('*, sum(monto) as montog, count(monto) as cantidad, DATE_FORMAT(fecha, "%m-%y") as fechag')
                                     ->whereRaw('year(fecha) = ?', [date('Y')])
+                                    ->join('cat_subclasifica', 'operaciones.subclasifica_id', '=', 'cat_subclasifica.id')
                                     ->groupBy('subclasifica_id')
                                     ->groupBy('fechag')
+                                    ->orderBy('cat_subclasifica.clasifica_id', 'asc')
                                     ->orderBy('subclasifica_id', 'asc')
                                     ->get();
         $toperacionesporcuenta = operaciones::where('empresa_id',$empresaid)
