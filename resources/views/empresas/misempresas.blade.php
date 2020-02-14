@@ -4,7 +4,7 @@
             @foreach($empresas as $empresa)
             <div class="col-md">
               <div class="card bd-0">
-                <img class="card-img img-fluid" src="{{$empresa->logoempresa ? asset($empresa->url_logo) : asset('starlight/img/img11.jpg')}}" alt="Image">
+                <img class="card-img img-fluid" src="{{$empresa->logoempresa ? asset($empresa->url_logo) : asset('starlight/img/img11.jpg')}}" alt="Image" width="50" height="50">
                 <div class="card-img-overlay pd-30 d-flex align-items-start flex-column">
                   <h6 class="tx-white mg-b-15"><a href="{!! route('empresas.show', [$empresa->id]) !!}">{!! $empresa->nombre !!}</a></h6>
                   <p class="tx-white tx-white-7 mg-b-auto">
