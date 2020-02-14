@@ -222,6 +222,7 @@ class empresasController extends AppBaseController
     public function update($id, UpdateempresasRequest $request)
     {
         $empresas = $this->empresasRepository->findWithoutFail($id);
+        $input = $request->all();
 
         if (empty($empresas)) {
             Flash::error('Empresa no encontrada');
@@ -230,8 +231,16 @@ class empresasController extends AppBaseController
             return redirect(route('empresas.index'));
         }
 
+
         $empresas = $this->empresasRepository->update($request->all(), $id);
 
+        if( isset($input['logoempresa']) ){
+
+          $archivo = $request->file('logoempresa')->store('public/logos');
+
+          $empresas->logoempresa = $archivo;
+          $empresas->save();
+        }
         Flash::success('Empresa actualizada correctamente.');
         Alert::success('Empresa actualizada correctamente.');
 

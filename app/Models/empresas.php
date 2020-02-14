@@ -38,7 +38,8 @@ class empresas extends Model
         'rfc',
         'giro',
         'fcreacion',
-        'observaciones'
+        'observaciones',
+        'logoempresa'
     ];
 
     /**
@@ -52,7 +53,8 @@ class empresas extends Model
         'rfc'           => 'string',
         'giro'          => 'string',
         'fcreacion'     => 'date',
-        'observaciones' => 'string'
+        'observaciones' => 'string',
+        'logoempresa'   => 'string',
     ];
 
     /**
@@ -82,6 +84,11 @@ class empresas extends Model
     public function categorias()
     {
       return $this->belongsToMany('App\Models\clasifica', 'orden_categorias', 'empresa_id', 'categoria_id' )->withPivot('orden', 'alias');
+    }
+
+    public function getUrlLogoAttribute()
+    {
+      return \Storage::url($this->logoempresa);
     }
 
 
