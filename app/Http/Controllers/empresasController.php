@@ -140,15 +140,19 @@ class empresasController extends AppBaseController
             $subcategoriasAgrupadas[$categoria->nombre][$subcategoria->id] = $subcategoria->nombre;
           }
         }
-        $toperacionesg = operaciones::where('empresa_id',$empresaid)
+        $toperacionesg = operaciones::where('operaciones.empresa_id',$empresaid)
                                     ->selectRaw('*, sum(monto) as montog, count(monto) as cantidad, DATE_FORMAT(fecha, "%m-%y") as fechag')
                                     ->whereRaw('year(fecha) = ?', [date('Y')])
                                     ->join('cat_subclasifica', 'operaciones.subclasifica_id', '=', 'cat_subclasifica.id')
+                                    ->leftjoin('orden_categorias', 'cat_subclasifica.clasifica_id', '=', 'orden_categorias.categoria_id')
+                                    ->where('orden_categorias.empresa_id', $empresaid)
                                     ->groupBy('subclasifica_id')
                                     ->groupBy('fechag')
+                                    ->orderBy('orden_categorias.orden', 'asc')
                                     ->orderBy('cat_subclasifica.clasifica_id', 'asc')
                                     ->orderBy('subclasifica_id', 'asc')
                                     ->get();
+                                    //dd($toperacionesg);
         $toperacionesporcuenta = operaciones::where('empresa_id',$empresaid)
                                 ->selectRaw('*, sum(monto) as montog, count(monto) as cantidad, DATE_FORMAT(fecha, "%m-%y") as fechag')
                                 ->whereRaw('year(fecha) = ?', [date('Y')])

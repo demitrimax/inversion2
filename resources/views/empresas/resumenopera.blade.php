@@ -67,7 +67,7 @@
                         @endisset
                     @endisset
 
-                    @foreach($toperacionesg->where('fechag',$fechas->fechag) as $key=>$operacion)
+                    @foreach($toperacionesg->where('fechag', $fechas->fechag) as $key=>$operacion)
 
                       @if($catunicas <> $operacion->subclasifica->clasifica->nombre )
                         <tr>
